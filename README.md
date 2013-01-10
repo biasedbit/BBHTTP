@@ -43,6 +43,8 @@ There are still many features missing &mdash; automatic JSON parsing and multipa
          // handle response
      } error:nil];
     ````
+    
+    > The request's content type and content length headers will be automatically set based on the file's properties.
 
 * Download to memory buffers or stream directly to file/`NSOutputStream`:
 
@@ -54,6 +56,8 @@ There are still many features missing &mdash; automatic JSON parsing and multipa
          // handle response
      } error:nil];
     ````
+
+    > No need to delete the file if the download fails midway; hotpotato keeps everything clean.
 
 * Even the *power-dev* API is clean and concise:
 
