@@ -13,12 +13,12 @@ If boasts an extremely simple and compact interface that allows you to reduce yo
            r.code, r.message, [r.data length], r[@"Content-Type"]);
  } error:^(NSError* e) {
      NSLog(@"Request failed: %@", [e localizedDescription]);
-}];
+ }];
 
 > Finished: 200 OK -- received 68364 bytes of 'text/html'.
 ````
 
-There are still many features missing &mdash; automatic JSON parsing and multipart uploads to name a few &mdash; to bring it up-to-par with other similar projects. I want to add those over time but help is always more than welcome; open an issue or drop me a mention [@biasedbit](http://twitter.com/biasedbit).
+There are still many features missing &mdash; automatic JSON parsing and multipart uploads to name a few &mdash; to bring it up-to-par with other similar projects. I want to add those over time but help is always more than welcome so be sure to open issues for the features you'd love to see or drop me a mention [@biasedbit](http://twitter.com/biasedbit) on Twitter.
 
 
 ## Highlights
@@ -31,7 +31,7 @@ There are still many features missing &mdash; automatic JSON parsing and multipa
     } error:nil]];
     ````
 
-    You don't even need to keep references to the requests, just fire and forget.
+    > You don't even need to keep references to the requests, just fire and forget.
 
 * Stream files directly from disk or from a `NSInputStream`:
 
