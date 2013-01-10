@@ -1,0 +1,513 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		151CCB4D169E965B00726297 /* BBAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 151CCB42169E965B00726297 /* BBAppDelegate.m */; };
+		151CCB4E169E965B00726297 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 151CCB44169E965B00726297 /* Credits.rtf */; };
+		151CCB50169E965B00726297 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 151CCB48169E965B00726297 /* MainMenu.xib */; };
+		151CCB52169E965B00726297 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 151CCB4C169E965B00726297 /* main.m */; };
+		151CCB74169E96C000726297 /* curl.h in Headers */ = {isa = PBXBuildFile; fileRef = 151CCB69169E96C000726297 /* curl.h */; };
+		151CCB75169E96C000726297 /* curlbuild.h in Headers */ = {isa = PBXBuildFile; fileRef = 151CCB6A169E96C000726297 /* curlbuild.h */; };
+		151CCB76169E96C000726297 /* curlrules.h in Headers */ = {isa = PBXBuildFile; fileRef = 151CCB6B169E96C000726297 /* curlrules.h */; };
+		151CCB77169E96C000726297 /* curlver.h in Headers */ = {isa = PBXBuildFile; fileRef = 151CCB6C169E96C000726297 /* curlver.h */; };
+		151CCB78169E96C000726297 /* easy.h in Headers */ = {isa = PBXBuildFile; fileRef = 151CCB6D169E96C000726297 /* easy.h */; };
+		151CCB79169E96C000726297 /* libcurl.OSX.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 151CCB6E169E96C000726297 /* libcurl.OSX.a */; };
+		151CCB7A169E96C000726297 /* mprintf.h in Headers */ = {isa = PBXBuildFile; fileRef = 151CCB6F169E96C000726297 /* mprintf.h */; };
+		151CCB7B169E96C000726297 /* multi.h in Headers */ = {isa = PBXBuildFile; fileRef = 151CCB70169E96C000726297 /* multi.h */; };
+		151CCB7C169E96C000726297 /* stdcheaders.h in Headers */ = {isa = PBXBuildFile; fileRef = 151CCB71169E96C000726297 /* stdcheaders.h */; };
+		151CCB7D169E96C000726297 /* typecheck-gcc.h in Headers */ = {isa = PBXBuildFile; fileRef = 151CCB72169E96C000726297 /* typecheck-gcc.h */; };
+		151CCB7E169E96C000726297 /* BBHotpotato-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 151CCB73169E96C000726297 /* BBHotpotato-Prefix.pch */; };
+		151CCB7F169E974D00726297 /* BBHTTPExecutor.m in Sources */ = {isa = PBXBuildFile; fileRef = 151CCB2D169E958E00726297 /* BBHTTPExecutor.m */; };
+		151CCB80169E974D00726297 /* BBHTTPRequest+Convenience.m in Sources */ = {isa = PBXBuildFile; fileRef = 151CCB2F169E958E00726297 /* BBHTTPRequest+Convenience.m */; };
+		151CCB81169E974D00726297 /* BBHTTPRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 151CCB31169E958E00726297 /* BBHTTPRequest.m */; };
+		151CCB82169E974D00726297 /* BBHTTPRequestContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 151CCB33169E958E00726297 /* BBHTTPRequestContext.m */; };
+		151CCB83169E974D00726297 /* BBHTTPResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 151CCB35169E958E00726297 /* BBHTTPResponse.m */; };
+		151CCB84169E974D00726297 /* BBHTTPUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 151CCB37169E958E00726297 /* BBHTTPUtils.m */; };
+		151CCB8D169E981200726297 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 151CCB8C169E981200726297 /* Foundation.framework */; };
+		15B5119D169E984F0081CB14 /* libHotpotato.OSX.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 151CCB57169E967D00726297 /* libHotpotato.OSX.a */; };
+		15B511A0169E985B0081CB14 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 151CCB8C169E981200726297 /* Foundation.framework */; };
+		15B511A2169E98610081CB14 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15B511A1169E98610081CB14 /* Security.framework */; };
+		15B511A4169E98690081CB14 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 15B511A3169E98690081CB14 /* libz.dylib */; };
+		15B511A6169E98740081CB14 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15B511A5169E98740081CB14 /* AppKit.framework */; };
+		15B511A8169E98800081CB14 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15B511A7169E98800081CB14 /* CoreServices.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		151CCAE7169E93D200726297 /* Hotpotato for OSX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Hotpotato for OSX.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		151CCB2B169E958E00726297 /* BBHotpotato.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBHotpotato.h; sourceTree = "<group>"; };
+		151CCB2C169E958E00726297 /* BBHTTPExecutor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBHTTPExecutor.h; sourceTree = "<group>"; };
+		151CCB2D169E958E00726297 /* BBHTTPExecutor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBHTTPExecutor.m; sourceTree = "<group>"; };
+		151CCB2E169E958E00726297 /* BBHTTPRequest+Convenience.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BBHTTPRequest+Convenience.h"; sourceTree = "<group>"; };
+		151CCB2F169E958E00726297 /* BBHTTPRequest+Convenience.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "BBHTTPRequest+Convenience.m"; sourceTree = "<group>"; };
+		151CCB30169E958E00726297 /* BBHTTPRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBHTTPRequest.h; sourceTree = "<group>"; };
+		151CCB31169E958E00726297 /* BBHTTPRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBHTTPRequest.m; sourceTree = "<group>"; };
+		151CCB32169E958E00726297 /* BBHTTPRequestContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBHTTPRequestContext.h; sourceTree = "<group>"; };
+		151CCB33169E958E00726297 /* BBHTTPRequestContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBHTTPRequestContext.m; sourceTree = "<group>"; };
+		151CCB34169E958E00726297 /* BBHTTPResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBHTTPResponse.h; sourceTree = "<group>"; };
+		151CCB35169E958E00726297 /* BBHTTPResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBHTTPResponse.m; sourceTree = "<group>"; };
+		151CCB36169E958E00726297 /* BBHTTPUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBHTTPUtils.h; sourceTree = "<group>"; };
+		151CCB37169E958E00726297 /* BBHTTPUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBHTTPUtils.m; sourceTree = "<group>"; };
+		151CCB41169E965B00726297 /* BBAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBAppDelegate.h; sourceTree = "<group>"; };
+		151CCB42169E965B00726297 /* BBAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBAppDelegate.m; sourceTree = "<group>"; };
+		151CCB45169E965B00726297 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		151CCB47169E965B00726297 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		151CCB49169E965B00726297 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		151CCB4A169E965B00726297 /* BBHotpotato-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "BBHotpotato-Info.plist"; sourceTree = "<group>"; };
+		151CCB4B169E965B00726297 /* BBHotpotato-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BBHotpotato-Prefix.pch"; sourceTree = "<group>"; };
+		151CCB4C169E965B00726297 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		151CCB57169E967D00726297 /* libHotpotato.OSX.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libHotpotato.OSX.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		151CCB69169E96C000726297 /* curl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = curl.h; sourceTree = "<group>"; };
+		151CCB6A169E96C000726297 /* curlbuild.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = curlbuild.h; sourceTree = "<group>"; };
+		151CCB6B169E96C000726297 /* curlrules.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = curlrules.h; sourceTree = "<group>"; };
+		151CCB6C169E96C000726297 /* curlver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = curlver.h; sourceTree = "<group>"; };
+		151CCB6D169E96C000726297 /* easy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = easy.h; sourceTree = "<group>"; };
+		151CCB6E169E96C000726297 /* libcurl.OSX.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcurl.OSX.a; sourceTree = "<group>"; };
+		151CCB6F169E96C000726297 /* mprintf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mprintf.h; sourceTree = "<group>"; };
+		151CCB70169E96C000726297 /* multi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = multi.h; sourceTree = "<group>"; };
+		151CCB71169E96C000726297 /* stdcheaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stdcheaders.h; sourceTree = "<group>"; };
+		151CCB72169E96C000726297 /* typecheck-gcc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "typecheck-gcc.h"; sourceTree = "<group>"; };
+		151CCB73169E96C000726297 /* BBHotpotato-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BBHotpotato-Prefix.pch"; sourceTree = "<group>"; };
+		151CCB8C169E981200726297 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		15B511A1169E98610081CB14 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		15B511A3169E98690081CB14 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		15B511A5169E98740081CB14 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		15B511A7169E98800081CB14 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		151CCAC3169E923700726297 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				15B5119D169E984F0081CB14 /* libHotpotato.OSX.a in Frameworks */,
+				15B511A4169E98690081CB14 /* libz.dylib in Frameworks */,
+				15B511A6169E98740081CB14 /* AppKit.framework in Frameworks */,
+				15B511A8169E98800081CB14 /* CoreServices.framework in Frameworks */,
+				15B511A2169E98610081CB14 /* Security.framework in Frameworks */,
+				15B511A0169E985B0081CB14 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		151CCB54169E967D00726297 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				151CCB8D169E981200726297 /* Foundation.framework in Frameworks */,
+				151CCB79169E96C000726297 /* libcurl.OSX.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		151CCABD169E923700726297 = {
+			isa = PBXGroup;
+			children = (
+				151CCB2A169E958E00726297 /* Classes */,
+				151CCB5F169E967D00726297 /* Static lib */,
+				151CCB3F169E965B00726297 /* Sample app */,
+				151CCB87169E977A00726297 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		151CCB2A169E958E00726297 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				151CCB2B169E958E00726297 /* BBHotpotato.h */,
+				151CCB2C169E958E00726297 /* BBHTTPExecutor.h */,
+				151CCB2D169E958E00726297 /* BBHTTPExecutor.m */,
+				151CCB2E169E958E00726297 /* BBHTTPRequest+Convenience.h */,
+				151CCB2F169E958E00726297 /* BBHTTPRequest+Convenience.m */,
+				151CCB30169E958E00726297 /* BBHTTPRequest.h */,
+				151CCB31169E958E00726297 /* BBHTTPRequest.m */,
+				151CCB32169E958E00726297 /* BBHTTPRequestContext.h */,
+				151CCB33169E958E00726297 /* BBHTTPRequestContext.m */,
+				151CCB34169E958E00726297 /* BBHTTPResponse.h */,
+				151CCB35169E958E00726297 /* BBHTTPResponse.m */,
+				151CCB36169E958E00726297 /* BBHTTPUtils.h */,
+				151CCB37169E958E00726297 /* BBHTTPUtils.m */,
+			);
+			name = Classes;
+			path = ../../Classes;
+			sourceTree = "<group>";
+		};
+		151CCB3F169E965B00726297 /* Sample app */ = {
+			isa = PBXGroup;
+			children = (
+				151CCB40169E965B00726297 /* Classes */,
+				151CCB43169E965B00726297 /* Other */,
+				151CCB58169E967D00726297 /* Frameworks */,
+			);
+			path = "Sample app";
+			sourceTree = "<group>";
+		};
+		151CCB40169E965B00726297 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				151CCB41169E965B00726297 /* BBAppDelegate.h */,
+				151CCB42169E965B00726297 /* BBAppDelegate.m */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		151CCB43169E965B00726297 /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				151CCB44169E965B00726297 /* Credits.rtf */,
+				151CCB46169E965B00726297 /* InfoPlist.strings */,
+				151CCB48169E965B00726297 /* MainMenu.xib */,
+				151CCB4A169E965B00726297 /* BBHotpotato-Info.plist */,
+				151CCB4B169E965B00726297 /* BBHotpotato-Prefix.pch */,
+				151CCB4C169E965B00726297 /* main.m */,
+			);
+			path = Other;
+			sourceTree = "<group>";
+		};
+		151CCB58169E967D00726297 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				15B511A3169E98690081CB14 /* libz.dylib */,
+				15B511A5169E98740081CB14 /* AppKit.framework */,
+				15B511A7169E98800081CB14 /* CoreServices.framework */,
+				151CCB8C169E981200726297 /* Foundation.framework */,
+				15B511A1169E98610081CB14 /* Security.framework */,
+			);
+			name = Frameworks;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		151CCB5F169E967D00726297 /* Static lib */ = {
+			isa = PBXGroup;
+			children = (
+				151CCB68169E96C000726297 /* libcurl */,
+				151CCB73169E96C000726297 /* BBHotpotato-Prefix.pch */,
+			);
+			path = "Static lib";
+			sourceTree = "<group>";
+		};
+		151CCB68169E96C000726297 /* libcurl */ = {
+			isa = PBXGroup;
+			children = (
+				151CCB6E169E96C000726297 /* libcurl.OSX.a */,
+				151CCB69169E96C000726297 /* curl.h */,
+				151CCB6A169E96C000726297 /* curlbuild.h */,
+				151CCB6B169E96C000726297 /* curlrules.h */,
+				151CCB6C169E96C000726297 /* curlver.h */,
+				151CCB6D169E96C000726297 /* easy.h */,
+				151CCB6F169E96C000726297 /* mprintf.h */,
+				151CCB70169E96C000726297 /* multi.h */,
+				151CCB71169E96C000726297 /* stdcheaders.h */,
+				151CCB72169E96C000726297 /* typecheck-gcc.h */,
+			);
+			path = libcurl;
+			sourceTree = "<group>";
+		};
+		151CCB87169E977A00726297 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				151CCAE7169E93D200726297 /* Hotpotato for OSX.app */,
+				151CCB57169E967D00726297 /* libHotpotato.OSX.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		151CCB55169E967D00726297 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				151CCB74169E96C000726297 /* curl.h in Headers */,
+				151CCB75169E96C000726297 /* curlbuild.h in Headers */,
+				151CCB76169E96C000726297 /* curlrules.h in Headers */,
+				151CCB77169E96C000726297 /* curlver.h in Headers */,
+				151CCB78169E96C000726297 /* easy.h in Headers */,
+				151CCB7A169E96C000726297 /* mprintf.h in Headers */,
+				151CCB7B169E96C000726297 /* multi.h in Headers */,
+				151CCB7C169E96C000726297 /* stdcheaders.h in Headers */,
+				151CCB7D169E96C000726297 /* typecheck-gcc.h in Headers */,
+				151CCB7E169E96C000726297 /* BBHotpotato-Prefix.pch in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		151CCAC5169E923700726297 /* Hotpotato for OSX */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 151CCAE3169E923700726297 /* Build configuration list for PBXNativeTarget "Hotpotato for OSX" */;
+			buildPhases = (
+				151CCAC2169E923700726297 /* Sources */,
+				151CCAC3169E923700726297 /* Frameworks */,
+				151CCAC4169E923700726297 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Hotpotato for OSX";
+			productName = "Hotpotato for OSX";
+			productReference = 151CCAE7169E93D200726297 /* Hotpotato for OSX.app */;
+			productType = "com.apple.product-type.application";
+		};
+		151CCB56169E967D00726297 /* Hotpotato.OSX */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 151CCB65169E967D00726297 /* Build configuration list for PBXNativeTarget "Hotpotato.OSX" */;
+			buildPhases = (
+				151CCB53169E967D00726297 /* Sources */,
+				151CCB54169E967D00726297 /* Frameworks */,
+				151CCB55169E967D00726297 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Hotpotato.OSX;
+			productName = "Static lib";
+			productReference = 151CCB57169E967D00726297 /* libHotpotato.OSX.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		151CCABE169E923700726297 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = BBHTTP;
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = BiasedBit;
+			};
+			buildConfigurationList = 151CCAC1169E923700726297 /* Build configuration list for PBXProject "Hotpotato for OSX" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 151CCABD169E923700726297;
+			productRefGroup = 151CCABD169E923700726297;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				151CCAC5169E923700726297 /* Hotpotato for OSX */,
+				151CCB56169E967D00726297 /* Hotpotato.OSX */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		151CCAC4169E923700726297 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				151CCB4E169E965B00726297 /* Credits.rtf in Resources */,
+				151CCB50169E965B00726297 /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		151CCAC2169E923700726297 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				151CCB4D169E965B00726297 /* BBAppDelegate.m in Sources */,
+				151CCB52169E965B00726297 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		151CCB53169E967D00726297 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				151CCB7F169E974D00726297 /* BBHTTPExecutor.m in Sources */,
+				151CCB80169E974D00726297 /* BBHTTPRequest+Convenience.m in Sources */,
+				151CCB81169E974D00726297 /* BBHTTPRequest.m in Sources */,
+				151CCB82169E974D00726297 /* BBHTTPRequestContext.m in Sources */,
+				151CCB83169E974D00726297 /* BBHTTPResponse.m in Sources */,
+				151CCB84169E974D00726297 /* BBHTTPUtils.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		151CCB44169E965B00726297 /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				151CCB45169E965B00726297 /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		151CCB46169E965B00726297 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				151CCB47169E965B00726297 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		151CCB48169E965B00726297 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				151CCB49169E965B00726297 /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		151CCAE1169E923700726297 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		151CCAE2169E923700726297 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		151CCAE4169E923700726297 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Sample app/Other/BBHotpotato-Prefix.pch";
+				INFOPLIST_FILE = "Sample app/Other/BBHotpotato-Info.plist";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		151CCAE5169E923700726297 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Sample app/Other/BBHotpotato-Prefix.pch";
+				INFOPLIST_FILE = "Sample app/Other/BBHotpotato-Info.plist";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		151CCB66169E967D00726297 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Static lib/BBHotpotato-Prefix.pch";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Static lib/libcurl\"",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		151CCB67169E967D00726297 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Static lib/BBHotpotato-Prefix.pch";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Static lib/libcurl\"",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		151CCAC1169E923700726297 /* Build configuration list for PBXProject "Hotpotato for OSX" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				151CCAE1169E923700726297 /* Debug */,
+				151CCAE2169E923700726297 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		151CCAE3169E923700726297 /* Build configuration list for PBXNativeTarget "Hotpotato for OSX" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				151CCAE4169E923700726297 /* Debug */,
+				151CCAE5169E923700726297 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		151CCB65169E967D00726297 /* Build configuration list for PBXNativeTarget "Hotpotato.OSX" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				151CCB66169E967D00726297 /* Debug */,
+				151CCB67169E967D00726297 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 151CCABE169E923700726297 /* Project object */;
+}

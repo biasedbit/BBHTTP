@@ -111,12 +111,13 @@ A couple of quick tests with command line version of curl proved that curl knew 
 ## Dependencies
 
 * `libcurl`
+* `libz.dylib`
+* `Security.framework`
 * `CoreServices.framework` on OSX
 * `MobileCoreServices.framework` on iOS
-* `libz.dylib`
 
 > **Note:**  
-> Under `BBHotpotato/External/Curl` you can find libcurl, compiled against 6.0 SDK with support for i386 (simulator), armv7 and armv7s (iPhone 3GS and newer) but you can compile your own custom version with [this](https://github.com/brunodecarvalho/curl-ios-build-scripts).
+> You can find libcurl binaries and headers under `Build/iOS/Static lib/libcurl` and `Build/OSX/Static lib/libcurl`. The iOS version was compiled against 6.0 SDK with support for i386 (simulator), armv7 and armv7s (iPhone 3GS and newer). The OSX version was compiled against 10.8 SDK with support for x86_64 (64 bit Intel). If you'd like to build your own custom version, try [this](https://github.com/brunodecarvalho/curl-ios-build-scripts).
 
 
 ## Documentation

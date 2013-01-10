@@ -30,7 +30,6 @@
 NSString* const kBBHTTPRequestDefaultUserAgentString = @"BBHotpotato/1.0";
 
 
-
 #pragma mark -
 
 @implementation BBHTTPRequest
