@@ -1,4 +1,5 @@
 .DS_Store
-*/xcuserdata
-*/project.xcworkspace
+xcuserdata
+project.xcworkspace
 .idea
+Docs/html
