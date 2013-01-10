@@ -15,7 +15,7 @@ If boasts an extremely simple and compact interface that allows you to reduce yo
      NSLog(@"Request failed: %@", [e localizedDescription]);
  }];
 
-> Finished: 200 OK -- received 68364 bytes of 'text/html'.
+// Finished: 200 OK -- received 68364 bytes of 'text/html'.
 ````
 
 There are still many features missing &mdash; automatic JSON parsing and multipart uploads to name a few &mdash; to bring it up-to-par with other similar projects. I want to add those over time but help is always more than welcome so be sure to open issues for the features you'd love to see or drop me a mention [@biasedbit](http://twitter.com/biasedbit) on Twitter.
@@ -33,7 +33,7 @@ There are still many features missing &mdash; automatic JSON parsing and multipa
 
     > You don't even need to keep references to the requests, just fire and forget.
 
-* Stream files directly from disk or from a `NSInputStream`:
+* Stream uploads from a `NSInputStream` or directly from a file:
 
     ````objc
     [[BBHTTPRequest postFile:@"/path/to/file" to:@"http://api.target.url/"]
@@ -44,7 +44,7 @@ There are still many features missing &mdash; automatic JSON parsing and multipa
      } error:nil];
     ````
 
-* Download to memory buffers or stream directly to `NSOutputStream`/file:
+* Download to memory buffers or stream directly to file/`NSOutputStream`:
 
     ````objc
     [[BBHTTPRequest getFrom:@"http://biasedbit.com"]
@@ -55,12 +55,13 @@ There are still many features missing &mdash; automatic JSON parsing and multipa
      } error:nil];
     ````
 
-* Even the "under-the-hood" API is clean and concise:
+* Even the *power-dev* API is clean and concise:
 
     ````objc
     BBHTTPExecutor* twitterExecutor = [BBHTTPExecutor initWithId:@"twitter.com"];
     BBHTTPExecutor* facebookExecutor = [BBHTTPExecutor initWithId:@"facebook.com"];
-    e1.maxCurlHandles = 10;
+    twitterExecutor.maxCurlHandles = 10;
+    facebookExecutor.maxCurlHandles = 2;
     ...
     BBHTTPRequest* request = [[BBHTTPRequest alloc]
                               initWithURL:[NSURL URLWithString:@"http://twitter.com"]
