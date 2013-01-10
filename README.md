@@ -23,7 +23,7 @@ There are still many rough edges to polish and features missing &mdash; automati
 
 ## Highlights
 
-* Super compact asynchronous-driven usage:
+* Concise asynchronous-driven usage:
 
     ````objc
     [[BBHTTPRequest getFrom:@"http://biasedbit.com"] execute:^(BBHTTPResponse* response) {
@@ -81,7 +81,7 @@ There are still many rough edges to polish and features missing &mdash; automati
 
 ## Why?
 
-You mean other than its super sexy API or the fact that it uses libcurl underneath?
+You mean other than its sleek API or the fact that it uses libcurl underneath?
 
 Well, unlike `NSURLConnection` and, consequently, any lib that relies on it, hotpotato...
 
