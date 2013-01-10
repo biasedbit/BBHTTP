@@ -18,7 +18,7 @@ If boasts an extremely simple and compact interface that allows you to reduce yo
 // Finished: 200 OK -- received 68364 bytes of 'text/html'.
 ````
 
-There are still many features missing &mdash; automatic JSON parsing and multipart uploads to name a few &mdash; to bring it up-to-par with other similar projects. I want to add those over time but help is always more than welcome so be sure to open issues for the features you'd love to see or drop me a mention [@biasedbit](http://twitter.com/biasedbit) on Twitter.
+There are still many rough edges to polish and features missing &mdash; automatic JSON parsing and multipart uploads to name a few &mdash; to bring it up-to-par with other similar projects. I want to add those over time but help is always more than welcome so be sure to open issues for the features you'd love to see or drop me a mention [@biasedbit](http://twitter.com/biasedbit) on Twitter.
 
 
 ## Highlights
@@ -43,6 +43,8 @@ There are still many features missing &mdash; automatic JSON parsing and multipa
          // handle response
      } error:nil];
     ````
+    
+    > The request's content type and content length headers will be automatically set based on the file's properties.
 
 * Download to memory buffers or stream directly to file/`NSOutputStream`:
 
@@ -54,6 +56,8 @@ There are still many features missing &mdash; automatic JSON parsing and multipa
          // handle response
      } error:nil];
     ````
+
+    > No need to delete the file if the download fails midway; hotpotato keeps everything clean.
 
 * Even the *power-dev* API is clean and concise:
 
@@ -79,7 +83,7 @@ There are still many features missing &mdash; automatic JSON parsing and multipa
 
 You mean other than its super sexy API or the fact that it uses libcurl underneath?
 
-Well, unlike `NSURLConnection` and, consequently, any lib that relies on it...
+Well, unlike `NSURLConnection` and, consequently, any lib that relies on it, hotpotato...
 
 * is strictly compliant with [section 8.2.3](http://tools.ietf.org/html/rfc2616#section-8.2.3) of RFC 2616, a.k.a. the misbeloved `Expect: 100-Continue` header;
 * can receive server error responses midway through upload &mdash; as opposed to continuing to pump data into socket eden, and eventually reporting connection timeout instead of the actual error response sent by the server.
@@ -87,7 +91,7 @@ Well, unlike `NSURLConnection` and, consequently, any lib that relies on it...
 *"But my uploads work just fine..."*
 
 * If you only wrote code that uploads to a server, you've probably never noticed either of the above;
-* If you wrote both client *and* server-side code to handle uploads, chances are that you never ran into either of the above;
+* If you wrote both client *and* server-side code to handle uploads, chances are that you never ran into either of the above either;
 * If you're hardcore and wrote your own server *and* client *and* noticed `NSURLConnection` ignores errors until it finishes its upload, then this is the HTTP framework for you. Also, fistbump for writing your server and client. And paying attention to the specs.
 
 On a more serious tone, the motivation for this libcurl wrapper was that during development of [Droplr](http://droplr.com)'s API server, we noticed that whenever the API rejected an upload and immediately closed the connection &mdash; which is a perfectly legal & reasonable behavior &mdash; the Cocoa-based clients would keep reporting upload progress (even though I **knew** the socket was closed) and eventually fail with "Request timeout", instead of the response the server had sent down the pipes.
@@ -117,9 +121,15 @@ A couple of quick tests with command line version of curl proved that curl knew 
 
 ## Documentation
 
-The project includes comprehensive class-level documentation generated with [appledoc](https://github.com/tomaz/appledoc) under the `Docs` folder.
+For guides on how to setup and start working with this lib, check out [the wiki pages](https://github.com/brunodecarvalho/BBHotpotato/wiki).
 
-For guides on how to setup and start working with this lib, check out the Wiki pages.
+The project also includes comprehensive class-level documentation. If you happen to have [appledoc](https://github.com/tomaz/appledoc) installed, just run the `generate` script on the `Docs` folder and it'll create html documentation for you under `Docs/html`.
+
+
+## Credits
+
+* Daniel Stenberg and everyone else involved in making cURL and libcurl
+* Ben Copsey for the fantastic ASIHTTPRequest, which has been my HTTP workhorse on iOS since day 0
 
 
 ## License
