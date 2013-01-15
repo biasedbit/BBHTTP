@@ -509,6 +509,8 @@ static size_t BBHTTPExecutorReceiveCallback(uint8_t* buffer, size_t size, size_t
     curl_easy_setopt(handle, CURLOPT_FAILONERROR, NO); // Handle >= 400 codes as success at this layer
     curl_easy_setopt(handle, CURLOPT_SSL_VERIFYPEER, !context.request.allowInvalidSSLCertificates);
 
+    // Emit start notification
+    if (request.startBlock != nil) [[self class] triggerRequestDidStart:request];
 
     // Execute
     CURLcode curlResult = curl_easy_perform(handle);
