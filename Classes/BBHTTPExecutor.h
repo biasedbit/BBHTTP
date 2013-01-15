@@ -93,13 +93,21 @@
 ///---------------------------
 
 /**
- Determines the maximum number of libcurl handles this instance can pool.
+ Determines the maximum number of maximum parallel requests that can be executed.
  
- All instances begin with zero handles and ramp them up, as required, until this number is hit.
+ This value controls the number of libcurl handles that this instance can pool. All instances begin with zero handles 
+ and ramp them up, as required, until this number is hit.
  
- Defaults to 3.
+ Defaults to 3, minimum allowed value is 1.
  */
-@property(assign, nonatomic) NSUInteger maxCurlHandles;
+@property(assign, nonatomic) NSUInteger maxParallelRequests;
+
+/**
+ The maximum number of requests that can be queued until others finish.
+ 
+ Defaults to 1024.
+ */
+@property(assign, nonatomic) NSUInteger maxQueueSize;
 
 /** For debug/bug-reporting purposes only; this turns on verbose mode for the underlying libcurl handles. */
 @property(assign, nonatomic) BOOL verbose;
@@ -111,33 +119,9 @@
 /// @name Executing requests
 ///-------------------------
 
-/**
- Executes a request (or enqueues for execution) with the given finish and error blocks.
- 
- This method inlines the assignment of finish block, the assignment of the error block and execution of the request
- (calling `performRequest:`) into a single convenience operation.
- 
- @warning If the request already had finish/error blocks assigned, this will override them.
- 
- @param request The request to execute.
- @param finish The finish block that will be called when the request terminates normally.
- @param error The error block that will be called if the request terminates abnormally.
-
- @return `YES` if the request can be executed/enqueued, `NO` if the request was rejected.
- 
- @see executeRequest:
- @see [BBHTTPRequest finishBlock]
- @see [BBHTTPRequest errorBlock]
- */
-- (BOOL)executeRequest:(BBHTTPRequest*)request
-                finish:(void (^)(BBHTTPResponse* response))finish
-                 error:(void (^)(NSError* error))error;
 
 /**
  Executes or enqueues a request for execution.
-
- @bug At this time, request enqueuing is not yet implemented so requests will be rejected if there are no available
- handles
 
  @param request The request to execute. 
 

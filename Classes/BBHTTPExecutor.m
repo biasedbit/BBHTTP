@@ -174,7 +174,9 @@ static size_t BBHTTPExecutorReceiveCallback(uint8_t* buffer, size_t size, size_t
     dispatch_queue_t _synchronizationQueue;
     dispatch_queue_t _requestExecutionQueue;
 
-    NSMutableArray* _runningRequests;
+    NSMutableArray* _running;
+    NSMutableArray* _queued;
+
     NSMutableArray* _availableCurlHandles;
     NSMutableArray* _allCurlHandles;
 }
@@ -186,9 +188,12 @@ static size_t BBHTTPExecutorReceiveCallback(uint8_t* buffer, size_t size, size_t
 {
     self = [super init];
     if (self != nil) {
-        _maxCurlHandles = 3;
+        _maxParallelRequests = 3;
+        _maxQueueSize = 1024;
 
-        _runningRequests = [NSMutableArray array];
+        _running = [NSMutableArray array];
+        _queued = [NSMutableArray array];
+
         _availableCurlHandles = [NSMutableArray array];
         _allCurlHandles = [NSMutableArray array];
 
@@ -196,7 +201,7 @@ static size_t BBHTTPExecutorReceiveCallback(uint8_t* buffer, size_t size, size_t
         _synchronizationQueue = dispatch_queue_create([syncQueueId UTF8String], DISPATCH_QUEUE_SERIAL);
 
         NSString* requestQueueId = [NSString stringWithFormat:@"com.biasedbit.HTTPExecutorRequestQueue-%@", identifier];
-        _requestExecutionQueue = dispatch_queue_create([requestQueueId UTF8String], NULL);
+        _requestExecutionQueue = dispatch_queue_create([requestQueueId UTF8String], DISPATCH_QUEUE_CONCURRENT);
     }
 
     return self;
@@ -234,43 +239,36 @@ static size_t BBHTTPExecutorReceiveCallback(uint8_t* buffer, size_t size, size_t
 }
 
 
+#pragma mark Configuring behavior
+
+- (void)setMaxParallelRequests:(NSUInteger)maxParallelRequests
+{
+    NSParameterAssert(maxParallelRequests >= 1);
+    _maxParallelRequests = maxParallelRequests;
+}
+
+
 #pragma mark Performing requests
 
 - (BOOL)executeRequest:(BBHTTPRequest*)request
 {
     if (request == nil) return NO;
 
-    // TODO this part needs some serious love...
     __block BOOL accepted = NO;
     dispatch_sync(_synchronizationQueue, ^{
-        if (request.cancelled || [_runningRequests containsObject:request]) return;
+        if (request.cancelled) return; // already cancelled
+        if ([self isAlreadyRunningOrQueued:request]) return;
 
-        CURL* handle = [self getOrCreateCurlHandleInsideSyncBlock];
-        if (handle == NULL) return; // No available handles and cannot create more; bail out
-
-        BBHTTPRequestContext* context = [self createContextWithRequest:request andCurlHandle:handle];
-        [self setupContextForExecution:context];
-        [_runningRequests addObject:context];
-
-        dispatch_async(_requestExecutionQueue, ^{
-            [self executeContext:context withCurlHandle:handle];
-            [_runningRequests removeObject:context];
-        });
+        if ([_running count] >= _maxParallelRequests) {
+            [self enqueueRequest:request];
+        } else {
+            [self createContextAndExecuteRequest:request];
+        }
 
         accepted = YES;
     });
 
     return accepted;
-}
-
-- (BOOL)executeRequest:(BBHTTPRequest*)request
-                finish:(void (^)(BBHTTPResponse* response))finish
-                 error:(void (^)(NSError* error))error
-{
-    request.finishBlock = finish;
-    request.errorBlock = error;
-
-    return [self executeRequest:request];
 }
 
 
@@ -324,12 +322,11 @@ static size_t BBHTTPExecutorReceiveCallback(uint8_t* buffer, size_t size, size_t
 
 #pragma mark Private helpers
 
-- (CURL*)getOrCreateCurlHandleInsideSyncBlock
+- (CURL*)getOrCreatePooledCurlHandle
 {
     CURL* handle;
 
     if ([_availableCurlHandles count] == 0) {
-        if ([_allCurlHandles count] >= _maxCurlHandles) return NULL;
         handle = [self createAndSetupCurlHandle];
         NSValue* handleWrapper = [NSValue valueWithPointer:handle];
         [_allCurlHandles addObject:handleWrapper];
@@ -352,12 +349,7 @@ static size_t BBHTTPExecutorReceiveCallback(uint8_t* buffer, size_t size, size_t
     return handle;
 }
 
-- (BBHTTPRequestContext*)createContextWithRequest:(BBHTTPRequest*)request andCurlHandle:(CURL*)handle
-{
-    return [[BBHTTPRequestContext alloc] initWithRequest:request andCurlHandle:handle];
-}
-
-- (void)setupContextForExecution:(BBHTTPRequestContext*)context
+- (void)prepareContextForExecution:(BBHTTPRequestContext*)context
 {
     BBHTTPRequest* request = context.request;
 
@@ -386,6 +378,70 @@ static size_t BBHTTPExecutorReceiveCallback(uint8_t* buffer, size_t size, size_t
         BBHTTPLogDebug(@"%@ | Upload size is unknown, adding 'Transfer-Encoding: chunked' header.", context);
         [request setValue:HV(Chunked) forHeader:H(TransferEncoding)];
     }
+}
+
+- (void)createContextAndExecuteRequest:(BBHTTPRequest*)request
+{
+    CURL* handle = [self getOrCreatePooledCurlHandle];
+    BBHTTPRequestContext* context = [[BBHTTPRequestContext alloc] initWithRequest:request andCurlHandle:handle];
+    [self prepareContextForExecution:context];
+
+    [self addToRunning:request];
+
+    dispatch_async(_requestExecutionQueue, ^{
+        [self executeContext:context withCurlHandle:handle];
+
+        dispatch_sync(_synchronizationQueue, ^{
+            [self removeFromRunning:request];
+            [self returnHandle:handle];
+
+            [self executeNextRequest];
+        });
+    });
+}
+
+- (void)executeNextRequest
+{
+    while (true) {
+        BBHTTPRequest* nextRequest = [self popQueuedRequest];
+
+        if (nextRequest == nil) return; // No more requests queued, bail out
+        if (nextRequest.cancelled) continue; // Loop again to find an executable request
+
+        // Executable operation found, break the loop; next operation finishing will trigger this method again
+        [self createContextAndExecuteRequest:nextRequest];
+        return;
+    }
+}
+
+- (BOOL)isAlreadyRunningOrQueued:(BBHTTPRequest*)request
+{
+    return [_running containsObject:request] || [_queued containsObject:request];
+}
+
+- (void)enqueueRequest:(BBHTTPRequest*)request
+{
+    [_queued addObject:request];
+}
+
+- (void)addToRunning:(BBHTTPRequest*)request
+{
+    [_running addObject:request];
+}
+
+- (void)removeFromRunning:(BBHTTPRequest*)request
+{
+    [_running removeObject:request];
+}
+
+- (BBHTTPRequest*)popQueuedRequest
+{
+    if ([_queued count] == 0) return nil;
+
+    BBHTTPRequest* request = _queued[0];
+    [_queued removeObjectAtIndex:0];
+    
+    return request;
 }
 
 - (void)executeContext:(BBHTTPRequestContext*)context withCurlHandle:(CURL*)handle
@@ -477,6 +533,11 @@ static size_t BBHTTPExecutorReceiveCallback(uint8_t* buffer, size_t size, size_t
 
         [BBHTTPExecutor triggerRequest:context.request didFinishWithResponse:response];
     }
+}
+
+- (void)returnHandle:(CURL*)handle
+{
+    [_availableCurlHandles addObject:[NSValue valueWithPointer:handle]];
 }
 
 - (NSError*)convertCURLCodeToNSError:(CURLcode)code context:(BBHTTPRequestContext*)context

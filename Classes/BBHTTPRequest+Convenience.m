@@ -86,7 +86,10 @@
 
 - (BOOL)execute:(void (^)(BBHTTPResponse* response))finish error:(void (^)(NSError* error))error
 {
-    return [[BBHTTPExecutor sharedExecutor] executeRequest:self finish:finish error:error];
+    self.finishBlock = finish;
+    self.errorBlock = error;
+
+    return [[BBHTTPExecutor sharedExecutor] executeRequest:self];
 }
 
 - (BOOL)setup:(void (^)(BBHTTPRequest* request))setup andExecute:(void (^)(BBHTTPResponse* response))finish
