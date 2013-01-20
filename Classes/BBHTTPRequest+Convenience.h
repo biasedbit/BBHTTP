@@ -124,7 +124,7 @@
 
  @see BBHTTPExecutor
  */
-- (BOOL)setup:(void (^)(BBHTTPRequest* request))setup andExecute:(void (^)(BBHTTPResponse* response))finish
+- (BOOL)setup:(void (^)(id request))setup andExecute:(void (^)(BBHTTPResponse* response))finish
         error:(void (^)(NSError* error))error;
 
 @end

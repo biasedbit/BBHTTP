@@ -22,22 +22,9 @@
 #import "BBHTTPExecutor.h"
 
 #import "BBHTTPRequestContext.h"
+#import "BBHTTPRequest+PrivateInterface.h"
 #import "BBHTTPUtils.h"
 #import "curl.h"
-
-
-
-#pragma mark -
-
-@interface BBHTTPExecutor (RequestNotifications)
-
-+ (void)triggerRequestDidStart:(BBHTTPRequest*)context;
-+ (void)triggerRequest:(BBHTTPRequest*)context didFailWithError:(NSError*)error;
-+ (void)triggerRequest:(BBHTTPRequest*)context didFinishWithResponse:(BBHTTPResponse*)response;
-+ (void)triggerRequest:(BBHTTPRequest*)context didUploadCurrent:(NSUInteger)current ofTotal:(NSUInteger)total;
-+ (void)triggerRequest:(BBHTTPRequest*)context didDownloadCurrent:(NSUInteger)current ofTotal:(NSUInteger)total;
-
-@end
 
 
 
@@ -92,8 +79,8 @@ static size_t BBHTTPExecutorReadHeader(uint8_t* buffer, size_t size, size_t leng
 
         // If upload was paused, unpause it. We either got 100-Continue or any other response will be considered error.
         if (context.uploadPaused) {
-            BBHTTPLogTrace(@"%@ | Response received (%d) and upload was paused; unpausing...",
-                           context, currentResponse.code);
+            BBHTTPLogTrace(@"%@ | Response received (%lu) and upload was paused; unpausing...",
+                           context, (unsigned long)currentResponse.code);
             context.uploadPaused = NO;
             curl_easy_pause(context.handle, CURLPAUSE_SEND_CONT);
         }
@@ -108,10 +95,6 @@ static size_t BBHTTPExecutorReadHeader(uint8_t* buffer, size_t size, size_t leng
 static size_t BBHTTPExecutorAppendData(uint8_t* buffer, size_t size, size_t length, BBHTTPRequestContext* context)
 {
     BBHTTPEnsureSuccessOrReturn0([context appendDataToCurrentResponse:buffer withLength:length]);
-
-    [BBHTTPExecutor triggerRequest:context.request
-              didDownloadCurrent:context.downloadedBytes
-                         ofTotal:context.downloadSize];
 
     return length;
 }
@@ -128,12 +111,7 @@ static size_t BBHTTPExecutorSendCallback(uint8_t* buffer, size_t size, size_t le
 
     if (context.uploadAccepted) {
         NSInteger written = [context transferInputToBuffer:buffer limit:length];
-        if (written > 0) {
-            [BBHTTPExecutor triggerRequest:context.request
-                        didUploadCurrent:context.uploadedBytes
-                                 ofTotal:context.request.uploadSize];
-        }
-        BBHTTPLogTrace(@"%@ | Wrote %d (max: %lu) bytes to server", context, written, length);
+        BBHTTPLogTrace(@"%@ | Wrote %ld (max: %lu) bytes to server", context, (long)written, length);
         return written;
 
     } else {
@@ -272,54 +250,6 @@ static size_t BBHTTPExecutorReceiveCallback(uint8_t* buffer, size_t size, size_t
 }
 
 
-#pragma mark Private static helpers
-
-+ (void)triggerRequestDidStart:(BBHTTPRequest*)request
-{
-    if (request.startBlock != nil) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            request.startBlock();
-        });
-    }
-}
-
-+ (void)triggerRequest:(BBHTTPRequest*)request didFailWithError:(NSError*)error
-{
-    if (request.errorBlock != nil) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            request.errorBlock(error);
-        });
-    }
-}
-
-+ (void)triggerRequest:(BBHTTPRequest*)request didFinishWithResponse:(BBHTTPResponse*)response
-{
-    if (request.finishBlock != nil) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            request.finishBlock(response);
-        });
-    }
-}
-
-+ (void)triggerRequest:(BBHTTPRequest*)request didUploadCurrent:(NSUInteger)current ofTotal:(NSUInteger)total
-{
-    if (request.uploadProgressBlock != nil) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            request.uploadProgressBlock(current, total);
-        });
-    }
-}
-
-+ (void)triggerRequest:(BBHTTPRequest*)request didDownloadCurrent:(NSUInteger)current ofTotal:(NSUInteger)total
-{
-    if (request.downloadProgressBlock != nil) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            request.downloadProgressBlock(current, total);
-        });
-    }
-}
-
-
 #pragma mark Private helpers
 
 - (CURL*)getOrCreatePooledCurlHandle
@@ -359,8 +289,8 @@ static size_t BBHTTPExecutorReceiveCallback(uint8_t* buffer, size_t size, size_t
         ([request uploadSize] > kBBHTTPExecutorTinyUpload) &&
         ![request hasHeader:H(Expect) withValue:HV(100Continue)]) {
 
-        BBHTTPLogDebug(@"%@ | Adding 'Expect: 100-Continue' header to request (upload size > %u)",
-                       context, kBBHTTPExecutorTinyUpload);
+        BBHTTPLogDebug(@"%@ | Adding 'Expect: 100-Continue' header to request (upload size > %lu)",
+                       context, (long)kBBHTTPExecutorTinyUpload);
         [request setValue:HV(100Continue) forHeader:H(Expect)];
     }
 
@@ -510,7 +440,7 @@ static size_t BBHTTPExecutorReceiveCallback(uint8_t* buffer, size_t size, size_t
     curl_easy_setopt(handle, CURLOPT_SSL_VERIFYPEER, !context.request.allowInvalidSSLCertificates);
 
     // Emit start notification
-    if (request.startBlock != nil) [[self class] triggerRequestDidStart:request];
+    [request executionStarted];
 
     // Execute
     CURLcode curlResult = curl_easy_perform(handle);
@@ -522,18 +452,14 @@ static size_t BBHTTPExecutorReceiveCallback(uint8_t* buffer, size_t size, size_t
 
     if (curlResult != CURLE_OK) {
         NSError* error = context.error; // Try and use the error set inside the context or translate libcurl's error
-        if (error == nil) error = [self convertCURLCodeToNSError:curlResult context:context];
-
-        [context cleanup:NO];
-        [BBHTTPExecutor triggerRequest:context.request didFailWithError:error];
+        if (error != nil) {
+            [context finish];
+        } else {
+            error = [self convertCURLCodeToNSError:curlResult context:context];
+            [context finishWithError:error];
+        }
     } else {
-        [context finishCurrentResponse];
-        [context cleanup:YES];
-
-        BBHTTPResponse* response = [context lastResponse];
-        NSAssert(response != nil, @"response is nil?"); // TODO can this ever happen?
-
-        [BBHTTPExecutor triggerRequest:context.request didFinishWithResponse:response];
+        [context finish];
     }
 }
 

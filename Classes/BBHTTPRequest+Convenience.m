@@ -86,13 +86,20 @@
 
 - (BOOL)execute:(void (^)(BBHTTPResponse* response))finish error:(void (^)(NSError* error))error
 {
-    self.finishBlock = finish;
-    self.errorBlock = error;
+    self.finishBlock = ^(BBHTTPRequest* request) {
+        if (request.cancelled) return;
+
+        if (request.error != nil) {
+            if (error != nil) error(request.error);
+        } else {
+            finish(request.response);
+        }
+    };
 
     return [[BBHTTPExecutor sharedExecutor] executeRequest:self];
 }
 
-- (BOOL)setup:(void (^)(BBHTTPRequest* request))setup andExecute:(void (^)(BBHTTPResponse* response))finish
+- (BOOL)setup:(void (^)(id request))setup andExecute:(void (^)(BBHTTPResponse* response))finish
         error:(void (^)(NSError* error))error
 {
     if (setup != nil) setup(self);

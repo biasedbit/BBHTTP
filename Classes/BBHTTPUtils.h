@@ -119,3 +119,4 @@ BBHTTPHeaderValue(Chunked,       @"chunked");
 #pragma mark - Utility functions
 
 extern NSString* BBHTTPMimeType(NSString* file);
+extern long long BBHTTPCurrentTimeMillis(void);
