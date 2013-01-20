@@ -99,6 +99,8 @@
 /// @name Executing the request
 ///----------------------------
 
+- (BOOL)execute:(void (^)(id request))finish;
+
 /**
  Convenience method that executes this request in the singleton instance of `<BBHTTPExecutor>`.
 
@@ -109,7 +111,10 @@
 
  @see BBHTTPExecutor
  */
-- (BOOL)execute:(void (^)(BBHTTPResponse* response))finish error:(void (^)(NSError* error))error;
+- (BOOL)execute:(void (^)(BBHTTPResponse* response))completed error:(void (^)(NSError* error))error;
+
+- (BOOL)execute:(void (^)(BBHTTPResponse* response))completed error:(void (^)(NSError* error))error
+        finally:(void (^)())finally;
 
 /**
  Convenience method allows for extra request preparation steps and executes this request in the singleton instance of
@@ -124,7 +129,10 @@
 
  @see BBHTTPExecutor
  */
-- (BOOL)setup:(void (^)(id request))setup andExecute:(void (^)(BBHTTPResponse* response))finish
+- (BOOL)setup:(void (^)(id request))setup andExecute:(void (^)(BBHTTPResponse* response))completed
         error:(void (^)(NSError* error))error;
+
+- (BOOL)setup:(void (^)(id request))setup andExecute:(void (^)(BBHTTPResponse* response))completed
+        error:(void (^)(NSError* error))error finally:(void (^)())finally;
 
 @end

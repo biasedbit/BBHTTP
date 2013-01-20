@@ -84,26 +84,44 @@
 
 #pragma mark Executing the request
 
-- (BOOL)execute:(void (^)(BBHTTPResponse* response))finish error:(void (^)(NSError* error))error
+- (BOOL)execute:(void (^)(id request))finish
+{
+    self.finishBlock = finish;
+    return [[BBHTTPExecutor sharedExecutor] executeRequest:self];
+}
+
+- (BOOL)execute:(void (^)(BBHTTPResponse* response))completed error:(void (^)(NSError* error))error
+{
+    return [self execute:completed error:error finally:nil];
+}
+
+- (BOOL)execute:(void (^)(BBHTTPResponse* response))completed error:(void (^)(NSError* error))error
+        finally:(void (^)())finally
 {
     self.finishBlock = ^(BBHTTPRequest* request) {
-        if (request.cancelled) return;
-
         if (request.error != nil) {
             if (error != nil) error(request.error);
-        } else {
-            finish(request.response);
+        } else if (!request.cancelled) {
+            completed(request.response);
         }
+
+        if (finally != nil) finally();
     };
 
     return [[BBHTTPExecutor sharedExecutor] executeRequest:self];
 }
 
-- (BOOL)setup:(void (^)(id request))setup andExecute:(void (^)(BBHTTPResponse* response))finish
+- (BOOL)setup:(void (^)(id request))setup andExecute:(void (^)(BBHTTPResponse* response))completed
         error:(void (^)(NSError* error))error
 {
+    return [self setup:setup andExecute:completed error:error finally:nil];
+}
+
+- (BOOL)setup:(void (^)(id request))setup andExecute:(void (^)(BBHTTPResponse* response))completed
+        error:(void (^)(NSError* error))error finally:(void (^)())finally
+{
     if (setup != nil) setup(self);
-    return [self execute:finish error:error];
+    return [self execute:completed error:error finally:finally];
 }
 
 @end

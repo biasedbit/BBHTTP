@@ -29,22 +29,20 @@
 
 @implementation BBHTTPRequest (PrivateInterface)
 
+// These are already defined on the main class
+@dynamic startTimestamp;
+@dynamic endTimestamp;
+@dynamic sentBytes;
+@dynamic receivedBytes;
+@dynamic error;
+@dynamic response;
+
 
 #pragma mark Property access redefinition
-
-- (long long)startTimestamp
-{
-    return _startTimestamp;
-}
 
 - (void)setStartTimestamp:(long long)startTimestamp
 {
     _startTimestamp = startTimestamp;
-}
-
-- (long long)endTimestamp
-{
-    return _endTimestamp;
 }
 
 - (void)setEndTimestamp:(long long)endTimestamp
@@ -52,19 +50,9 @@
     _endTimestamp = endTimestamp;
 }
 
-- (NSUInteger)sentBytes
-{
-    return _sentBytes;
-}
-
 - (void)setSentBytes:(NSUInteger)sentBytes
 {
     _sentBytes = sentBytes;
-}
-
-- (NSUInteger)receivedBytes
-{
-    return _receivedBytes;
 }
 
 - (void)setReceivedBytes:(NSUInteger)receivedBytes
@@ -72,19 +60,9 @@
     _receivedBytes = receivedBytes;
 }
 
-- (NSError*)error
-{
-    return _error;
-}
-
 - (void)setError:(NSError*)error
 {
     _error = error;
-}
-
-- (BBHTTPResponse*)response
-{
-    return _response;
 }
 
 - (void)setResponse:(BBHTTPResponse*)response
