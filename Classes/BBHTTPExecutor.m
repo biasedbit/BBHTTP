@@ -454,7 +454,6 @@ static size_t BBHTTPExecutorReceiveCallback(uint8_t* buffer, size_t size, size_t
         [context finish];
         BBHTTPLogInfo(@"%@ | Request finished.", context);
     }
-
 }
 
 - (void)returnHandle:(CURL*)handle
