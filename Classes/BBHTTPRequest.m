@@ -344,7 +344,16 @@ NSString* const kBBHTTPRequestDefaultUserAgentString = @"BBHotpotato/1.0";
     if (_cancelled) return NO;
 
     _cancelled = YES;
-    _endTimestamp = BBHTTPCurrentTimeMillis();
+
+    long long now = BBHTTPCurrentTimeMillis();
+    if (_startTimestamp < 0) _startTimestamp = now;
+    _endTimestamp = now;
+
+    if (_finishBlock != nil) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.finishBlock(self);
+        });
+    }
 
     return YES;
 }

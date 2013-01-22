@@ -444,7 +444,6 @@ static size_t BBHTTPExecutorReceiveCallback(uint8_t* buffer, size_t size, size_t
 
     // Execute
     CURLcode curlResult = curl_easy_perform(handle);
-    BBHTTPLogInfo(@"%@ | Request finished.", context);
 
     // Cleanup the headers & resent handle to a pristine state
     curl_slist_free_all(headers);
@@ -461,6 +460,8 @@ static size_t BBHTTPExecutorReceiveCallback(uint8_t* buffer, size_t size, size_t
     } else {
         [context finish];
     }
+
+    BBHTTPLogInfo(@"%@ | Request finished.", context);
 }
 
 - (void)returnHandle:(CURL*)handle
