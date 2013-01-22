@@ -90,7 +90,7 @@
 
 - (void)finishWithError:(NSError*)error
 {
-    if (_error != nil) _error = error;
+    if (_error == nil) _error = error;
 
     [self finish];
 }

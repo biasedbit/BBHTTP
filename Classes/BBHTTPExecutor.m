@@ -257,7 +257,7 @@ static size_t BBHTTPExecutorReceiveCallback(uint8_t* buffer, size_t size, size_t
     CURL* handle;
 
     if ([_availableCurlHandles count] == 0) {
-        handle = [self createAndSetupCurlHandle];
+        handle = curl_easy_init();
         NSValue* handleWrapper = [NSValue valueWithPointer:handle];
         [_allCurlHandles addObject:handleWrapper];
     } else {
@@ -265,16 +265,6 @@ static size_t BBHTTPExecutorReceiveCallback(uint8_t* buffer, size_t size, size_t
         [_availableCurlHandles removeObjectAtIndex:0];
         handle = (CURL*)[handleWrapper pointerValue];
     }
-
-    return handle;
-}
-
-- (CURL*)createAndSetupCurlHandle
-{
-    CURL* handle = curl_easy_init();
-    if (handle == NULL) return NULL;
-
-    if (_verbose) curl_easy_setopt(handle, CURLOPT_VERBOSE, 1);
 
     return handle;
 }
@@ -378,6 +368,8 @@ static size_t BBHTTPExecutorReceiveCallback(uint8_t* buffer, size_t size, size_t
 {
     BBHTTPRequest* request = context.request;
 
+    if (_verbose) curl_easy_setopt(handle, CURLOPT_VERBOSE, 1);
+
     // Setup - request line
     if (request.version == BBHTTPProtocolVersion_1_0) {
         curl_easy_setopt(handle, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_0);
@@ -457,11 +449,12 @@ static size_t BBHTTPExecutorReceiveCallback(uint8_t* buffer, size_t size, size_t
             error = [self convertCURLCodeToNSError:curlResult context:context];
             [context finishWithError:error];
         }
+        BBHTTPLogInfo(@"%@ | Request abnormally terminated.", context);
     } else {
         [context finish];
+        BBHTTPLogInfo(@"%@ | Request finished.", context);
     }
 
-    BBHTTPLogInfo(@"%@ | Request finished.", context);
 }
 
 - (void)returnHandle:(CURL*)handle
@@ -594,9 +587,11 @@ static size_t BBHTTPExecutorReceiveCallback(uint8_t* buffer, size_t size, size_t
             break;
 
         case CURLE_SEND_ERROR: // 55
+            description = @"Failure sending data to server";
             break;
 
         case CURLE_RECV_ERROR: // 56
+            description = @"Failure receiving data from server";
             break;
 
         case CURLE_SSL_CERTPROBLEM: // 58
