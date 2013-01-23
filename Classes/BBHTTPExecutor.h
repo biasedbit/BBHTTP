@@ -132,4 +132,9 @@
  */
 - (BOOL)executeRequest:(BBHTTPRequest*)request;
 
+
+#pragma mark Cleanup
+
++ (void)cleanup;
+
 @end
