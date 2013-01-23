@@ -21,6 +21,7 @@
 
 #import "BBHTTPRequestContext.h"
 
+#import "BBHTTPRequest+PrivateInterface.h"
 #import "BBHTTPUtils.h"
 
 
@@ -81,18 +82,32 @@
     BBHTTPResponse* response = _currentResponse;
     _currentResponse = nil;
 
-    BBHTTPLogDebug(@"%@ | Response with status '%d' (%@) finished.", self, response.code, response.message);
+    BBHTTPLogDebug(@"%@ | Response with status '%lu' (%@) finished.",
+                   self, (unsigned long)response.code, response.message);
     
     return YES;
 }
 
-- (void)cleanup:(BOOL)success
+- (void)finishWithError:(NSError*)error
 {
-    if (_uploadStream != nil) [_uploadStream close];
-    if (_downloadStream != nil) [_downloadStream close];
+    if (_error == nil) _error = error;
 
-    if (!success && (_request.downloadToFile != nil) && (_downloadStream != nil)) {
-        [self deleteFileInBackground:_request.downloadToFile];
+    [self finish];
+}
+
+- (void)finish
+{
+    if (_error != nil) {
+        [_request executionFailedWithError:_error];
+        [self cleanup:NO];
+
+    } else {
+        [self finishCurrentResponse];
+        [self cleanup:YES];
+
+        BBHTTPResponse* response = [self lastResponse];
+        NSAssert(response != nil, @"response is nil?"); // TODO can this ever happen?
+        [_request executionFinishedWithFinalResponse:response];
     }
 }
 
@@ -143,8 +158,9 @@
         _uploadStream = nil;
     } else {
         _uploadedBytes += read;
+        [_request uploadProgressedToCurrent:_uploadedBytes ofTotal:_request.uploadSize];
     }
-    
+
     return read;
 }
 
@@ -206,13 +222,15 @@
         _downloadStream = nil;
         return NO;
     } else if (written < length) {
-        BBHTTPLogWarn(@"%@ | Could only write %d bytes to stream (expecting %u)", self, written, length);
+        BBHTTPLogWarn(@"%@ | Could only write %ld bytes to stream (expecting %lu)",
+                      self, (long)written, (unsigned long)length);
         [_downloadStream close];
         _downloadStream = nil;
         return NO;
     }
 
     _downloadedBytes += length;
+    [_request downloadProgressedToCurrent:_downloadedBytes ofTotal:_downloadSize];
     
     return YES;
 }
@@ -245,6 +263,16 @@
     BBHTTPLogTrace(@"%@ | Received header '%@: %@'.", self, headerName, headerValue);
 
     return YES;
+}
+
+- (void)cleanup:(BOOL)success
+{
+    if (_uploadStream != nil) [_uploadStream close];
+    if (_downloadStream != nil) [_downloadStream close];
+
+    if (!success && (_request.downloadToFile != nil) && (_downloadStream != nil)) {
+        [self deleteFileInBackground:_request.downloadToFile];
+    }
 }
 
 - (void)deleteFileInBackground:(NSString*)file

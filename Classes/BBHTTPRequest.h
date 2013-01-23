@@ -33,6 +33,15 @@
  they are submitted.
  */
 @interface BBHTTPRequest : NSObject
+{
+@private
+    long long _startTimestamp;
+    long long _endTimestamp;
+    NSUInteger _sentBytes;
+    NSUInteger _receivedBytes;
+    NSError* _error;
+    BBHTTPResponse* _response;
+}
 
 
 #pragma mark Creating a request
@@ -85,26 +94,11 @@
 @property(copy, nonatomic) void (^startBlock)();
 
 /**
- Block that will be called if the request terminates abnormally (upload error, network failure, etc).
- 
- The *error* parameter will always contain a human readable description for `localizedDescription` and may contain a
- detailed description under `localizedFailureCause`.
- 
- The `code` method will either return the underlying libcurl error code (as defined on `curl.h`) or one of Hotpotatos'
- error codes.
- */
-@property(copy, nonatomic) void (^errorBlock)(NSError* error);
+ Block that will be called when the request terminates, either normally or abnormally.
 
-/**
- Block that will be called when the request terminates normally.
- 
- Note that at this layer a request is considered to have terminated normally even if it receives an error HTTP response.
- Here, "normal" means sending a request and receiving a response, whatever that may be.
- 
- You can check `<BBHTTPResponse>`'s [`statusCode`]([BBHTTPResponse statusCode]) property or call
- [`isSuccessful`]([BBHTTPResponse isSuccessful]) to test whether the HTTP received a success response.
+ This instance is passed as a parameter of the block to avoid the weak/strong dance and allow a fluent code syntax.
  */
-@property(copy, nonatomic) void (^finishBlock)(BBHTTPResponse* response);
+@property(copy, nonatomic) void (^finishBlock)(id request);
 
 /**
  Block that will be called every time a new chunk of data is written to the remote server, during the upload phase.
@@ -142,6 +136,12 @@
  If the file cannot be written to or there's not enough space left on device, the request will fail.
  */
 @property(copy, nonatomic) NSString* downloadToFile;
+
+/** The download size, in, bytes when available. */
+@property(assign, nonatomic, readonly) NSUInteger downloadSize;
+
+@property(assign, nonatomic, readonly) double downloadProgress;
+@property(assign, nonatomic, readonly) double downloadTransferRate;
 
 
 #pragma mark Managing upload behavior
@@ -250,6 +250,9 @@
 /** The in-memory buffer of data to upload, if any. */
 @property(retain, nonatomic, readonly) NSData* uploadData;
 
+@property(assign, nonatomic, readonly) double uploadProgress;
+@property(assign, nonatomic, readonly) double uploadTransferRate;
+
 
 #pragma mark Manipulating headers
 
@@ -344,9 +347,7 @@
  */
 @property(assign, nonatomic) NSUInteger responseReadTimeout;
 
-/**
- TODO: Not yet properly supported.
- */
+/* TODO: Not yet properly supported. */
 @property(assign, nonatomic) NSUInteger maxRedirects;
 
 /**
@@ -361,6 +362,15 @@
  expectations and cope with error responses midway through upload.
  */
 @property(assign, nonatomic) BOOL dontSendExpect100Continue;
+
+/**
+ Flag that determines whether the body for non successful responses should be discarded.
+ 
+ When this flag is set to `YES` the HTTP response body will be discarded.
+ 
+ Defaults to `YES`.
+ */
+@property(assign, nonatomic) BOOL discardBodyForNon200Responses;
 
 /**
  Flag that indicates that this request should used chunked transfer encoding.
@@ -406,12 +416,32 @@
 @property(assign, nonatomic, readonly) NSUInteger port;
 
 
+#pragma mark Querying request state
+
+/// ----------------------------
+/// @name Querying request state
+/// ----------------------------
+
+@property(assign, nonatomic, readonly) long long startTimestamp;
+@property(assign, nonatomic, readonly) long long endTimestamp;
+@property(assign, nonatomic, readonly, getter = hasStarted) BOOL started;
+@property(assign, nonatomic, readonly, getter = hasFinished) BOOL finished;
+@property(assign, nonatomic, readonly, getter = isExecuting) BOOL executing;
+@property(assign, nonatomic, readonly) NSUInteger sentBytes;
+@property(assign, nonatomic, readonly) NSUInteger receivedBytes;
+
+@property(strong, nonatomic, readonly) NSError* error;
+@property(assign, nonatomic, readonly, getter = wasSuccessfullyExecuted) BOOL successfullyExecuted;
+@property(strong, nonatomic, readonly) BBHTTPResponse* response;
+@property(assign, nonatomic, readonly) NSUInteger responseStatusCode;
+@property(assign, nonatomic, readonly, getter = isSuccessfulResponse) BOOL successfulResponse;
+
+
 #pragma mark Cancelling a request
 
 /// --------------------------
 /// @name Cancelling a request
 /// --------------------------
-
 
 /**
  Immediately cancel this request.
@@ -422,6 +452,6 @@
 - (BOOL)cancel;
 
 /** Flag that indicates whether this request was cancelled. */
-@property(assign, nonatomic, readonly, getter = isCancelled) BOOL cancelled;
+@property(assign, nonatomic, readonly, getter = wasCancelled) BOOL cancelled;
 
 @end

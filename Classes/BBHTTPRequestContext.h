@@ -65,6 +65,8 @@ typedef NS_ENUM(NSUInteger, BBHTTPResponseState) {
 
 - (BOOL)finishCurrentResponse;
 - (void)cleanup:(BOOL)success;
+- (void)finish;
+- (void)finishWithError:(NSError*)error;
 - (void)deleteFileInBackground:(NSString*)file;
 
 

@@ -21,6 +21,8 @@
 
 #include "BBHTTPUtils.h"
 
+#import <sys/time.h>
+
 #if TARGET_OS_IPHONE
     #import <MobileCoreServices/MobileCoreServices.h>
 #else
@@ -66,4 +68,12 @@ NSString* BBHTTPMimeType(NSString* file)
     if (!registeredType) return @"application/octet-stream";
     else return CFBridgingRelease(registeredType);
 #endif
+}
+
+long long BBHTTPCurrentTimeMillis()
+{
+    struct timeval t;
+    gettimeofday(&t, NULL);
+
+    return (((int64_t) t.tv_sec) * 1000) + (((int64_t) t.tv_usec) / 1000);
 }

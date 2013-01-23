@@ -106,6 +106,8 @@ BBHTTPHeaderName(Accept,            @"Accept")
 BBHTTPHeaderName(AcceptLanguage,    @"Accept-Language")
 BBHTTPHeaderName(Expect,            @"Expect")
 BBHTTPHeaderName(TransferEncoding,  @"Transfer-Encoding")
+BBHTTPHeaderName(Date,              @"Date")
+BBHTTPHeaderName(Authorization,     @"Authorization")
 
 
 
@@ -119,3 +121,4 @@ BBHTTPHeaderValue(Chunked,       @"chunked");
 #pragma mark - Utility functions
 
 extern NSString* BBHTTPMimeType(NSString* file);
+extern long long BBHTTPCurrentTimeMillis(void);

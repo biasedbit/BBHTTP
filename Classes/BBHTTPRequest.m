@@ -69,15 +69,18 @@ NSString* const kBBHTTPRequestDefaultUserAgentString = @"BBHotpotato/1.0";
         _verb = [verb copy];
         _headers = [NSMutableDictionary dictionary];
 
+        _startTimestamp = -1;
+        _endTimestamp = -1;
         _version = version;
         _maxRedirects = 0;
         _allowInvalidSSLCertificates = NO;
+        _discardBodyForNon200Responses = YES;
         _connectionTimeout = 10;
         _responseReadTimeout = 10;
 
         NSString* hostHeaderValue = [_url host];
         NSUInteger port = [self port];
-        if (port != 80) hostHeaderValue = [hostHeaderValue stringByAppendingFormat:@":%d", port];
+        if (port != 80) hostHeaderValue = [hostHeaderValue stringByAppendingFormat:@":%ld", (long)port];
 
         [self setValue:hostHeaderValue forHeader:H(Host)];
         [self setValue:@"*/*" forHeader:H(Accept)];
@@ -108,6 +111,33 @@ NSString* const kBBHTTPRequestDefaultUserAgentString = @"BBHotpotato/1.0";
 }
 
 
+#pragma mark Managing download behavior
+
+- (NSUInteger)downloadSize
+{
+    return _response == nil ? 0 : _response.contentSize;
+}
+
+- (double)downloadProgress
+{
+    NSUInteger toReceive = self.downloadSize;
+    if (toReceive == 0) return 0;
+
+    return (self.receivedBytes / (double)self.downloadSize) * 100;
+}
+
+- (double)downloadTransferRate
+{
+    if (![self hasStarted]) return 0;
+
+    NSUInteger toReceive = self.downloadSize;
+    if (toReceive == 0) return 0;
+
+    long long end = (self.endTimestamp > 0 ? self.endTimestamp : BBHTTPCurrentTimeMillis());
+    return (self.receivedBytes * 1000) / (double)(end - self.startTimestamp);
+}
+
+
 #pragma mark Managing upload behavior
 
 - (BOOL)setUploadStream:(NSInputStream*)stream withContentType:(NSString*)contentType andSize:(NSUInteger)size;
@@ -124,7 +154,7 @@ NSString* const kBBHTTPRequestDefaultUserAgentString = @"BBHotpotato/1.0";
     _uploadSize = size;
 
     [self setValue:contentType forHeader:H(ContentType)];
-    if (size > 0) [self setValue:[NSString stringWithFormat:@"%u", size] forHeader:H(ContentLength)];
+    if (size > 0) [self setValue:[NSString stringWithFormat:@"%lu", (long)size] forHeader:H(ContentLength)];
 
     return YES;
 }
@@ -164,7 +194,7 @@ NSString* const kBBHTTPRequestDefaultUserAgentString = @"BBHotpotato/1.0";
     _uploadData = nil;
     _uploadStream = nil;
 
-    _uploadSize = size;
+    _uploadSize = (NSUInteger)size;
     _uploadFile = [path copy];
 
     return YES;
@@ -184,7 +214,7 @@ NSString* const kBBHTTPRequestDefaultUserAgentString = @"BBHotpotato/1.0";
     _uploadSize = [data length];
 
     [self setValue:contentType forHeader:H(ContentType)];
-    [self setValue:[NSString stringWithFormat:@"%u", _uploadSize] forHeader:H(ContentLength)];
+    [self setValue:[NSString stringWithFormat:@"%lu", (long)_uploadSize] forHeader:H(ContentLength)];
 
     return NO;
 }
@@ -199,6 +229,25 @@ NSString* const kBBHTTPRequestDefaultUserAgentString = @"BBHotpotato/1.0";
     if ((_uploadStream != nil) && (_uploadSize == 0)) return NO;
     if ((_uploadFile != nil) || (_uploadData != nil)) return YES;
     else return NO;
+}
+
+- (double)uploadProgress
+{
+    NSUInteger toSend = self.uploadSize;
+    if (toSend == 0) return 0;
+
+    return (self.sentBytes / (double)toSend) * 100;
+}
+
+- (double)uploadTransferRate
+{
+    if (![self hasStarted]) return 0;
+
+    NSUInteger toSend = self.uploadSize;
+    if (toSend == 0) return 0;
+
+    long long end = (self.endTimestamp > 0 ? self.endTimestamp : BBHTTPCurrentTimeMillis());
+    return (self.sentBytes * 1000) / (double)(end - self.startTimestamp);
 }
 
 
@@ -255,11 +304,57 @@ NSString* const kBBHTTPRequestDefaultUserAgentString = @"BBHotpotato/1.0";
 }
 
 
+#pragma mark Querying request state
+
+- (BOOL)hasStarted
+{
+    return _startTimestamp > 0;
+}
+
+- (BOOL)hasFinished
+{
+    return _endTimestamp > 0;
+}
+
+- (BOOL)isExecuting
+{
+    return [self hasStarted] && ![self hasFinished];
+}
+
+- (BOOL)wasSuccessfullyExecuted
+{
+    return [self hasFinished] && (_response != nil);
+}
+
+- (NSUInteger)responseStatusCode
+{
+    return _response == nil ? 0 : _response.code;
+}
+
+- (BOOL)isSuccessfulResponse
+{
+    return [self wasSuccessfullyExecuted] && [_response isSuccessful];
+}
+
+
 #pragma mark Cancelling a request
 
 - (BOOL)cancel
 {
+    if (_cancelled) return NO;
+
     _cancelled = YES;
+
+    long long now = BBHTTPCurrentTimeMillis();
+    if (_startTimestamp < 0) _startTimestamp = now;
+    _endTimestamp = now;
+
+    if (_finishBlock != nil) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.finishBlock(self);
+        });
+    }
+
     return YES;
 }
 

@@ -125,8 +125,8 @@ BBHTTPProtocolVersion BBHTTPProtocolVersionFromNSString(NSString* string)
 
 - (NSString*)description
 {
-    return [NSString stringWithFormat:@"%@{%u, %@, %u bytes of data}",
-            NSStringFromClass([self class]), _code, _message, [self contentSize]];
+    return [NSString stringWithFormat:@"%@{%lu, %@, %lu bytes of data}",
+            NSStringFromClass([self class]), (unsigned long)_code, _message, (unsigned long)[self contentSize]];
 }
 
 
