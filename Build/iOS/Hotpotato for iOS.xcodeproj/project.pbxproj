@@ -23,6 +23,7 @@
 		151CCB27169E956F00726297 /* BBHTTPRequestContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 151CCB1F169E956F00726297 /* BBHTTPRequestContext.m */; };
 		151CCB28169E956F00726297 /* BBHTTPResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 151CCB21169E956F00726297 /* BBHTTPResponse.m */; };
 		151CCB29169E956F00726297 /* BBHTTPUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 151CCB23169E956F00726297 /* BBHTTPUtils.m */; };
+		153A9DEB16AF68C100BCB7B4 /* BBHTTPRequest+PrivateInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 153A9DE916AF68C100BCB7B4 /* BBHTTPRequest+PrivateInterface.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -76,6 +77,8 @@
 		151CCB22169E956F00726297 /* BBHTTPUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBHTTPUtils.h; sourceTree = "<group>"; };
 		151CCB23169E956F00726297 /* BBHTTPUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBHTTPUtils.m; sourceTree = "<group>"; };
 		151CCB3E169E95FD00726297 /* Hotpotato.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hotpotato.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		153A9DE816AF68C100BCB7B4 /* BBHTTPRequest+PrivateInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BBHTTPRequest+PrivateInterface.h"; sourceTree = "<group>"; };
+		153A9DE916AF68C100BCB7B4 /* BBHTTPRequest+PrivateInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "BBHTTPRequest+PrivateInterface.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -188,6 +191,8 @@
 				151CCB19169E956F00726297 /* BBHTTPExecutor.m */,
 				151CCB1A169E956F00726297 /* BBHTTPRequest+Convenience.h */,
 				151CCB1B169E956F00726297 /* BBHTTPRequest+Convenience.m */,
+				153A9DE816AF68C100BCB7B4 /* BBHTTPRequest+PrivateInterface.h */,
+				153A9DE916AF68C100BCB7B4 /* BBHTTPRequest+PrivateInterface.m */,
 				151CCB1C169E956F00726297 /* BBHTTPRequest.h */,
 				151CCB1D169E956F00726297 /* BBHTTPRequest.m */,
 				151CCB1E169E956F00726297 /* BBHTTPRequestContext.h */,
@@ -307,6 +312,7 @@
 				151CCB27169E956F00726297 /* BBHTTPRequestContext.m in Sources */,
 				151CCB28169E956F00726297 /* BBHTTPResponse.m in Sources */,
 				151CCB29169E956F00726297 /* BBHTTPUtils.m in Sources */,
+				153A9DEB16AF68C100BCB7B4 /* BBHTTPRequest+PrivateInterface.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -420,7 +426,6 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -441,7 +446,6 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
