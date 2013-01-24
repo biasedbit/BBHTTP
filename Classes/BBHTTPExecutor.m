@@ -159,6 +159,26 @@ static size_t BBHTTPExecutorReceiveCallback(uint8_t* buffer, size_t size, size_t
     NSMutableArray* _allCurlHandles;
 }
 
+static BOOL BBHTTPExecutorInitialized = NO;
+
+
+#pragma mark Class creation
+
++ (void)initialize
+{
+    [super initialize];
+
+    if (!BBHTTPExecutorInitialized) {
+        CURLcode result = curl_global_init(CURL_GLOBAL_ALL);
+        if (result != CURLE_OK) {
+            BBHTTPLogError(@"curl_global_init() failed with code %d; some functionalities may be impaired.", result);
+        } else {
+            BBHTTPLogInfo(@"curl_global_init() executed with success.");
+            BBHTTPExecutorInitialized = YES;
+        }
+    }
+}
+
 
 #pragma mark Creation
 
@@ -247,6 +267,18 @@ static size_t BBHTTPExecutorReceiveCallback(uint8_t* buffer, size_t size, size_t
     });
 
     return accepted;
+}
+
+
+#pragma mark Cleanup
+
++ (void)cleanup
+{
+    if (BBHTTPExecutorInitialized) {
+        curl_global_cleanup();
+        BBHTTPExecutorInitialized = NO;
+        BBHTTPLogInfo(@"curl_global_cleanup() performed.");
+    }
 }
 
 
