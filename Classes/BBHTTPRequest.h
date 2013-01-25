@@ -344,6 +344,8 @@
  Inactivity limit, in seconds, before considering the request as timed out.
  
  If a request does not receive data for more than *responseReadTimeout* seconds, the request will fail.
+ 
+ @bug This is not working, for the time being.
  */
 @property(assign, nonatomic) NSUInteger responseReadTimeout;
 

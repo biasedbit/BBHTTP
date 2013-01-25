@@ -27,9 +27,10 @@
 
 #pragma mark - Error codes
 
-#define BBHTTPErrorCodeUploadFileStreamError         100
-#define BBHTTPErrorCodeUploadDataStreamError         101
-#define BBHTTPErrorCodeDownloadCannotWriteToStream   102
+#define BBHTTPErrorCodeCancelled                    100
+#define BBHTTPErrorCodeUploadFileStreamError        101
+#define BBHTTPErrorCodeUploadDataStreamError        102
+#define BBHTTPErrorCodeDownloadCannotWriteToStream  103
 
 
 
