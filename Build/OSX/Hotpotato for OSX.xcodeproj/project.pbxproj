@@ -29,6 +29,8 @@
 		151CCB83169E974D00726297 /* BBHTTPResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 151CCB35169E958E00726297 /* BBHTTPResponse.m */; };
 		151CCB84169E974D00726297 /* BBHTTPUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 151CCB37169E958E00726297 /* BBHTTPUtils.m */; };
 		151CCB8D169E981200726297 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 151CCB8C169E981200726297 /* Foundation.framework */; };
+		153A9DE416AF68B500BCB7B4 /* BBHTTPRequest+PrivateInterface.h in Headers */ = {isa = PBXBuildFile; fileRef = 153A9DE216AF68B500BCB7B4 /* BBHTTPRequest+PrivateInterface.h */; };
+		153A9DE616AF68B500BCB7B4 /* BBHTTPRequest+PrivateInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 153A9DE316AF68B500BCB7B4 /* BBHTTPRequest+PrivateInterface.m */; };
 		15B5119D169E984F0081CB14 /* libHotpotato.OSX.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 151CCB57169E967D00726297 /* libHotpotato.OSX.a */; };
 		15B511A0169E985B0081CB14 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 151CCB8C169E981200726297 /* Foundation.framework */; };
 		15B511A2169E98610081CB14 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15B511A1169E98610081CB14 /* Security.framework */; };
@@ -73,6 +75,8 @@
 		151CCB72169E96C000726297 /* typecheck-gcc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "typecheck-gcc.h"; sourceTree = "<group>"; };
 		151CCB73169E96C000726297 /* BBHotpotato-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BBHotpotato-Prefix.pch"; sourceTree = "<group>"; };
 		151CCB8C169E981200726297 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		153A9DE216AF68B500BCB7B4 /* BBHTTPRequest+PrivateInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BBHTTPRequest+PrivateInterface.h"; sourceTree = "<group>"; };
+		153A9DE316AF68B500BCB7B4 /* BBHTTPRequest+PrivateInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "BBHTTPRequest+PrivateInterface.m"; sourceTree = "<group>"; };
 		15B511A1169E98610081CB14 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		15B511A3169E98690081CB14 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		15B511A5169E98740081CB14 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -123,6 +127,8 @@
 				151CCB2D169E958E00726297 /* BBHTTPExecutor.m */,
 				151CCB2E169E958E00726297 /* BBHTTPRequest+Convenience.h */,
 				151CCB2F169E958E00726297 /* BBHTTPRequest+Convenience.m */,
+				153A9DE216AF68B500BCB7B4 /* BBHTTPRequest+PrivateInterface.h */,
+				153A9DE316AF68B500BCB7B4 /* BBHTTPRequest+PrivateInterface.m */,
 				151CCB30169E958E00726297 /* BBHTTPRequest.h */,
 				151CCB31169E958E00726297 /* BBHTTPRequest.m */,
 				151CCB32169E958E00726297 /* BBHTTPRequestContext.h */,
@@ -233,6 +239,7 @@
 				151CCB7C169E96C000726297 /* stdcheaders.h in Headers */,
 				151CCB7D169E96C000726297 /* typecheck-gcc.h in Headers */,
 				151CCB7E169E96C000726297 /* BBHotpotato-Prefix.pch in Headers */,
+				153A9DE416AF68B500BCB7B4 /* BBHTTPRequest+PrivateInterface.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -333,6 +340,7 @@
 				151CCB82169E974D00726297 /* BBHTTPRequestContext.m in Sources */,
 				151CCB83169E974D00726297 /* BBHTTPResponse.m in Sources */,
 				151CCB84169E974D00726297 /* BBHTTPUtils.m in Sources */,
+				153A9DE616AF68B500BCB7B4 /* BBHTTPRequest+PrivateInterface.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

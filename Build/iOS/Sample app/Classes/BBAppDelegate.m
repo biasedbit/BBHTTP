@@ -52,10 +52,7 @@
 
 - (void)postExample
 {
-    [BBHTTPRequest postFile:@"/path/to/file" to:@"http://api.target.url/"];
-    NSString* file = [[NSBundle mainBundle] pathForResource:@"Default-568h@2x" ofType:@"png"];
-
-    BBHTTPRequest* upload = [BBHTTPRequest postFile:file to:@"http://biasedbit.com"];
+    BBHTTPRequest* upload = [BBHTTPRequest postFile:@"/path/to/file" to:@"http://api.target.url/"];
     upload.uploadProgressBlock = ^(NSUInteger current, NSUInteger total) {
         NSLog(@"--> %u/%u", current, total);
     };
