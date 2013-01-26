@@ -193,6 +193,10 @@ static BOOL BBHTTPExecutorInitialized = NO;
         _maxParallelRequests = 3;
         _maxQueueSize = 1024;
 
+#if defined(__IPHONE_OS_VERSION_MIN_REQUIRED)
+        _manageNetworkActivityIndicator = YES;
+#endif
+
         _running = [NSMutableArray array];
         _queued = [NSMutableArray array];
 
@@ -264,6 +268,10 @@ static BOOL BBHTTPExecutorInitialized = NO;
         if ([_running count] >= _maxParallelRequests) {
             [self enqueueRequest:request];
         } else {
+#if defined(__IPHONE_OS_VERSION_MIN_REQUIRED)
+            if (([_running count] == 0) && _manageNetworkActivityIndicator)
+                [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+#endif
             [self createContextAndExecuteRequest:request];
         }
 
@@ -361,7 +369,15 @@ static BOOL BBHTTPExecutorInitialized = NO;
     while (true) {
         BBHTTPRequest* nextRequest = [self popQueuedRequest];
 
-        if (nextRequest == nil) return; // No more requests queued, bail out
+        if (nextRequest == nil) { // No more requests queued, bail out
+#if defined(__IPHONE_OS_VERSION_MIN_REQUIRED)
+            // Last request to finish stops the activity indicator
+            if (([_running count] == 0) && _manageNetworkActivityIndicator)
+                [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+#endif
+            return;
+        }
+
         if (nextRequest.cancelled) continue; // Loop again to find an executable request
 
         // Executable operation found, break the loop; next operation finishing will trigger this method again
