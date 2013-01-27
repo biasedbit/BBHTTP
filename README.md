@@ -7,7 +7,7 @@ It is an ARC-only library that uses [features](http://clang.llvm.org/docs/Object
 
 If boasts an extremely simple and compact interface that allows you to reduce your code to fire off HTTP requests down to a couple of clean lines, while preserving full flexibility should you ever need it.
 
-````objc
+```objc
 [[BBHTTPRequest getFrom:@"http://biasedbit.com"] execute:^(BBHTTPResponse* r) {
      NSLog(@"Finished: %u %@ -- received %u bytes of '%@'.",
            r.code, r.message, [r.data length], r[@"Content-Type"]);
@@ -16,56 +16,92 @@ If boasts an extremely simple and compact interface that allows you to reduce yo
  }];
 
 // Finished: 200 OK -- received 68364 bytes of 'text/html'.
-````
+```
 
-There are still many rough edges to polish and features missing &mdash; automatic JSON parsing and multipart uploads to name a few &mdash; to bring it up-to-par with other similar projects. I want to add those over time but help is always more than welcome so be sure to open issues for the features you'd love to see or drop me a mention [@biasedbit](http://twitter.com/biasedbit) on Twitter.
+> **IMPORTANT NOTE:**  
+> SSL uploads are currently broken for content above ~1MB due to a bug in curl. I [reported it](http://curl.haxx.se/mail/lib-2013-01/0295.html) and Nick Zitzmann got me a patch that fixes it. You'll have to [build your own curl](https://github.com/brunodecarvalho/curl-ios-build-scripts) with that patch &mdash; it's the attachment on Nick's reply to my original email. [Ping me](https://twitter.com/biasedbit) if you want the patched static libs or need help patching curl.
+
+
+At this stage there are probably things broken, rough edges to polish and features missing &mdash; using curl's multi handles and multipart uploads to name a few &mdash; to bring it up-to-par with other similar projects. I want to add those over time but help is always more than welcome so be sure to open issues for the features you'd love to see or drop me a mention [@biasedbit](http://twitter.com/biasedbit) on Twitter.
 
 
 ## Highlights
 
 * Concise asynchronous-driven usage:
 
-    ````objc
+    ```objc
     [[BBHTTPRequest getFrom:@"http://biasedbit.com"] execute:^(BBHTTPResponse* response) {
         // handle response
     } error:nil]];
-    ````
+    ```
 
     > You don't even need to keep references to the requests, just fire and forget.
 
+
+* Handy common usage patterns
+
+    ```objc
+    [[BBHTTPRequest getFrom:@"http://biasedbit.com"] setup:^(id request) {
+        // Prepare request...
+    } execute:^(BBHTTPResponse* response) {
+        // Handle response...
+    } error:^(NSError* error) {
+        // Handle error...
+    } finally:^{
+        // Do after error OR success.
+    }];
+
+
+* Get JSON effortlessly
+
+    ```objc
+    [[BBJSONRequest getFrom:@"http://foo.bar"] getJSON:^(id result) {
+        NSLog(@"User email: %@", result[@"user.email"]);
+        NSLog(@"# of followers: %@", result[@"user.followers.@count"]);
+    } error:^(NSError* error) {
+        // Handle request *or* JSON decoding error
+    }];
+    ```
+
+    > Notice the keyed subscript operator behaves as `valueForKeyPath:` rather than `valueForKey:`. That's because JSON responses that would yield a `NSDictionary` get wrapped by `BBJSONDictionary`.
+    > Read more about the collection operators [here](http://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/KeyValueCoding/Articles/CollectionOperators.html);
+
+
 * Stream uploads from a `NSInputStream` or directly from a file:
 
-    ````objc
+    ```objc
     [[BBHTTPRequest postFile:@"/path/to/file" to:@"http://api.target.url/"]
      setup:^(BBHTTPRequest* request) {
          request[@"Extra-Header"] = @"something else";
      } andExecute:^(BBHTTPResponse* response) {
          // handle response
      } error:nil];
-    ````
-    
+    ```
+
     > The request's content type and content length headers will be automatically set based on the file's properties.
+
 
 * Download to memory buffers or stream directly to file/`NSOutputStream`:
 
-    ````objc
+    ```objc
     [[BBHTTPRequest getFrom:@"http://biasedbit.com"]
      setup:^(BBHTTPRequest* request) {
          request.downloadToFile = @"/path/to/file";
      } andExecute:^(BBHTTPResponse* response) {
          // handle response
      } error:nil];
-    ````
+    ```
 
-    > No need to delete the file if the download fails midway; hotpotato keeps everything clean.
+    > No need to delete the file if the download fails midway; hotpotato will take care of keeping everything clean.
+
 
 * Even the *power-dev* API is clean and concise:
 
-    ````objc
+    ```objc
     BBHTTPExecutor* twitterExecutor = [BBHTTPExecutor initWithId:@"twitter.com"];
     BBHTTPExecutor* facebookExecutor = [BBHTTPExecutor initWithId:@"facebook.com"];
-    twitterExecutor.maxCurlHandles = 10;
-    facebookExecutor.maxCurlHandles = 2;
+    twitterExecutor.maxParallelRequests = 10;
+    facebookExecutor.maxParallelRequests = 2;
     ...
     BBHTTPRequest* request = [[BBHTTPRequest alloc]
                               initWithURL:[NSURL URLWithString:@"http://twitter.com"]
@@ -76,7 +112,15 @@ There are still many rough edges to polish and features missing &mdash; automati
     request.finishBlock = ^(BBHTTPResponse* response) { /* ... */ };
 
     [twitterExecutor executeRequest:request];
-    ````
+    ```
+
+
+## TODO list
+
+* Multipart upload helpers
+* Request queue
+* Use curl's multi handles
+* *Your bright idea here*
 
 
 ## Why?
