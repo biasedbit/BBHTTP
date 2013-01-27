@@ -434,7 +434,7 @@
 @property(assign, nonatomic, readonly, getter = wasSuccessfullyExecuted) BOOL successfullyExecuted;
 @property(strong, nonatomic, readonly) BBHTTPResponse* response;
 @property(assign, nonatomic, readonly) NSUInteger responseStatusCode;
-@property(assign, nonatomic, readonly, getter = isSuccessfulResponse) BOOL successfulResponse;
+@property(assign, nonatomic, readonly, getter = hasSuccessfulResponse) BOOL successfulResponse;
 
 
 #pragma mark Cancelling a request

@@ -331,7 +331,7 @@ NSString* const kBBHTTPRequestDefaultUserAgentString = @"BBHotpotato/1.0";
     return _response == nil ? 0 : _response.code;
 }
 
-- (BOOL)isSuccessfulResponse
+- (BOOL)hasSuccessfulResponse
 {
     return [self wasSuccessfullyExecuted] && [_response isSuccessful];
 }
