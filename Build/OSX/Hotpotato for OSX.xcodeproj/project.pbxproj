@@ -22,15 +22,28 @@
 		151CCB7C169E96C000726297 /* stdcheaders.h in Headers */ = {isa = PBXBuildFile; fileRef = 151CCB71169E96C000726297 /* stdcheaders.h */; };
 		151CCB7D169E96C000726297 /* typecheck-gcc.h in Headers */ = {isa = PBXBuildFile; fileRef = 151CCB72169E96C000726297 /* typecheck-gcc.h */; };
 		151CCB7E169E96C000726297 /* BBHotpotato-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 151CCB73169E96C000726297 /* BBHotpotato-Prefix.pch */; };
-		151CCB7F169E974D00726297 /* BBHTTPExecutor.m in Sources */ = {isa = PBXBuildFile; fileRef = 151CCB2D169E958E00726297 /* BBHTTPExecutor.m */; };
-		151CCB80169E974D00726297 /* BBHTTPRequest+Convenience.m in Sources */ = {isa = PBXBuildFile; fileRef = 151CCB2F169E958E00726297 /* BBHTTPRequest+Convenience.m */; };
-		151CCB81169E974D00726297 /* BBHTTPRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 151CCB31169E958E00726297 /* BBHTTPRequest.m */; };
-		151CCB82169E974D00726297 /* BBHTTPRequestContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 151CCB33169E958E00726297 /* BBHTTPRequestContext.m */; };
-		151CCB83169E974D00726297 /* BBHTTPResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 151CCB35169E958E00726297 /* BBHTTPResponse.m */; };
-		151CCB84169E974D00726297 /* BBHTTPUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 151CCB37169E958E00726297 /* BBHTTPUtils.m */; };
 		151CCB8D169E981200726297 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 151CCB8C169E981200726297 /* Foundation.framework */; };
-		153A9DE416AF68B500BCB7B4 /* BBHTTPRequest+PrivateInterface.h in Headers */ = {isa = PBXBuildFile; fileRef = 153A9DE216AF68B500BCB7B4 /* BBHTTPRequest+PrivateInterface.h */; };
-		153A9DE616AF68B500BCB7B4 /* BBHTTPRequest+PrivateInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 153A9DE316AF68B500BCB7B4 /* BBHTTPRequest+PrivateInterface.m */; };
+		15A14D0A16B50B5F00392F98 /* BBHTTPResponse+JSON.h in Headers */ = {isa = PBXBuildFile; fileRef = 15A14CF516B50B5F00392F98 /* BBHTTPResponse+JSON.h */; };
+		15A14D0B16B50B5F00392F98 /* BBHTTPResponse+JSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 15A14CF616B50B5F00392F98 /* BBHTTPResponse+JSON.m */; };
+		15A14D0C16B50B5F00392F98 /* BBJSONDictionary.h in Headers */ = {isa = PBXBuildFile; fileRef = 15A14CF716B50B5F00392F98 /* BBJSONDictionary.h */; };
+		15A14D0D16B50B5F00392F98 /* BBJSONDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 15A14CF816B50B5F00392F98 /* BBJSONDictionary.m */; };
+		15A14D0E16B50B5F00392F98 /* BBJSONRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 15A14CF916B50B5F00392F98 /* BBJSONRequest.h */; };
+		15A14D0F16B50B5F00392F98 /* BBJSONRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 15A14CFA16B50B5F00392F98 /* BBJSONRequest.m */; };
+		15A14D1016B50B5F00392F98 /* BBHotpotato.h in Headers */ = {isa = PBXBuildFile; fileRef = 15A14CFB16B50B5F00392F98 /* BBHotpotato.h */; };
+		15A14D1116B50B5F00392F98 /* BBHTTPExecutor.h in Headers */ = {isa = PBXBuildFile; fileRef = 15A14CFC16B50B5F00392F98 /* BBHTTPExecutor.h */; };
+		15A14D1216B50B5F00392F98 /* BBHTTPExecutor.m in Sources */ = {isa = PBXBuildFile; fileRef = 15A14CFD16B50B5F00392F98 /* BBHTTPExecutor.m */; };
+		15A14D1316B50B5F00392F98 /* BBHTTPRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 15A14CFE16B50B5F00392F98 /* BBHTTPRequest.h */; };
+		15A14D1416B50B5F00392F98 /* BBHTTPRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 15A14CFF16B50B5F00392F98 /* BBHTTPRequest.m */; };
+		15A14D1516B50B5F00392F98 /* BBHTTPRequest+Convenience.h in Headers */ = {isa = PBXBuildFile; fileRef = 15A14D0016B50B5F00392F98 /* BBHTTPRequest+Convenience.h */; };
+		15A14D1616B50B5F00392F98 /* BBHTTPRequest+Convenience.m in Sources */ = {isa = PBXBuildFile; fileRef = 15A14D0116B50B5F00392F98 /* BBHTTPRequest+Convenience.m */; };
+		15A14D1716B50B5F00392F98 /* BBHTTPRequest+PrivateInterface.h in Headers */ = {isa = PBXBuildFile; fileRef = 15A14D0216B50B5F00392F98 /* BBHTTPRequest+PrivateInterface.h */; };
+		15A14D1816B50B5F00392F98 /* BBHTTPRequest+PrivateInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 15A14D0316B50B5F00392F98 /* BBHTTPRequest+PrivateInterface.m */; };
+		15A14D1916B50B5F00392F98 /* BBHTTPRequestContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 15A14D0416B50B5F00392F98 /* BBHTTPRequestContext.h */; };
+		15A14D1A16B50B5F00392F98 /* BBHTTPRequestContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 15A14D0516B50B5F00392F98 /* BBHTTPRequestContext.m */; };
+		15A14D1B16B50B5F00392F98 /* BBHTTPResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 15A14D0616B50B5F00392F98 /* BBHTTPResponse.h */; };
+		15A14D1C16B50B5F00392F98 /* BBHTTPResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 15A14D0716B50B5F00392F98 /* BBHTTPResponse.m */; };
+		15A14D1D16B50B5F00392F98 /* BBHTTPUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 15A14D0816B50B5F00392F98 /* BBHTTPUtils.h */; };
+		15A14D1E16B50B5F00392F98 /* BBHTTPUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 15A14D0916B50B5F00392F98 /* BBHTTPUtils.m */; };
 		15B5119D169E984F0081CB14 /* libHotpotato.OSX.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 151CCB57169E967D00726297 /* libHotpotato.OSX.a */; };
 		15B511A0169E985B0081CB14 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 151CCB8C169E981200726297 /* Foundation.framework */; };
 		15B511A2169E98610081CB14 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15B511A1169E98610081CB14 /* Security.framework */; };
@@ -41,19 +54,6 @@
 
 /* Begin PBXFileReference section */
 		151CCAE7169E93D200726297 /* Hotpotato for OSX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Hotpotato for OSX.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		151CCB2B169E958E00726297 /* BBHotpotato.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBHotpotato.h; sourceTree = "<group>"; };
-		151CCB2C169E958E00726297 /* BBHTTPExecutor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBHTTPExecutor.h; sourceTree = "<group>"; };
-		151CCB2D169E958E00726297 /* BBHTTPExecutor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBHTTPExecutor.m; sourceTree = "<group>"; };
-		151CCB2E169E958E00726297 /* BBHTTPRequest+Convenience.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BBHTTPRequest+Convenience.h"; sourceTree = "<group>"; };
-		151CCB2F169E958E00726297 /* BBHTTPRequest+Convenience.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "BBHTTPRequest+Convenience.m"; sourceTree = "<group>"; };
-		151CCB30169E958E00726297 /* BBHTTPRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBHTTPRequest.h; sourceTree = "<group>"; };
-		151CCB31169E958E00726297 /* BBHTTPRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBHTTPRequest.m; sourceTree = "<group>"; };
-		151CCB32169E958E00726297 /* BBHTTPRequestContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBHTTPRequestContext.h; sourceTree = "<group>"; };
-		151CCB33169E958E00726297 /* BBHTTPRequestContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBHTTPRequestContext.m; sourceTree = "<group>"; };
-		151CCB34169E958E00726297 /* BBHTTPResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBHTTPResponse.h; sourceTree = "<group>"; };
-		151CCB35169E958E00726297 /* BBHTTPResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBHTTPResponse.m; sourceTree = "<group>"; };
-		151CCB36169E958E00726297 /* BBHTTPUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBHTTPUtils.h; sourceTree = "<group>"; };
-		151CCB37169E958E00726297 /* BBHTTPUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBHTTPUtils.m; sourceTree = "<group>"; };
 		151CCB41169E965B00726297 /* BBAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBAppDelegate.h; sourceTree = "<group>"; };
 		151CCB42169E965B00726297 /* BBAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBAppDelegate.m; sourceTree = "<group>"; };
 		151CCB45169E965B00726297 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
@@ -75,8 +75,27 @@
 		151CCB72169E96C000726297 /* typecheck-gcc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "typecheck-gcc.h"; sourceTree = "<group>"; };
 		151CCB73169E96C000726297 /* BBHotpotato-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BBHotpotato-Prefix.pch"; sourceTree = "<group>"; };
 		151CCB8C169E981200726297 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		153A9DE216AF68B500BCB7B4 /* BBHTTPRequest+PrivateInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BBHTTPRequest+PrivateInterface.h"; sourceTree = "<group>"; };
-		153A9DE316AF68B500BCB7B4 /* BBHTTPRequest+PrivateInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "BBHTTPRequest+PrivateInterface.m"; sourceTree = "<group>"; };
+		15A14CF516B50B5F00392F98 /* BBHTTPResponse+JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BBHTTPResponse+JSON.h"; sourceTree = "<group>"; };
+		15A14CF616B50B5F00392F98 /* BBHTTPResponse+JSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "BBHTTPResponse+JSON.m"; sourceTree = "<group>"; };
+		15A14CF716B50B5F00392F98 /* BBJSONDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBJSONDictionary.h; sourceTree = "<group>"; };
+		15A14CF816B50B5F00392F98 /* BBJSONDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBJSONDictionary.m; sourceTree = "<group>"; };
+		15A14CF916B50B5F00392F98 /* BBJSONRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBJSONRequest.h; sourceTree = "<group>"; };
+		15A14CFA16B50B5F00392F98 /* BBJSONRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBJSONRequest.m; sourceTree = "<group>"; };
+		15A14CFB16B50B5F00392F98 /* BBHotpotato.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBHotpotato.h; sourceTree = "<group>"; };
+		15A14CFC16B50B5F00392F98 /* BBHTTPExecutor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBHTTPExecutor.h; sourceTree = "<group>"; };
+		15A14CFD16B50B5F00392F98 /* BBHTTPExecutor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBHTTPExecutor.m; sourceTree = "<group>"; };
+		15A14CFE16B50B5F00392F98 /* BBHTTPRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBHTTPRequest.h; sourceTree = "<group>"; };
+		15A14CFF16B50B5F00392F98 /* BBHTTPRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBHTTPRequest.m; sourceTree = "<group>"; };
+		15A14D0016B50B5F00392F98 /* BBHTTPRequest+Convenience.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BBHTTPRequest+Convenience.h"; sourceTree = "<group>"; };
+		15A14D0116B50B5F00392F98 /* BBHTTPRequest+Convenience.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "BBHTTPRequest+Convenience.m"; sourceTree = "<group>"; };
+		15A14D0216B50B5F00392F98 /* BBHTTPRequest+PrivateInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BBHTTPRequest+PrivateInterface.h"; sourceTree = "<group>"; };
+		15A14D0316B50B5F00392F98 /* BBHTTPRequest+PrivateInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "BBHTTPRequest+PrivateInterface.m"; sourceTree = "<group>"; };
+		15A14D0416B50B5F00392F98 /* BBHTTPRequestContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBHTTPRequestContext.h; sourceTree = "<group>"; };
+		15A14D0516B50B5F00392F98 /* BBHTTPRequestContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBHTTPRequestContext.m; sourceTree = "<group>"; };
+		15A14D0616B50B5F00392F98 /* BBHTTPResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBHTTPResponse.h; sourceTree = "<group>"; };
+		15A14D0716B50B5F00392F98 /* BBHTTPResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBHTTPResponse.m; sourceTree = "<group>"; };
+		15A14D0816B50B5F00392F98 /* BBHTTPUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBHTTPUtils.h; sourceTree = "<group>"; };
+		15A14D0916B50B5F00392F98 /* BBHTTPUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBHTTPUtils.m; sourceTree = "<group>"; };
 		15B511A1169E98610081CB14 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		15B511A3169E98690081CB14 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		15B511A5169E98740081CB14 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -122,21 +141,22 @@
 		151CCB2A169E958E00726297 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				151CCB2B169E958E00726297 /* BBHotpotato.h */,
-				151CCB2C169E958E00726297 /* BBHTTPExecutor.h */,
-				151CCB2D169E958E00726297 /* BBHTTPExecutor.m */,
-				151CCB2E169E958E00726297 /* BBHTTPRequest+Convenience.h */,
-				151CCB2F169E958E00726297 /* BBHTTPRequest+Convenience.m */,
-				153A9DE216AF68B500BCB7B4 /* BBHTTPRequest+PrivateInterface.h */,
-				153A9DE316AF68B500BCB7B4 /* BBHTTPRequest+PrivateInterface.m */,
-				151CCB30169E958E00726297 /* BBHTTPRequest.h */,
-				151CCB31169E958E00726297 /* BBHTTPRequest.m */,
-				151CCB32169E958E00726297 /* BBHTTPRequestContext.h */,
-				151CCB33169E958E00726297 /* BBHTTPRequestContext.m */,
-				151CCB34169E958E00726297 /* BBHTTPResponse.h */,
-				151CCB35169E958E00726297 /* BBHTTPResponse.m */,
-				151CCB36169E958E00726297 /* BBHTTPUtils.h */,
-				151CCB37169E958E00726297 /* BBHTTPUtils.m */,
+				15A14CF416B50B5F00392F98 /* JSON */,
+				15A14CFB16B50B5F00392F98 /* BBHotpotato.h */,
+				15A14CFC16B50B5F00392F98 /* BBHTTPExecutor.h */,
+				15A14CFD16B50B5F00392F98 /* BBHTTPExecutor.m */,
+				15A14CFE16B50B5F00392F98 /* BBHTTPRequest.h */,
+				15A14CFF16B50B5F00392F98 /* BBHTTPRequest.m */,
+				15A14D0016B50B5F00392F98 /* BBHTTPRequest+Convenience.h */,
+				15A14D0116B50B5F00392F98 /* BBHTTPRequest+Convenience.m */,
+				15A14D0216B50B5F00392F98 /* BBHTTPRequest+PrivateInterface.h */,
+				15A14D0316B50B5F00392F98 /* BBHTTPRequest+PrivateInterface.m */,
+				15A14D0416B50B5F00392F98 /* BBHTTPRequestContext.h */,
+				15A14D0516B50B5F00392F98 /* BBHTTPRequestContext.m */,
+				15A14D0616B50B5F00392F98 /* BBHTTPResponse.h */,
+				15A14D0716B50B5F00392F98 /* BBHTTPResponse.m */,
+				15A14D0816B50B5F00392F98 /* BBHTTPUtils.h */,
+				15A14D0916B50B5F00392F98 /* BBHTTPUtils.m */,
 			);
 			name = Classes;
 			path = ../../Classes;
@@ -222,6 +242,19 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		15A14CF416B50B5F00392F98 /* JSON */ = {
+			isa = PBXGroup;
+			children = (
+				15A14CF516B50B5F00392F98 /* BBHTTPResponse+JSON.h */,
+				15A14CF616B50B5F00392F98 /* BBHTTPResponse+JSON.m */,
+				15A14CF716B50B5F00392F98 /* BBJSONDictionary.h */,
+				15A14CF816B50B5F00392F98 /* BBJSONDictionary.m */,
+				15A14CF916B50B5F00392F98 /* BBJSONRequest.h */,
+				15A14CFA16B50B5F00392F98 /* BBJSONRequest.m */,
+			);
+			path = JSON;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -239,7 +272,17 @@
 				151CCB7C169E96C000726297 /* stdcheaders.h in Headers */,
 				151CCB7D169E96C000726297 /* typecheck-gcc.h in Headers */,
 				151CCB7E169E96C000726297 /* BBHotpotato-Prefix.pch in Headers */,
-				153A9DE416AF68B500BCB7B4 /* BBHTTPRequest+PrivateInterface.h in Headers */,
+				15A14D0A16B50B5F00392F98 /* BBHTTPResponse+JSON.h in Headers */,
+				15A14D0C16B50B5F00392F98 /* BBJSONDictionary.h in Headers */,
+				15A14D0E16B50B5F00392F98 /* BBJSONRequest.h in Headers */,
+				15A14D1016B50B5F00392F98 /* BBHotpotato.h in Headers */,
+				15A14D1116B50B5F00392F98 /* BBHTTPExecutor.h in Headers */,
+				15A14D1316B50B5F00392F98 /* BBHTTPRequest.h in Headers */,
+				15A14D1516B50B5F00392F98 /* BBHTTPRequest+Convenience.h in Headers */,
+				15A14D1716B50B5F00392F98 /* BBHTTPRequest+PrivateInterface.h in Headers */,
+				15A14D1916B50B5F00392F98 /* BBHTTPRequestContext.h in Headers */,
+				15A14D1B16B50B5F00392F98 /* BBHTTPResponse.h in Headers */,
+				15A14D1D16B50B5F00392F98 /* BBHTTPUtils.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -334,13 +377,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				151CCB7F169E974D00726297 /* BBHTTPExecutor.m in Sources */,
-				151CCB80169E974D00726297 /* BBHTTPRequest+Convenience.m in Sources */,
-				151CCB81169E974D00726297 /* BBHTTPRequest.m in Sources */,
-				151CCB82169E974D00726297 /* BBHTTPRequestContext.m in Sources */,
-				151CCB83169E974D00726297 /* BBHTTPResponse.m in Sources */,
-				151CCB84169E974D00726297 /* BBHTTPUtils.m in Sources */,
-				153A9DE616AF68B500BCB7B4 /* BBHTTPRequest+PrivateInterface.m in Sources */,
+				15A14D0B16B50B5F00392F98 /* BBHTTPResponse+JSON.m in Sources */,
+				15A14D0D16B50B5F00392F98 /* BBJSONDictionary.m in Sources */,
+				15A14D0F16B50B5F00392F98 /* BBJSONRequest.m in Sources */,
+				15A14D1216B50B5F00392F98 /* BBHTTPExecutor.m in Sources */,
+				15A14D1416B50B5F00392F98 /* BBHTTPRequest.m in Sources */,
+				15A14D1616B50B5F00392F98 /* BBHTTPRequest+Convenience.m in Sources */,
+				15A14D1816B50B5F00392F98 /* BBHTTPRequest+PrivateInterface.m in Sources */,
+				15A14D1A16B50B5F00392F98 /* BBHTTPRequestContext.m in Sources */,
+				15A14D1C16B50B5F00392F98 /* BBHTTPResponse.m in Sources */,
+				15A14D1E16B50B5F00392F98 /* BBHTTPUtils.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

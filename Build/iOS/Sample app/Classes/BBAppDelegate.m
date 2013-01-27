@@ -34,10 +34,26 @@
 
 - (BOOL)application:(UIApplication*)application didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 {
-    [self getExample];
+    [self getJsonExample];
+//    [self getExample];
 //    [self postExample];
 
     return YES;
+}
+
+- (void)getJsonExample
+{
+    NSString* yahooWeather = @"http://query.yahooapis.com/v1/public/yql?format=json&q="
+                              "select%20*%20from%20weather.forecast%20where%20woeid%3D2502265";
+
+    [[BBJSONRequest getFrom:yahooWeather] getJSON:^(id result) {
+        NSLog(@"%@: %@",
+              result[@"query.results.channel.description"],
+              result[@"query.results.channel.item.condition.text"]);
+//        DOBJ(result); // dump the whole JSON response
+    } error:^(NSError* error) {
+        NSLog(@"Error: %@", [error localizedDescription]);
+    }];
 }
 
 - (void)getExample

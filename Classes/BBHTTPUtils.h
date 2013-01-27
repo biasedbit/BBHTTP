@@ -21,15 +21,16 @@
 
 #pragma mark - Constants
 
-#define BBHTTPVersion @"0.9.0"
+#define BBHTTPVersion @"0.9.1"
 
 
 
 #pragma mark - Error codes
 
-#define BBHTTPErrorCodeUploadFileStreamError         100
-#define BBHTTPErrorCodeUploadDataStreamError         101
-#define BBHTTPErrorCodeDownloadCannotWriteToStream   102
+#define BBHTTPErrorCodeUploadFileStreamError         1000
+#define BBHTTPErrorCodeUploadDataStreamError         1001
+#define BBHTTPErrorCodeDownloadCannotWriteToStream   1002
+#define BBHTTPErrorCodeInvalidJSONContentType        1003
 
 
 

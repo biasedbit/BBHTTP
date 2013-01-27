@@ -24,6 +24,9 @@
 		151CCB28169E956F00726297 /* BBHTTPResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 151CCB21169E956F00726297 /* BBHTTPResponse.m */; };
 		151CCB29169E956F00726297 /* BBHTTPUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 151CCB23169E956F00726297 /* BBHTTPUtils.m */; };
 		153A9DEB16AF68C100BCB7B4 /* BBHTTPRequest+PrivateInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 153A9DE916AF68C100BCB7B4 /* BBHTTPRequest+PrivateInterface.m */; };
+		15A14CE916B4A37000392F98 /* BBJSONRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 15A14CE816B4A37000392F98 /* BBJSONRequest.m */; };
+		15A14CEC16B4A38200392F98 /* BBHTTPResponse+JSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 15A14CEB16B4A38200392F98 /* BBHTTPResponse+JSON.m */; };
+		15A14CF216B4C09500392F98 /* BBJSONDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 15A14CF116B4C09500392F98 /* BBJSONDictionary.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -79,6 +82,12 @@
 		151CCB3E169E95FD00726297 /* Hotpotato.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hotpotato.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		153A9DE816AF68C100BCB7B4 /* BBHTTPRequest+PrivateInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BBHTTPRequest+PrivateInterface.h"; sourceTree = "<group>"; };
 		153A9DE916AF68C100BCB7B4 /* BBHTTPRequest+PrivateInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "BBHTTPRequest+PrivateInterface.m"; sourceTree = "<group>"; };
+		15A14CE716B4A37000392F98 /* BBJSONRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBJSONRequest.h; sourceTree = "<group>"; };
+		15A14CE816B4A37000392F98 /* BBJSONRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBJSONRequest.m; sourceTree = "<group>"; };
+		15A14CEA16B4A38200392F98 /* BBHTTPResponse+JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BBHTTPResponse+JSON.h"; sourceTree = "<group>"; };
+		15A14CEB16B4A38200392F98 /* BBHTTPResponse+JSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "BBHTTPResponse+JSON.m"; sourceTree = "<group>"; };
+		15A14CF016B4C09500392F98 /* BBJSONDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBJSONDictionary.h; sourceTree = "<group>"; };
+		15A14CF116B4C09500392F98 /* BBJSONDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBJSONDictionary.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -186,6 +195,7 @@
 		151CCB16169E956F00726297 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				15A14CE616B4A37000392F98 /* JSON */,
 				151CCB17169E956F00726297 /* BBHotpotato.h */,
 				151CCB18169E956F00726297 /* BBHTTPExecutor.h */,
 				151CCB19169E956F00726297 /* BBHTTPExecutor.m */,
@@ -213,6 +223,19 @@
 				151CCB3E169E95FD00726297 /* Hotpotato.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		15A14CE616B4A37000392F98 /* JSON */ = {
+			isa = PBXGroup;
+			children = (
+				15A14CE716B4A37000392F98 /* BBJSONRequest.h */,
+				15A14CE816B4A37000392F98 /* BBJSONRequest.m */,
+				15A14CEA16B4A38200392F98 /* BBHTTPResponse+JSON.h */,
+				15A14CEB16B4A38200392F98 /* BBHTTPResponse+JSON.m */,
+				15A14CF016B4C09500392F98 /* BBJSONDictionary.h */,
+				15A14CF116B4C09500392F98 /* BBJSONDictionary.m */,
+			);
+			path = JSON;
 			sourceTree = "<group>";
 		};
 		15C55ABC14D26CF500CE81A6 = {
@@ -313,6 +336,9 @@
 				151CCB28169E956F00726297 /* BBHTTPResponse.m in Sources */,
 				151CCB29169E956F00726297 /* BBHTTPUtils.m in Sources */,
 				153A9DEB16AF68C100BCB7B4 /* BBHTTPRequest+PrivateInterface.m in Sources */,
+				15A14CE916B4A37000392F98 /* BBJSONRequest.m in Sources */,
+				15A14CEC16B4A38200392F98 /* BBHTTPResponse+JSON.m in Sources */,
+				15A14CF216B4C09500392F98 /* BBJSONDictionary.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
