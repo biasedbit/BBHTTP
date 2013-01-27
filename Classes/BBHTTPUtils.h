@@ -27,10 +27,11 @@
 
 #pragma mark - Error codes
 
-#define BBHTTPErrorCodeUploadFileStreamError         1000
-#define BBHTTPErrorCodeUploadDataStreamError         1001
-#define BBHTTPErrorCodeDownloadCannotWriteToStream   1002
-#define BBHTTPErrorCodeInvalidJSONContentType        1003
+#define BBHTTPErrorCodeCancelled                     1000
+#define BBHTTPErrorCodeUploadFileStreamError         1001
+#define BBHTTPErrorCodeUploadDataStreamError         1002
+#define BBHTTPErrorCodeDownloadCannotWriteToStream   1003
+#define BBHTTPErrorCodeInvalidJSONContentType        1004
 
 
 

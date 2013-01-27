@@ -106,8 +106,10 @@ static size_t BBHTTPExecutorAppendData(uint8_t* buffer, size_t size, size_t leng
 static size_t BBHTTPExecutorSendCallback(uint8_t* buffer, size_t size, size_t length, BBHTTPRequestContext* context)
 {
     if (length == 0) return 0;
-    if (![context.request isUpload]) return 0; // Never happens, but...
-    if (context.uploadAborted) return 0;
+
+    if ([context.request wasCancelled] ||
+        ![context.request isUpload] ||
+        context.uploadAborted) return CURL_READFUNC_ABORT;
 
     if (context.uploadAccepted) {
         NSInteger written = [context transferInputToBuffer:buffer limit:length];
@@ -127,6 +129,8 @@ static size_t BBHTTPExecutorSendCallback(uint8_t* buffer, size_t size, size_t le
 
 static size_t BBHTTPExecutorReceiveCallback(uint8_t* buffer, size_t size, size_t length, BBHTTPRequestContext* context)
 {
+    if ([context.request wasCancelled]) return 0;
+
     switch (context.state) {
         case BBHTTPResponseStateReadingStatusLine:
             return BBHTTPExecutorReadStatusLine(buffer, size, length, context);
@@ -188,6 +192,10 @@ static BOOL BBHTTPExecutorInitialized = NO;
     if (self != nil) {
         _maxParallelRequests = 3;
         _maxQueueSize = 1024;
+
+#if defined(__IPHONE_OS_VERSION_MIN_REQUIRED)
+        _manageNetworkActivityIndicator = YES;
+#endif
 
         _running = [NSMutableArray array];
         _queued = [NSMutableArray array];
@@ -260,6 +268,10 @@ static BOOL BBHTTPExecutorInitialized = NO;
         if ([_running count] >= _maxParallelRequests) {
             [self enqueueRequest:request];
         } else {
+#if defined(__IPHONE_OS_VERSION_MIN_REQUIRED)
+            if (([_running count] == 0) && _manageNetworkActivityIndicator)
+                [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+#endif
             [self createContextAndExecuteRequest:request];
         }
 
@@ -357,7 +369,15 @@ static BOOL BBHTTPExecutorInitialized = NO;
     while (true) {
         BBHTTPRequest* nextRequest = [self popQueuedRequest];
 
-        if (nextRequest == nil) return; // No more requests queued, bail out
+        if (nextRequest == nil) { // No more requests queued, bail out
+#if defined(__IPHONE_OS_VERSION_MIN_REQUIRED)
+            // Last request to finish stops the activity indicator
+            if (([_running count] == 0) && _manageNetworkActivityIndicator)
+                [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+#endif
+            return;
+        }
+
         if (nextRequest.cancelled) continue; // Loop again to find an executable request
 
         // Executable operation found, break the loop; next operation finishing will trigger this method again
@@ -448,7 +468,11 @@ static BOOL BBHTTPExecutorInitialized = NO;
 
     // Setup - configure timeouts
     curl_easy_setopt(handle, CURLOPT_CONNECTTIMEOUT, context.request.connectionTimeout);
-    curl_easy_setopt(handle, CURLOPT_TIMEOUT, context.request.responseReadTimeout);
+
+    // TODO expose options to configure these - right now, if transfer's below 1KB/s for 15 seconds, abort
+    curl_easy_setopt(handle, CURLOPT_LOW_SPEED_LIMIT, 1024);
+    curl_easy_setopt(handle, CURLOPT_LOW_SPEED_TIME, 15);
+//    curl_easy_setopt(handle, CURLOPT_TIMEOUT, context.request.responseReadTimeout);
 
     // Setup - configure redirections
     if (context.request.maxRedirects == 0) {
@@ -473,15 +497,21 @@ static BOOL BBHTTPExecutorInitialized = NO;
     curl_slist_free_all(headers);
     curl_easy_reset(handle);
 
-    if (curlResult != CURLE_OK) {
-        NSError* error = context.error; // Try and use the error set inside the context or translate libcurl's error
+    if ([request wasCancelled]) {
+        static NSError* cancelError = nil;
+        if (cancelError == nil) cancelError = BBHTTPCreateNSError(BBHTTPErrorCodeCancelled, @"Request cancelled.");
+        [context finishWithError:cancelError];
+        BBHTTPLogInfo(@"%@ | Request cancelled.", context);
+
+    } else if (curlResult != CURLE_OK) {
+        NSError* error = context.error;
         if (error != nil) {
             [context finish];
         } else {
             error = [self convertCURLCodeToNSError:curlResult context:context];
             [context finishWithError:error];
         }
-        BBHTTPLogInfo(@"%@ | Request abnormally terminated.", context);
+        BBHTTPLogInfo(@"%@ | Request abnormally terminated: %@", context, [error localizedDescription]);
     } else {
         [context finish];
         BBHTTPLogInfo(@"%@ | Request finished.", context);

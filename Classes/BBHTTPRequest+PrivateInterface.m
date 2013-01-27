@@ -73,42 +73,59 @@
 
 #pragma mark Events
 
-- (void)executionStarted
+- (BOOL)executionStarted
 {
+    if ([self hasFinished]) return NO;
+
     self.startTimestamp = BBHTTPCurrentTimeMillis();
     if (self.startBlock != nil) {
         dispatch_async(dispatch_get_main_queue(), ^{
             self.startBlock();
+            self.startBlock = nil;
         });
     }
+
+    return YES;
 }
 
-- (void)executionFailedWithError:(NSError*)error
+- (BOOL)executionFailedWithError:(NSError*)error
 {
+    if ([self hasFinished]) return NO;
+
     self.endTimestamp = BBHTTPCurrentTimeMillis();
     self.error = error;
 
     if (self.finishBlock != nil) {
         dispatch_async(dispatch_get_main_queue(), ^{
             self.finishBlock(self);
+            self.finishBlock = nil;
         });
     }
+
+    return YES;
 }
 
-- (void)executionFinishedWithFinalResponse:(BBHTTPResponse*)response
+- (BOOL)executionFinishedWithFinalResponse:(BBHTTPResponse*)response
 {
+    if ([self hasFinished]) return NO;
+
     self.endTimestamp = BBHTTPCurrentTimeMillis();
     self.response = response;
 
     if (self.finishBlock != nil) {
         dispatch_async(dispatch_get_main_queue(), ^{
             self.finishBlock(self);
+            self.finishBlock = nil;
         });
     }
+
+    return YES;
 }
 
-- (void)uploadProgressedToCurrent:(NSUInteger)current ofTotal:(NSUInteger)total
+- (BOOL)uploadProgressedToCurrent:(NSUInteger)current ofTotal:(NSUInteger)total
 {
+    if ([self hasFinished]) return NO;
+
     self.sentBytes = current;
 
     if (self.uploadProgressBlock != nil) {
@@ -116,10 +133,14 @@
             self.uploadProgressBlock(current, total);
         });
     }
+
+    return YES;
 }
 
-- (void)downloadProgressedToCurrent:(NSUInteger)current ofTotal:(NSUInteger)total
+- (BOOL)downloadProgressedToCurrent:(NSUInteger)current ofTotal:(NSUInteger)total
 {
+    if ([self hasFinished]) return NO;
+
     self.receivedBytes = current;
 
     if (self.downloadProgressBlock != nil) {
@@ -127,6 +148,8 @@
             self.downloadProgressBlock(current, total);
         });
     }
+
+    return YES;
 }
 
 @end

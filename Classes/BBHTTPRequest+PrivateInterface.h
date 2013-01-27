@@ -40,10 +40,10 @@
 
 #pragma mark Events
 
-- (void)executionStarted;
-- (void)executionFailedWithError:(NSError*)error;
-- (void)executionFinishedWithFinalResponse:(BBHTTPResponse*)response;
-- (void)uploadProgressedToCurrent:(NSUInteger)current ofTotal:(NSUInteger)total;
-- (void)downloadProgressedToCurrent:(NSUInteger)current ofTotal:(NSUInteger)total;
+- (BOOL)executionStarted;
+- (BOOL)executionFailedWithError:(NSError*)error;
+- (BOOL)executionFinishedWithFinalResponse:(BBHTTPResponse*)response;
+- (BOOL)uploadProgressedToCurrent:(NSUInteger)current ofTotal:(NSUInteger)total;
+- (BOOL)downloadProgressedToCurrent:(NSUInteger)current ofTotal:(NSUInteger)total;
 
 @end

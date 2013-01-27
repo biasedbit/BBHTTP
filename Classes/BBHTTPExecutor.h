@@ -109,6 +109,11 @@
  */
 @property(assign, nonatomic) NSUInteger maxQueueSize;
 
+#if defined(__IPHONE_OS_VERSION_MIN_REQUIRED)
+@property(assign, nonatomic) BOOL manageNetworkActivityIndicator;
+#endif
+
+
 /** For debug/bug-reporting purposes only; this turns on verbose mode for the underlying libcurl handles. */
 @property(assign, nonatomic) BOOL verbose;
 
