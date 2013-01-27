@@ -129,10 +129,10 @@
 
  @see BBHTTPExecutor
  */
-- (BOOL)setup:(void (^)(id request))setup andExecute:(void (^)(BBHTTPResponse* response))completed
+- (BOOL)setup:(void (^)(id request))setup execute:(void (^)(BBHTTPResponse* response))completed
         error:(void (^)(NSError* error))error;
 
-- (BOOL)setup:(void (^)(id request))setup andExecute:(void (^)(BBHTTPResponse* response))completed
+- (BOOL)setup:(void (^)(id request))setup execute:(void (^)(BBHTTPResponse* response))completed
         error:(void (^)(NSError* error))error finally:(void (^)())finally;
 
 @end

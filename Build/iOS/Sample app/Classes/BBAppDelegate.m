@@ -62,7 +62,7 @@
 
     [upload setup:^(BBHTTPRequest* request) {
         request[@"User-Agent"] = @"<- super cool, eh?";
-    } andExecute:^(BBHTTPResponse* response) {
+    } execute:^(BBHTTPResponse* response) {
         NSLog(@"%@ %u %@ %@", NSStringFromBBHTTPProtocolVersion(response.version),
               response.code, response.message, response.headers);
     } error:^(NSError* error) {

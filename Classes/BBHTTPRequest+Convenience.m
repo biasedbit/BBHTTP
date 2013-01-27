@@ -111,13 +111,13 @@
     return [[BBHTTPExecutor sharedExecutor] executeRequest:self];
 }
 
-- (BOOL)setup:(void (^)(id request))setup andExecute:(void (^)(BBHTTPResponse* response))completed
+- (BOOL)setup:(void (^)(id request))setup execute:(void (^)(BBHTTPResponse* response))completed
         error:(void (^)(NSError* error))error
 {
-    return [self setup:setup andExecute:completed error:error finally:nil];
+    return [self setup:setup execute:completed error:error finally:nil];
 }
 
-- (BOOL)setup:(void (^)(id request))setup andExecute:(void (^)(BBHTTPResponse* response))completed
+- (BOOL)setup:(void (^)(id request))setup execute:(void (^)(BBHTTPResponse* response))completed
         error:(void (^)(NSError* error))error finally:(void (^)())finally
 {
     if (setup != nil) setup(self);
