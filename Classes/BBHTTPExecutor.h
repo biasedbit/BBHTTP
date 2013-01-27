@@ -49,9 +49,9 @@
 
  ### libcurl handle pooling
 
- Each instance will create up to `<maxCurlHandles>` libcurl handles to execute requests, depending on number of parallel
- requests that may need to be performed. In other words, if you set the limit of libcurl handles to 3 but never execute
- more than one request at a time, the instance will only create and maintain a single handle.
+ Each instance will create up to `<maxParallelRequests>` libcurl handles to execute requests, depending on number of
+ parallel requests that may need to be performed. In other words, if you set the limit of libcurl handles to 3 but
+ never execute more than one request at a time, the instance will only create and maintain a single handle.
  
  When all the handles are in use, request will be queued and executed later in time, in the first handle that frees up.
  
