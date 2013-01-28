@@ -19,9 +19,24 @@
 //  Copyright (c) 2013 BiasedBit. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
+#import "BBHTTPSelectiveHandler.h"
 
-int main(int argc, char* argv[])
-{
-    return NSApplicationMain(argc, (const char**)argv);
-}
+
+#pragma mark -
+
+/**
+ Response parser that inherits selective behavior from `<BBHTTPSelectiveResponseParser>` and dumps all the data it
+ receives through `<appendResponseBytes:withLength:>` to a the file it was initialized with.
+ 
+ If the file cannot be written to or there's not enough space left on device, the request will fail.
+
+ If an error occurs while transferring data to the the file, the partial file will automatically be deleted.
+ */
+@interface BBHTTPFileWriter : BBHTTPSelectiveHandler
+
+
+#pragma mark Creating a new file writer
+
+- (id)initWithTargetFile:(NSString*)pathToFile;
+
+@end

@@ -19,9 +19,25 @@
 //  Copyright (c) 2013 BiasedBit. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
+#import "BBHTTPSelectiveHandler.h"
 
-int main(int argc, char* argv[])
-{
-    return NSApplicationMain(argc, (const char**)argv);
-}
+
+
+#pragma mark -
+
+@interface BBHTTPAccumulator : BBHTTPSelectiveHandler
+
+
+#pragma mark BBHTTPResponseProcessor interface overrides
+
+/**
+ Convert request body to `NSData`.
+
+ @param error On input, a pointer to an error object. If an error occurs, this pointer is set to an actual error object
+ containing the error information. You may specify nil for this parameter if you do not want the error information.
+
+ @return A `NSData` object containing the content of the response body or `nil` if body was empty.
+ */
+- (NSData*)parseContent:(NSError**)error;
+
+@end

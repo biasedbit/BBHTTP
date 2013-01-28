@@ -19,31 +19,19 @@
 //  Copyright (c) 2013 BiasedBit. All rights reserved.
 //
 
-#import "BBHTTPResponse+JSON.h"
-
-#import "BBJSONDictionary.h"
+#import "BBHTTPAccumulator.h"
 
 
 
 #pragma mark -
 
-@implementation BBHTTPResponse (JSON)
+@interface BBHTTPImageDecoder : BBHTTPAccumulator
 
 
-#pragma mark Convert response to JSON
-
-- (id)bodyAsJSON:(NSError**)error
-{
-    if (self.contentSize == 0) return nil;
-
-    // TODO also read from file/output stream?
-    id result = [NSJSONSerialization JSONObjectWithData:self.data options:0 error:error];
-
-    if (((error != NULL) && (*error != nil)) || (result == nil)) return nil;
-
-    // If it's a dictionary, wrap it in BBHTTPDictionary; allows keypath retrieval via subscript operators.
-    if ([result isKindOfClass:[NSDictionary class]]) return [[BBJSONDictionary alloc] initWithDictionary:result];
-    else return result;
-}
+#if defined(__IPHONE_OS_VERSION_MIN_REQUIRED)
+- (UIImage*)parseContent:(NSError**)error;
+#elif defined(__MAC_OS_X_VERSION_MIN_REQUIRED)
+- (NSImage*)parseContent:(NSError**)error;
+#endif
 
 @end

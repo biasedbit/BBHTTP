@@ -30,8 +30,9 @@
 #define BBHTTPErrorCodeCancelled                     1000
 #define BBHTTPErrorCodeUploadFileStreamError         1001
 #define BBHTTPErrorCodeUploadDataStreamError         1002
-#define BBHTTPErrorCodeDownloadCannotWriteToStream   1003
-#define BBHTTPErrorCodeInvalidJSONContentType        1004
+#define BBHTTPErrorCodeDownloadCannotWriteToHandler  1003
+#define BBHTTPErrorCodeUnnacceptableContentType      1004
+#define BBHTTPErrorCodeImageDecodingFailed           1005
 
 
 

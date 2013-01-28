@@ -20,6 +20,7 @@
 //
 
 #import "BBHTTPResponse.h"
+#import "BBHTTPContentHandler.h"
 
 
 
@@ -121,21 +122,7 @@
 /// @name Managing download behavior
 /// --------------------------------
 
-/**
- The output stream to which the download body should be written to.
- 
- When set, it takes precedence over `<downloadToFile>`.
-
- If the stream does not have enough space available, the request will fail.
- */
-@property(strong, nonatomic) NSOutputStream* downloadToStream;
-
-/**
- When set, it takes precedence over the in-memory buffer (default), which will be empty.
- 
- If the file cannot be written to or there's not enough space left on device, the request will fail.
- */
-@property(copy, nonatomic) NSString* downloadToFile;
+@property(strong, nonatomic) id<BBHTTPContentHandler> responseContentHandler;
 
 /** The download size, in, bytes when available. */
 @property(assign, nonatomic, readonly) NSUInteger downloadSize;

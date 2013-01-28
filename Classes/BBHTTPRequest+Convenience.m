@@ -21,6 +21,12 @@
 
 #import "BBHTTPRequest+Convenience.h"
 
+#import "BBHTTPAccumulator.h"
+#import "BBHTTPToStringConverter.h"
+#import "BBJSONParser.h"
+#import "BBHTTPImageDecoder.h"
+#import "BBHTTPFileWriter.h"
+#import "BBHTTPStreamWriter.h"
 #import "BBHTTPExecutor.h"
 
 
@@ -82,6 +88,68 @@
 }
 
 
+#pragma mark Response handling
+
+- (void)discardResponseContent
+{
+    self.responseContentHandler = nil;
+}
+
+- (void)downloadContentAsData
+{
+    self.responseContentHandler = [[BBHTTPAccumulator alloc] init];
+}
+
+- (void)downloadContentAsString
+{
+    self.responseContentHandler = [[BBHTTPToStringConverter alloc] init];
+}
+
+- (void)downloadContentAsJSON
+{
+    self.responseContentHandler = [[BBJSONParser alloc] init];
+}
+
+- (void)downloadContentAsImage
+{
+    self.responseContentHandler = [[BBHTTPImageDecoder alloc] init];
+}
+
+- (void)downloadToFile:(NSString*)pathToFile
+{
+    self.responseContentHandler = [[BBHTTPFileWriter alloc] initWithTargetFile:pathToFile];
+}
+
+- (void)downloadToStream:(NSOutputStream*)stream
+{
+    self.responseContentHandler = [[BBHTTPStreamWriter alloc] initWithOutputStream:stream];
+}
+
+- (instancetype)asData
+{
+    [self downloadContentAsData];
+    return self;
+}
+
+- (instancetype)asString
+{
+    [self downloadContentAsString];
+    return self;
+}
+
+- (instancetype)asJSON
+{
+    [self downloadContentAsJSON];
+    return self;
+}
+
+- (instancetype)asImage
+{
+    [self downloadContentAsImage];
+    return self;
+}
+
+
 #pragma mark Executing the request
 
 - (BOOL)execute:(void (^)(id request))finish
@@ -98,6 +166,9 @@
 - (BOOL)execute:(void (^)(BBHTTPResponse* response))completed error:(void (^)(NSError* error))error
         finally:(void (^)())finally
 {
+    // If nothing was specified, load body to memory -- perhaps an instance of BBHTTPDiscard would be better here?
+    if (self.responseContentHandler == nil) [self downloadContentAsData];
+
     self.finishBlock = ^(BBHTTPRequest* request) {
         if (request.error != nil) {
             if (error != nil) error(request.error);

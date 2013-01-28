@@ -67,7 +67,6 @@ typedef NS_ENUM(NSUInteger, BBHTTPResponseState) {
 - (void)cleanup:(BOOL)success;
 - (void)finish;
 - (void)finishWithError:(NSError*)error;
-- (void)deleteFileInBackground:(NSString*)file;
 
 
 #pragma mark Managing the upload

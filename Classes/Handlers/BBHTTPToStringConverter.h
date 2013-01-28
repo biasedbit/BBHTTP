@@ -19,9 +19,24 @@
 //  Copyright (c) 2013 BiasedBit. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
+#import "BBHTTPAccumulator.h"
 
-int main(int argc, char* argv[])
-{
-    return NSApplicationMain(argc, (const char**)argv);
-}
+/**
+ Simple response parser that extends `<BBHTTPAccumulator>` and converts the resulting `NSData` into a `NSString`.
+ */
+@interface BBHTTPToStringConverter : BBHTTPAccumulator
+
+
+#pragma mark BBHTTPAccumulator behavior overrides
+
+/**
+ Converts the body of the response to a UTF8 `NSString`
+ 
+ @param error On input, a pointer to an error object. If an error occurs, this pointer is set to an actual error object
+ containing the error information. You may specify nil for this parameter if you do not want the error information.
+
+ @return UTF8 encoded string built from the body of the response.
+ */
+- (NSString*)parseContent:(NSError**)error;
+
+@end

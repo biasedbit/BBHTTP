@@ -46,9 +46,9 @@ BBHTTPProtocolVersion BBHTTPProtocolVersionFromNSString(NSString* string);
 @property(assign, nonatomic, readonly) NSUInteger code;
 @property(strong, nonatomic, readonly) NSString* message;
 @property(strong, nonatomic, readonly) NSDictionary* headers;
-
-@property(assign, nonatomic) NSUInteger contentSize;
-@property(strong, nonatomic) NSData* data;
+@property(assign, nonatomic, readonly, getter = isSuccessful) BOOL successful;
+@property(assign, nonatomic, readonly) NSUInteger contentSize;
+@property(strong, nonatomic, readonly) id content;
 
 
 #pragma mark Creation
@@ -65,10 +65,10 @@ BBHTTPProtocolVersion BBHTTPProtocolVersionFromNSString(NSString* string);
 
 #pragma mark Interface
 
+- (void)finishWithContent:(id)content size:(NSUInteger)size successful:(BOOL)successful;
 - (NSString*)headerWithName:(NSString*)header;
-- (NSString*)objectForKeyedSubscript:(NSString*)header;
 - (void)setValue:(NSString*)value forHeader:(NSString*)header;
+- (NSString*)objectForKeyedSubscript:(NSString*)header;
 - (void)setObject:(NSString*)value forKeyedSubscript:(NSString*)header;
-- (BOOL)isSuccessful;
 
 @end

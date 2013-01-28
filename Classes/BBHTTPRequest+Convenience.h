@@ -93,6 +93,97 @@
 + (instancetype)putToURL:(NSURL*)url withData:(NSData*)data andContentType:(NSString*)contentType;
 
 
+#pragma mark Configure how
+
+/**
+ Completely discard any data received as the body of the response.
+ 
+ Sets `<responseContentHandler>` to `nil`.
+ */
+- (void)discardResponseContent;
+
+/**
+ Treat the reponse body as `NSData`.
+ 
+ When a successful response is received, a `NSData` will be available at at the `content` property of the response.
+
+ This method assigns a `<BBHTTPAccumulator>` as the `<responseContentHandler>` for this request.
+ */
+- (void)downloadContentAsData;
+
+/**
+ Treat the reponse body as a `NSString`
+ 
+ When a successful response is received, a `NSString` will be available at at the `content` property of the response.
+
+ This method assigns a `<BBHTTPToStringConverter>` as the `<responseContentHandler>` for this request.
+ */
+- (void)downloadContentAsString;
+
+/**
+ Treat the reponse body as JSON.
+ 
+ When a successful response is received, the parsed JSON object will be available at the `content` property of the 
+ response.
+
+ This method assigns a `<BBJSONParser>` as the `<responseContentHandler>` for this request.
+ */
+- (void)downloadContentAsJSON;
+
+/**
+ Treat the reponse body as an image.
+
+ When a successful response is received, the decoded `NSImage`/`UIImage` will be available at the `content` property of
+ the response.
+
+ This method assigns a `<BBHTTPImageDecoder>` as the `<responseContentHandler>` for this request.
+ */
+- (void)downloadContentAsImage;
+
+/**
+ Download the response body directo to a file.
+ 
+ The `content` property of the response will be nil. If the download fails, any partially downloaded file is deleted.
+ 
+ This method assigns a `<BBHTTPFileWriter>` as the `<responseContentHandler>` for this request.
+ 
+ @param pathToFile Path to the file to write to.
+ */
+- (void)downloadToFile:(NSString*)pathToFile;
+
+/**
+ Download the response body directly to an output stream.
+
+ The `content` property of the response will be nil. If the download fails, the stream will be closed.
+
+ This method assigns a `<BBHTTPStreamWriter>` as the `<responseContentHandler>` for this request.
+ 
+ @param stream The output stream to write to.
+ */
+- (void)downloadToStream:(NSOutputStream*)stream;
+
+/**
+ Fluent syntax shortcut for `<downloadContentAsData>`.
+ 
+ @return The current instance.
+ */
+- (instancetype)asData;
+
+/**
+ Fluent syntax shortcut for `<downloadContentAsString>`.
+
+ @return The current instance.
+ */
+- (instancetype)asString;
+
+/**
+ Fluent syntax shortcut for `<downloadContentAsJSON>`.
+
+ @return The current instance.
+ */
+- (instancetype)asJSON;
+
+
 #pragma mark Executing the request
 
 ///----------------------------

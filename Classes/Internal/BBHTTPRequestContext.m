@@ -31,8 +31,8 @@
 @implementation BBHTTPRequestContext
 {
     NSMutableArray* _receivedResponses;
-    NSOutputStream* _downloadStream;
     NSInputStream* _uploadStream;
+    BOOL _discardBodyForCurrentResponse;
 }
 
 
@@ -52,7 +52,6 @@
         _handle = handle;
 
         _uploadAborted = NO;
-        _downloadStream = nil;
         _receivedResponses = [NSMutableArray array];
     }
 
@@ -66,26 +65,31 @@
 {
     if (_currentResponse == nil) return NO;
 
-    if (_downloadStream != nil) {
-        if ((_request.downloadToStream == nil) && (_request.downloadToFile == nil)) {
-            _currentResponse.data = [_downloadStream propertyForKey:NSStreamDataWrittenToMemoryStreamKey];
-        }
+    id parsedContent = nil;
 
-        [_downloadStream close];
-        _downloadStream = nil;
+    if (_currentResponse.code == 100) {
+        _uploadAccepted = YES;
+    } else if (!_discardBodyForCurrentResponse) {
+        NSError* error = nil;
+        parsedContent = [_request.responseContentHandler parseContent:&error];
+
+        if (error != nil) _error = error;
     }
 
-    _currentResponse.contentSize = _downloadedBytes;
-    [_receivedResponses addObject:_currentResponse];
-    if (_currentResponse.code == 100) _uploadAccepted = YES;
-
+    [_currentResponse finishWithContent:parsedContent size:_downloadedBytes successful:(_error == nil)];
     BBHTTPResponse* response = _currentResponse;
     _currentResponse = nil;
+    [_receivedResponses addObject:response];
 
-    BBHTTPLogDebug(@"%@ | Response with status '%lu' (%@) finished.",
-                   self, (unsigned long)response.code, response.message);
-    
-    return YES;
+    if (_error != nil) {
+        BBHTTPLogDebug(@"%@ | Response with status '%lu' (%@) finished with error parsing content: %@.",
+                       self, (unsigned long)response.code, response.message, [_error localizedDescription]);
+        return NO;
+    } else {
+        BBHTTPLogDebug(@"%@ | Response with status '%lu' (%@) finished.",
+                       self, (unsigned long)response.code, response.message);
+        return YES;
+    }
 }
 
 - (void)finishWithError:(NSError*)error
@@ -174,8 +178,9 @@
     _uploadedBytes = 0;
     _downloadSize = 0;
     _downloadedBytes = 0;
+    _discardBodyForCurrentResponse = NO;
     _currentResponse = [BBHTTPResponse responseWithStatusLine:line];
-    if (_currentResponse == nil) return NO;
+    if (_currentResponse == nil) return NO; // May happen if line is not a valid status response line
 
     BBHTTPLogDebug(@"%@ | Receiving response with line '%@'.", self, line);
     if ([_request isUpload] && (_currentResponse.code >= 300)) {
@@ -196,43 +201,41 @@
 - (BOOL)appendDataToCurrentResponse:(uint8_t*)bytes withLength:(NSUInteger)length
 {
     if (_currentResponse == nil) return NO;
+    if (_discardBodyForCurrentResponse) return YES;
 
-    if (_downloadStream == nil) {
-        if (_request.downloadToStream != nil) {
-            _downloadStream = _request.downloadToStream;
-        } else if (_request.downloadToFile != nil) {
-            _downloadStream = [NSOutputStream outputStreamToFileAtPath:_request.downloadToFile append:NO];
-        } else {
-            _downloadStream = [NSOutputStream outputStreamToMemory];
+    if (_downloadedBytes == 0) { // first piece of response body arrives
+        if (_request.responseContentHandler == nil) {
+            _discardBodyForCurrentResponse = YES;
+            return YES;
         }
-        [_downloadStream open];
 
-        if (![_downloadStream hasSpaceAvailable]) {
-            _error = BBHTTPCreateNSErrorWithReason(BBHTTPErrorCodeDownloadCannotWriteToStream,
-                                                   @"Couldn't read response body",
-                                                   @"Download stream/file cannot be written to.");
+        NSError* error = nil;
+        BOOL parserAcceptsResponse = [_request.responseContentHandler
+                                      prepareWithResponse:_currentResponse.code message:_currentResponse.message
+                                      headers:_currentResponse.headers error:&error];
+
+        if (!parserAcceptsResponse) {
+            _discardBodyForCurrentResponse = YES;
+            if (error != nil) _error = error;
+        }
+
+        if (_error != nil) {
+            BBHTTPLogError(@"%@ | Request handler rejected %lu %@ response with error: %@",
+                           self, (unsigned long)_currentResponse.code, _currentResponse.message,
+                           [_error localizedDescription]);
             return NO;
         }
+
+        // fall to code below
     }
 
-    NSInteger written = [_downloadStream write:bytes maxLength:length];
-    if (written == -1) {
-        BBHTTPLogWarn(@"%@ | Error writing to response stream.", self);
-        [_downloadStream close];
-        _downloadStream = nil;
-        return NO;
-    } else if (written < length) {
-        BBHTTPLogWarn(@"%@ | Could only write %ld bytes to stream (expecting %lu)",
-                      self, (long)written, (unsigned long)length);
-        [_downloadStream close];
-        _downloadStream = nil;
-        return NO;
+    if ([self transferBytes:bytes withLength:length toHandler:_request.responseContentHandler]) {
+        _downloadedBytes += length;
+        [_request downloadProgressedToCurrent:_downloadedBytes ofTotal:_downloadSize];
+        return YES;
     }
 
-    _downloadedBytes += length;
-    [_request downloadProgressedToCurrent:_downloadedBytes ofTotal:_downloadSize];
-    
-    return YES;
+    return NO;
 }
 
 
@@ -265,30 +268,29 @@
     return YES;
 }
 
+- (BOOL)transferBytes:(uint8_t*)bytes withLength:(NSUInteger)length toHandler:(id<BBHTTPContentHandler>)handler
+{
+    NSError* error = nil;
+    NSInteger written = [handler appendResponseBytes:bytes withLength:length error:&error];
+    if (error != nil) {
+        _error = error;
+        return NO;
+    } else if (written < length) {
+        _error = BBHTTPCreateNSErrorWithReason(BBHTTPErrorCodeDownloadCannotWriteToHandler,
+                                               @"Error handling response content",
+                                               @"Response handler capacity reached before content was fully read.");
+        BBHTTPLogError(@"%@ | Could only write %ld bytes to response handler (expecting %lu)",
+                       self, (long)written, (unsigned long)length);
+        return NO;
+    }
+
+    return YES;
+}
+
 - (void)cleanup:(BOOL)success
 {
     if (_uploadStream != nil) [_uploadStream close];
-    if (_downloadStream != nil) [_downloadStream close];
-
-    if (!success && (_request.downloadToFile != nil) && (_downloadStream != nil)) {
-        [self deleteFileInBackground:_request.downloadToFile];
-    }
 }
-
-- (void)deleteFileInBackground:(NSString*)file
-{
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-        NSError* error = nil;
-        if (![[NSFileManager defaultManager] removeItemAtPath:file error:&error]) {
-            NSError* cause = [[error userInfo] objectForKey:NSUnderlyingErrorKey];
-            NSString* description = cause == nil ? [error localizedDescription] : [cause localizedDescription];
-            BBHTTPLogWarn(@"[%@] Deletion of partially downloaded file '%@' failed: %@", self, file, description);
-        } else {
-            BBHTTPLogTrace(@"[%@] Deleted partially downloaded file '%@'.", self, file);
-        }
-    });
-}
-
 
 #pragma mark Debug
 

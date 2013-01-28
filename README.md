@@ -10,7 +10,7 @@ If boasts an extremely simple and compact interface that allows you to reduce yo
 ```objc
 [[BBHTTPRequest getFrom:@"http://biasedbit.com"] execute:^(BBHTTPResponse* r) {
      NSLog(@"Finished: %u %@ -- received %u bytes of '%@'.",
-           r.code, r.message, [r.data length], r[@"Content-Type"]);
+           r.code, r.message, r.contentSize, r[@"Content-Type"]);
  } error:^(NSError* e) {
      NSLog(@"Request failed: %@", [e localizedDescription]);
  }];
@@ -22,12 +22,12 @@ If boasts an extremely simple and compact interface that allows you to reduce yo
 > SSL uploads are currently broken for content above ~1MB due to a bug in curl. I [reported it](http://curl.haxx.se/mail/lib-2013-01/0295.html) and Nick Zitzmann got me a patch that fixes it. You'll have to [build your own curl](https://github.com/brunodecarvalho/curl-ios-build-scripts) with that patch &mdash; it's the attachment on Nick's reply to my original email. [Ping me](https://twitter.com/biasedbit) if you want the patched static libs or need help patching curl.
 
 
-At this stage there are probably things broken, rough edges to polish and features missing &mdash; using curl's multi handles and multipart uploads to name a few &mdash; to bring it up-to-par with other similar projects. I want to add those over time but help is always more than welcome so be sure to open issues for the features you'd love to see or drop me a mention [@biasedbit](http://twitter.com/biasedbit) on Twitter.
+At this stage there are still a lot of rough edges to polish, bugs to fix and features missing to bring it up-to-par with other similar projects. I want to add those over time but help is always more than welcome so be sure to open issues for the features you'd love to see or drop me a mention [@biasedbit](http://twitter.com/biasedbit) on Twitter.
 
 
 ## Highlights
 
-* Concise asynchronous-driven usage:
+* Concise asynchronous-driven usage
 
     ```objc
     [[BBHTTPRequest getFrom:@"http://biasedbit.com"] execute:^(BBHTTPResponse* response) {
@@ -55,9 +55,9 @@ At this stage there are probably things broken, rough edges to polish and featur
 * Get JSON effortlessly
 
     ```objc
-    [[BBJSONRequest getFrom:@"http://foo.bar"] getJSON:^(id result) {
-        NSLog(@"User email: %@", result[@"user.email"]);
-        NSLog(@"# of followers: %@", result[@"user.followers.@count"]);
+    [[[BBHTTPRequest getFrom:@"http://foo.bar"] asJSON] execute:^(BBHTTPResponse* response) {
+        NSLog(@"User email: %@", response.content[@"user.email"]);
+        NSLog(@"# of followers: %@", response.content[@"user.followers.@count"]);
     } error:^(NSError* error) {
         // Handle request *or* JSON decoding error
     }];
@@ -66,6 +66,18 @@ At this stage there are probably things broken, rough edges to polish and featur
     > Notice the keyed subscript operator behaves as `valueForKeyPath:` rather than `valueForKey:`. That's because JSON responses that would yield a `NSDictionary` get wrapped by `BBJSONDictionary`.
     > Read more about the collection operators [here](http://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/KeyValueCoding/Articles/CollectionOperators.html);
 
+* and images too!
+
+    ```objc
+    [[BBHTTPRequest getFrom:@"http://biasedbit.com/images/badge_dark.png"] setup:^(id request) {
+        [request downloadContentAsImage];
+    } execute:^(BBHTTPResponse* response) {
+        UIImage* image = response.content; // NSImage on OSX
+        NSLog(@"image size: %@", NSStringFromCGSize(image.size));
+    } error:nil];
+    ```
+
+    > This example uses `downloadContentAsImage` on the `setup` block to setup the image download & conversion but you could also use the fluent syntax alternative (`asImage`), just like on the JSON example above.
 
 * Stream uploads from a `NSInputStream` or directly from a file:
 
@@ -73,7 +85,7 @@ At this stage there are probably things broken, rough edges to polish and featur
     [[BBHTTPRequest postFile:@"/path/to/file" to:@"http://api.target.url/"]
      setup:^(BBHTTPRequest* request) {
          request[@"Extra-Header"] = @"something else";
-     } andExecute:^(BBHTTPResponse* response) {
+     } execute:^(BBHTTPResponse* response) {
          // handle response
      } error:nil];
     ```
@@ -84,18 +96,17 @@ At this stage there are probably things broken, rough edges to polish and featur
 * Download to memory buffers or stream directly to file/`NSOutputStream`:
 
     ```objc
-    [[BBHTTPRequest getFrom:@"http://biasedbit.com"]
-     setup:^(BBHTTPRequest* request) {
-         request.downloadToFile = @"/path/to/file";
-     } andExecute:^(BBHTTPResponse* response) {
-         // handle response
-     } error:nil];
+    [[BBHTTPRequest getFrom:@"http://biasedbit.com"] setup:^(BBHTTPRequest* request) {
+        [request downloadToFile:@"/path/to/file"];
+    } execute:^(BBHTTPResponse* response) {
+        // handle response
+    } error:nil];
     ```
 
     > No need to delete the file if the download fails midway; hotpotato will take care of keeping everything clean.
 
 
-* Even the *power-dev* API is clean and concise:
+* A *power-dev* API when you need that extra bit control
 
     ```objc
     BBHTTPExecutor* twitterExecutor = [BBHTTPExecutor initWithId:@"twitter.com"];
@@ -109,7 +120,7 @@ At this stage there are probably things broken, rough edges to polish and featur
 
     request[@"Accept-Language"] = @"en-us";
     request.downloadProgressBlock = ^(NSUInteger current, NSUInteger total) { /* ... */ };
-    request.finishBlock = ^(BBHTTPResponse* response) { /* ... */ };
+    request.finishBlock = ^(BBHTTPRequest* request) { /* ... */ };
 
     [twitterExecutor executeRequest:request];
     ```
@@ -171,12 +182,19 @@ For guides on how to setup and start working with this lib, check out [the wiki 
 The project also includes comprehensive class-level documentation. If you happen to have [appledoc](https://github.com/tomaz/appledoc) installed, just run the `generate` script on the `Docs` folder and it'll create html documentation for you under `Docs/html`.
 
 
-## Credits
+## Acknowledgements
 
 * Daniel Stenberg and everyone else involved in making cURL and libcurl
-* Ben Copsey for the fantastic ASIHTTPRequest, which has been my HTTP workhorse on iOS since day 0
+* Nick Zitzmann for the Secure Transport TLS/SSL curl plugin
+* Ben Copsey for ASIHTTPRequest, which has been my HTTP workhorse on iOS since day 0
 
 
 ## License
 
 Hotpotato is licensed under the Apache Software License version 2.0
+
+
+## Get in touch
+
+I'm on twitter as [@biasedbit](https://twitter.com/biasedbit).
+I also [write](http://biasedbit.com/) every now and then.

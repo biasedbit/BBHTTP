@@ -363,7 +363,9 @@ NSString* const kBBHTTPRequestDefaultUserAgentString = @"BBHotpotato/1.0";
 
 - (NSString*)description
 {
-    return [NSString stringWithFormat:@"%@ %@", _verb, _url];
+    NSString* url = [_url absoluteString];
+    NSString* trimmedUrl = [url length] > 40 ? [[url substringToIndex:37] stringByAppendingString:@"…"] : url;
+    return [NSString stringWithFormat:@"%@ %@", _verb, trimmedUrl];
 }
 
 @end
