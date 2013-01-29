@@ -21,6 +21,12 @@
 
 #import "BBHTTPRequest+Convenience.h"
 
+#import "BBHTTPAccumulator.h"
+#import "BBHTTPToStringConverter.h"
+#import "BBJSONParser.h"
+#import "BBHTTPImageDecoder.h"
+#import "BBHTTPFileWriter.h"
+#import "BBHTTPStreamWriter.h"
 #import "BBHTTPExecutor.h"
 
 
@@ -30,11 +36,11 @@
 @implementation BBHTTPRequest (Convenience)
 
 
-#pragma mark Creating common requests
+#pragma mark      GET
 
-+ (instancetype)getFrom:(NSString*)url
++ (instancetype)getResource:(NSString*)resourceUrl
 {
-    return [self getFromURL:[NSURL URLWithString:url]];
+    return [self getFromURL:[NSURL URLWithString:resourceUrl]];
 }
 
 + (instancetype)getFromURL:(NSURL*)url
@@ -42,17 +48,26 @@
     return [[self alloc] initWithURL:url andVerb:@"GET"];
 }
 
+#pragma mark      DELETE
+
++ (instancetype)deleteResource:(NSString*)resourceUrl
+{
+    return [self deleteAtURL:[NSURL URLWithString:resourceUrl]];
+}
+
 + (instancetype)deleteAtURL:(NSURL*)url
 {
     return [[self alloc] initWithURL:url andVerb:@"DELETE"];
 }
 
-+ (instancetype)postData:(NSData*)data withContentType:(NSString*)contentType to:(NSString*)url
+#pragma mark      POST
+
++ (instancetype)createResource:(NSString*)resourceUrl withData:(NSData*)data contentType:(NSString*)contentType
 {
-    return [self postData:data withContentType:contentType toURL:[NSURL URLWithString:url]];
+    return [self postToURL:[NSURL URLWithString:resourceUrl] data:data contentType:contentType];
 }
 
-+ (instancetype)postData:(NSData*)data withContentType:(NSString*)contentType toURL:(NSURL*)url
++ (instancetype)postToURL:(NSURL*)url data:(NSData*)data contentType:(NSString*)contentType
 {
     BBHTTPRequest* request = [[self alloc] initWithURL:url andVerb:@"POST"];
     [request setUploadData:data withContentType:contentType];
@@ -60,7 +75,22 @@
     return request;
 }
 
-+ (instancetype)putToURL:(NSURL*)url withData:(NSData*)data andContentType:(NSString*)contentType
++ (instancetype)createResource:(NSString*)resourceUrl withContentsOfFile:(NSString*)pathToFile
+{
+    return [self postToURL:[NSURL URLWithString:resourceUrl] withContentsOfFile:pathToFile];
+}
+
++ (instancetype)postToURL:(NSURL*)url withContentsOfFile:(NSString*)pathToFile
+{
+    BBHTTPRequest* request = [[BBHTTPRequest alloc] initWithURL:url andVerb:@"POST"];
+    if (![request setUploadFile:pathToFile]) return nil;
+
+    return request;
+}
+
+#pragma mark      PUT
+
++ (instancetype)putToURL:(NSURL*)url data:(NSData*)data contentType:(NSString*)contentType
 {
     BBHTTPRequest* request = [[self alloc] initWithURL:url andVerb:@"PUT"];
     [request setUploadData:data withContentType:contentType];
@@ -68,17 +98,66 @@
     return request;
 }
 
-+ (instancetype)postFile:(NSString*)path to:(NSString*)url
+
+#pragma mark Configuring response content handling
+
+- (void)downloadContentAsData
 {
-    return [self postFile:path toURL:[NSURL URLWithString:url]];
+    self.responseContentHandler = [[BBHTTPAccumulator alloc] init];
 }
 
-+ (instancetype)postFile:(NSString*)path toURL:(NSURL*)url
+- (void)downloadContentAsString
 {
-    BBHTTPRequest* request = [[BBHTTPRequest alloc] initWithURL:url andVerb:@"POST"];
-    if (![request setUploadFile:path]) return nil;
+    self.responseContentHandler = [[BBHTTPToStringConverter alloc] init];
+}
 
-    return request;
+- (void)downloadContentAsJSON
+{
+    self.responseContentHandler = [[BBJSONParser alloc] init];
+}
+
+- (void)downloadContentAsImage
+{
+    self.responseContentHandler = [[BBHTTPImageDecoder alloc] init];
+}
+
+- (void)downloadToFile:(NSString*)pathToFile
+{
+    self.responseContentHandler = [[BBHTTPFileWriter alloc] initWithTargetFile:pathToFile];
+}
+
+- (void)downloadToStream:(NSOutputStream*)stream
+{
+    self.responseContentHandler = [[BBHTTPStreamWriter alloc] initWithOutputStream:stream];
+}
+
+- (void)discardResponseContent
+{
+    self.responseContentHandler = [BBHTTPSelectiveDiscarder sharedDiscarder];
+}
+
+- (instancetype)asData
+{
+    [self downloadContentAsData];
+    return self;
+}
+
+- (instancetype)asString
+{
+    [self downloadContentAsString];
+    return self;
+}
+
+- (instancetype)asJSON
+{
+    [self downloadContentAsJSON];
+    return self;
+}
+
+- (instancetype)asImage
+{
+    [self downloadContentAsImage];
+    return self;
 }
 
 
@@ -98,6 +177,9 @@
 - (BOOL)execute:(void (^)(BBHTTPResponse* response))completed error:(void (^)(NSError* error))error
         finally:(void (^)())finally
 {
+    // If nothing was specified, load body to memory -- perhaps an instance of BBHTTPDiscard would be better here?
+    if (self.responseContentHandler == nil) [self downloadContentAsData];
+
     self.finishBlock = ^(BBHTTPRequest* request) {
         if (request.error != nil) {
             if (error != nil) error(request.error);

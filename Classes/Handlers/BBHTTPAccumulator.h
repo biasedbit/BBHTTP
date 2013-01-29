@@ -19,9 +19,14 @@
 //  Copyright (c) 2013 BiasedBit. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
+#import "BBHTTPSelectiveDiscarder.h"
 
-int main(int argc, char* argv[])
-{
-    return NSApplicationMain(argc, (const char**)argv);
-}
+
+
+#pragma mark -
+
+/**
+ Convert request body to `NSData`.
+ */
+@interface BBHTTPAccumulator : BBHTTPSelectiveDiscarder
+@end

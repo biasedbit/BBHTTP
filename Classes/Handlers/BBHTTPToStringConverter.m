@@ -19,9 +19,23 @@
 //  Copyright (c) 2013 BiasedBit. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
+#import "BBHTTPToStringConverter.h"
 
-int main(int argc, char* argv[])
+
+
+#pragma mark -
+
+@implementation BBHTTPToStringConverter
+
+
+#pragma mark BBHTTPAccumulator behavior override
+
+- (NSString*)parseContent:(NSError**)error
 {
-    return NSApplicationMain(argc, (const char**)argv);
+    NSData* data = [super parseContent:error];
+    if (((error != NULL) && (*error != nil)) || (data == nil)) return nil;
+
+    return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 }
+
+@end

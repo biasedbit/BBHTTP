@@ -52,6 +52,7 @@ BBHTTPProtocolVersion BBHTTPProtocolVersionFromNSString(NSString* string)
 @implementation BBHTTPResponse
 {
     NSMutableDictionary* _headers;
+    BOOL _successful;
 }
 
 
@@ -95,6 +96,13 @@ BBHTTPProtocolVersion BBHTTPProtocolVersionFromNSString(NSString* string)
 
 #pragma mark Interface
 
+- (void)finishWithContent:(id)content size:(NSUInteger)size successful:(BOOL)successful
+{
+    _content = content;
+    _contentSize = size;
+    _successful = successful;
+}
+
 - (NSString*)headerWithName:(NSString*)header
 {
     return _headers[header];
@@ -117,7 +125,7 @@ BBHTTPProtocolVersion BBHTTPProtocolVersionFromNSString(NSString* string)
 
 - (BOOL)isSuccessful
 {
-    return _code >= 200 && _code < 300;
+    return _successful;
 }
 
 

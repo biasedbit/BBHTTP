@@ -1,15 +1,12 @@
 #import <Availability.h>
-
-#ifdef __OBJC__
-    #import <UIKit/UIKit.h>
-    #import <Foundation/Foundation.h>
-#endif
+#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 // Debug helpers
 
 #if DEBUG
     #define DLOG(...)       NSLog(__VA_ARGS__)
-    #define DOBJ(o)         NSLog(@"%s = %@", #o, o)
+    #define DOBJ(o)         NSLog(@"%s=%@", #o, o)
     #define DMARK           NSLog(@"%s", __PRETTY_FUNCTION__)
     #define DRECT(r)        NSLog(@"%s=%@", #r, NSStringFromCGRect(r))
     #define DPOINT(p)       NSLog(@"%s=%@", #p, NSStringFromCGPoint(p))

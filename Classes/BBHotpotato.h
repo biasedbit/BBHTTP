@@ -24,6 +24,5 @@
 
 #import "BBHTTPExecutor.h"
 #import "BBHTTPRequest+Convenience.h"
-#import "BBJSONRequest.h"
 
 #endif

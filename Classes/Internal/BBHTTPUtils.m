@@ -35,15 +35,12 @@
 
 NSUInteger BBHTTPLogLevel = BBHTTPLogLevelWarn;
 
-void BBHTTPLog(NSUInteger level, NSString* prefix, NSString* format, ...)
+void BBHTTPLog(NSUInteger level, NSString* prefix, NSString* (^statement)())
 {
-    if (level <= BBHTTPLogLevel) {
-        va_list list;
-        va_start(list, format);
-        NSString* fmt = [NSString stringWithFormat:@"BBHTTP | %@ | %@", prefix, format];
-        NSLogv(fmt, list);
-        va_end(list);
-    }
+    // The block logging approach does incur some overhead but since default log level is WARN, the number of
+    // statements supressed (trace, debug & info) is so high that it compensates to not evaluate the formatted
+    // expression for these cases.
+    if (level <= BBHTTPLogLevel) NSLog(@"BBHTTP | %@ | %@", prefix, statement());
 }
 
 

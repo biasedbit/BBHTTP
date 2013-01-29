@@ -34,11 +34,24 @@
 
 - (BOOL)application:(UIApplication*)application didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 {
-    [self getJsonExample];
+    [self getImageExample];
+//    [self getJsonExample];
 //    [self getExample];
 //    [self postExample];
 
     return YES;
+}
+
+- (void)getImageExample
+{
+    [[BBHTTPRequest getResource:@"http://biasedbit.com/images/badge_dark.png"] setup:^(id request) {
+        [request downloadContentAsImage]; // alternative to 'asImage' fluent syntax
+    } execute:^(BBHTTPResponse* response) {
+        UIImage* image = response.content;
+        NSLog(@"image size: %@", NSStringFromCGSize(image.size));
+    } error:^(NSError* error) {
+        NSLog(@"Error: %@", [error localizedDescription]);
+    }];
 }
 
 - (void)getJsonExample
@@ -46,11 +59,12 @@
     NSString* yahooWeather = @"http://query.yahooapis.com/v1/public/yql?format=json&q="
                               "select%20*%20from%20weather.forecast%20where%20woeid%3D2502265";
 
-    [[BBJSONRequest getFrom:yahooWeather] getJSON:^(id result) {
+    [[[BBHTTPRequest getResource:yahooWeather] asJSON] execute:^(BBHTTPResponse* response) {
         NSLog(@"%@: %@",
-              result[@"query.results.channel.description"],
-              result[@"query.results.channel.item.condition.text"]);
-//        DOBJ(result); // dump the whole JSON response
+              response.content[@"query.results.channel.description"],
+              response.content[@"query.results.channel.item.condition.text"]);
+//        DOBJ(response.content); // dump the whole JSON response
+
     } error:^(NSError* error) {
         NSLog(@"Error: %@", [error localizedDescription]);
     }];
@@ -58,9 +72,11 @@
 
 - (void)getExample
 {
-    [[BBHTTPRequest getFrom:@"http://biasedbit.com"] execute:^(BBHTTPResponse* response) {
+    [[BBHTTPRequest getResource:@"http://biasedbit.com"] execute:^(BBHTTPResponse* response) {
          NSLog(@"Finished: %u %@ -- received %u bytes of '%@' %@",
-               response.code, response.message, [response.data length], response[@"Content-Type"], response.headers);
+               response.code, response.message, response.contentSize,
+               response[@"Content-Type"], response.headers);
+
      } error:^(NSError* error) {
          NSLog(@"Error: %@", [error localizedDescription]);
      }];
@@ -68,7 +84,7 @@
 
 - (void)postExample
 {
-    BBHTTPRequest* upload = [BBHTTPRequest postFile:@"/path/to/file" to:@"http://api.target.url/"];
+    BBHTTPRequest* upload = [BBHTTPRequest createResource:@"http://target.api/" withContentsOfFile:@"/path/to/file"];
     upload.uploadProgressBlock = ^(NSUInteger current, NSUInteger total) {
         NSLog(@"--> %u/%u", current, total);
     };
@@ -77,7 +93,7 @@
     };
 
     [upload setup:^(BBHTTPRequest* request) {
-        request[@"User-Agent"] = @"<- super cool, eh?";
+        request[@"User-Agent"] = @"<3 subscript operators";
     } execute:^(BBHTTPResponse* response) {
         NSLog(@"%@ %u %@ %@", NSStringFromBBHTTPProtocolVersion(response.version),
               response.code, response.message, response.headers);
