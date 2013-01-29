@@ -5,7 +5,7 @@ Hotpotato is a rich wrapper for **libcurl** written in Objective-C. Its name der
 
 It is an ARC-only library that uses [features](http://clang.llvm.org/docs/ObjectiveCLiterals.html) introduced by Clang 3.1. Thus, it is only suitable for iOS 5+ and OSX 10.7+.
 
-If boasts an extremely simple and compact interface that allows you to reduce your code to fire off HTTP requests down to a couple of clean lines, while preserving full flexibility should you ever need it.
+It boasts an extremely simple and compact interface that allows you to reduce your code to fire off HTTP requests down to a couple of clean lines, while preserving full flexibility should you ever need it.
 
 ```objc
 [[BBHTTPRequest getResource:@"http://biasedbit.com"] execute:^(BBHTTPResponse* r) {
