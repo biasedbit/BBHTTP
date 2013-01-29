@@ -83,7 +83,7 @@
 + (instancetype)postToURL:(NSURL*)url withContentsOfFile:(NSString*)pathToFile
 {
     BBHTTPRequest* request = [[BBHTTPRequest alloc] initWithURL:url andVerb:@"POST"];
-    if (![request setUploadFile:pathToFile]) return nil;
+    if (![request setUploadFile:pathToFile error:nil]) return nil;
 
     return request;
 }

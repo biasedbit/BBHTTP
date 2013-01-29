@@ -66,9 +66,9 @@ typedef NS_ENUM(NSUInteger, BBHTTPResponseState) {
 
 - (BOOL)finishCurrentResponse;
 - (BOOL)prepareToReceiveData;
-- (void)cleanup:(BOOL)success;
 - (void)requestFinished;
 - (void)requestFinishedWithError:(NSError*)error;
+- (void)cleanup;
 
 
 #pragma mark Managing the upload
@@ -87,7 +87,6 @@ typedef NS_ENUM(NSUInteger, BBHTTPResponseState) {
 - (void)waitFor100ContinueBeforeUploading;
 - (void)pauseUpload;
 - (void)unpauseUpload;
-- (void)abortUpload;
 - (BOOL)is100ContinueRequired;
 - (NSInteger)transferInputToBuffer:(uint8_t*)buffer limit:(NSUInteger)limit;
 
@@ -111,7 +110,6 @@ typedef NS_ENUM(NSUInteger, BBHTTPResponseState) {
 
 @property(strong, nonatomic, readonly) BBHTTPRequest* request;
 @property(assign, nonatomic, readonly) CURL* handle;
-@property(strong, nonatomic, readonly) NSMutableArray* receivedResponses;
 @property(strong, nonatomic, readonly) NSError* error;
 @property(strong, nonatomic, readonly) BBHTTPResponse* currentResponse;
 @property(strong, nonatomic, readonly) BBHTTPResponse* lastResponse;

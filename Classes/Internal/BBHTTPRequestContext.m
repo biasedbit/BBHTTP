@@ -134,6 +134,18 @@
     return YES;
 }
 
+- (void)requestFinished
+{
+    if (_error != nil) {
+        [self cleanup];
+        [_request executionFailedWithError:_error];
+    } else {
+        [self finishCurrentResponse];
+        [self cleanup];
+        [_request executionFinishedWithFinalResponse:[self lastResponse]];
+    }
+}
+
 - (void)requestFinishedWithError:(NSError*)error
 {
     if (_error == nil) _error = error;
@@ -141,18 +153,13 @@
     [self requestFinished];
 }
 
-- (void)requestFinished
+- (void)cleanup
 {
-    if (_error != nil) {
-        [_request executionFailedWithError:_error];
-        [self cleanup:NO];
+    if (_uploadStream != nil) [_uploadStream close];
 
-    } else {
-        [self finishCurrentResponse];
-        [self cleanup:YES];
-
-        BBHTTPResponse* response = [self lastResponse];
-        [_request executionFinishedWithFinalResponse:response];
+    if ((_request.responseContentHandler != nil) &&
+        [_request.responseContentHandler respondsToSelector:@selector(cleanup)]) {
+        [_request.responseContentHandler cleanup];
     }
 }
 
@@ -187,11 +194,6 @@
 - (BOOL)hasUploadBeenAborted
 {
     return _uploadAborted;
-}
-
-- (void)abortUpload
-{
-    _uploadAborted = YES;
 }
 
 - (BOOL)is100ContinueRequired
@@ -330,7 +332,7 @@
     [response setValue:headerValue forHeader:headerName];
 
     // If it's the Content-Length header, set our expected download size
-    if ([headerName isEqualToString:H(ContentLength)]) _downloadSize = [headerValue integerValue];
+    if ([headerName isEqualToString:H(ContentLength)]) _downloadSize = (NSUInteger)[headerValue integerValue];
 
     BBHTTPLogTrace(@"%@ | Received header '%@: %@'.", self, headerName, headerValue);
 
@@ -357,16 +359,6 @@
 
     BBHTTPLogTrace(@"%@ | Transferred %lub to response content handler.", self, (unsigned long)length);
     return YES;
-}
-
-- (void)cleanup:(BOOL)success
-{
-    if (_uploadStream != nil) [_uploadStream close];
-
-    if ((_request.responseContentHandler != nil) &&
-        [_request.responseContentHandler respondsToSelector:@selector(cleanup)]) {
-        [_request.responseContentHandler cleanup];
-    }
 }
 
 - (void)switchToState:(BBHTTPResponseState)state

@@ -28,16 +28,6 @@
 @interface BBHTTPRequest (PrivateInterface)
 
 
-#pragma mark Property access redefinition
-
-@property(assign, nonatomic, readwrite) long long startTimestamp;
-@property(assign, nonatomic, readwrite) long long endTimestamp;
-@property(assign, nonatomic, readwrite) NSUInteger sentBytes;
-@property(assign, nonatomic, readwrite) NSUInteger receivedBytes;
-@property(assign, nonatomic, readwrite) NSError* error;
-@property(assign, nonatomic, readwrite) BBHTTPResponse* response;
-
-
 #pragma mark Events
 
 - (BOOL)executionStarted;

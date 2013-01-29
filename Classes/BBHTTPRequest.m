@@ -25,11 +25,6 @@
 
 
 
-#pragma mark - Constants
-
-NSString* const kBBHTTPRequestDefaultUserAgentString = @"BBHotpotato/1.0";
-
-
 #pragma mark -
 
 @implementation BBHTTPRequest
@@ -155,11 +150,6 @@ NSString* const kBBHTTPRequestDefaultUserAgentString = @"BBHotpotato/1.0";
     if (size > 0) [self setValue:[NSString stringWithFormat:@"%lu", (long)size] forHeader:H(ContentLength)];
 
     return YES;
-}
-
-- (BOOL)setUploadFile:(NSString*)path
-{
-    return [self setUploadFile:path error:nil];
 }
 
 - (BOOL)setUploadFile:(NSString*)path error:(NSError**)error

@@ -168,15 +168,6 @@
 - (BOOL)setUploadStream:(NSInputStream*)stream withContentType:(NSString*)contentType andSize:(NSUInteger)size;
 
 /**
- Shortcut for `<setUploadFile:error:>` that discards error cause.
-
- @param path Absolute path to the file to be uploaded.
-
- @see setUploadFile:error:
- */
-- (BOOL)setUploadFile:(NSString*)path;
-
-/**
  Set the upload stream, from which this request will read data to perform the upload.
 
  Assigning an upload file to a request will override the stream or buffer previously set with 
@@ -232,7 +223,7 @@
 @property(strong, nonatomic, readonly) NSInputStream* uploadStream;
 
 /** The file to upload, if any. */
-@property(copy, nonatomic, readonly) NSString* uploadFile;
+@property(copy, nonatomic) NSString* uploadFile;
 
 /** The in-memory buffer of data to upload, if any. */
 @property(retain, nonatomic, readonly) NSData* uploadData;

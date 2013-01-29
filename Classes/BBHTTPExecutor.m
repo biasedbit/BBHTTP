@@ -24,7 +24,6 @@
 #import "BBHTTPRequestContext.h"
 #import "BBHTTPRequest+PrivateInterface.h"
 #import "BBHTTPUtils.h"
-#import "curl.h"
 
 
 
@@ -42,7 +41,7 @@ static NSString* BBHTTPExecutorConvertToNSString(uint8_t* buffer, size_t length)
     return [line stringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]];
 }
 
-static BOOL BBHTTPExecutorIsFinalHeader(uint8_t* buffer, size_t byteSize, size_t length)
+static BOOL BBHTTPExecutorIsFinalHeader(uint8_t* buffer, size_t size, size_t length)
 {
     if (length != 2) return NO;
     if (buffer[0] == '\r' && buffer[1] == '\n') return YES;
@@ -114,7 +113,8 @@ static size_t BBHTTPExecutorSendCallback(uint8_t* buffer, size_t size, size_t le
         [context hasUploadBeenAborted]) return CURL_READFUNC_ABORT;
 
     if ([context hasUploadBeenAccepted]) {
-        return [context transferInputToBuffer:buffer limit:length];
+        NSInteger transferred = [context transferInputToBuffer:buffer limit:length];
+        return (transferred > 0) ? (size_t)transferred : CURL_READFUNC_ABORT;
 
     } else {
         // Curl has a hardcoded 1 second hiatus for 100-Continue. While that's a decent value under normal
@@ -309,7 +309,7 @@ static BOOL BBHTTPExecutorInitialized = NO;
     } else {
         NSValue* handleWrapper = _availableCurlHandles[0];
         [_availableCurlHandles removeObjectAtIndex:0];
-        handle = (CURL*)[handleWrapper pointerValue];
+        handle = [handleWrapper pointerValue];
     }
 
     return handle;

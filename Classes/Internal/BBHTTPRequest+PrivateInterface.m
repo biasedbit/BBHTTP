@@ -29,47 +29,6 @@
 
 @implementation BBHTTPRequest (PrivateInterface)
 
-// These are already defined on the main class
-@dynamic startTimestamp;
-@dynamic endTimestamp;
-@dynamic sentBytes;
-@dynamic receivedBytes;
-@dynamic error;
-@dynamic response;
-
-
-#pragma mark Property access redefinition
-
-- (void)setStartTimestamp:(long long)startTimestamp
-{
-    _startTimestamp = startTimestamp;
-}
-
-- (void)setEndTimestamp:(long long)endTimestamp
-{
-    _endTimestamp = endTimestamp;
-}
-
-- (void)setSentBytes:(NSUInteger)sentBytes
-{
-    _sentBytes = sentBytes;
-}
-
-- (void)setReceivedBytes:(NSUInteger)receivedBytes
-{
-    _receivedBytes = receivedBytes;
-}
-
-- (void)setError:(NSError*)error
-{
-    _error = error;
-}
-
-- (void)setResponse:(BBHTTPResponse*)response
-{
-    _response = response;
-}
-
 
 #pragma mark Events
 
@@ -77,7 +36,7 @@
 {
     if ([self hasFinished]) return NO;
 
-    self.startTimestamp = BBHTTPCurrentTimeMillis();
+    _startTimestamp = BBHTTPCurrentTimeMillis();
     if (self.startBlock != nil) {
         dispatch_async(dispatch_get_main_queue(), ^{
             self.startBlock();
@@ -92,8 +51,8 @@
 {
     if ([self hasFinished]) return NO;
 
-    self.endTimestamp = BBHTTPCurrentTimeMillis();
-    self.error = error;
+    _endTimestamp = BBHTTPCurrentTimeMillis();
+    _error = error;
 
     if (self.finishBlock != nil) {
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -109,8 +68,8 @@
 {
     if ([self hasFinished]) return NO;
 
-    self.endTimestamp = BBHTTPCurrentTimeMillis();
-    self.response = response;
+    _endTimestamp = BBHTTPCurrentTimeMillis();
+    _response = response;
 
     if (self.finishBlock != nil) {
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -126,7 +85,7 @@
 {
     if ([self hasFinished]) return NO;
 
-    self.sentBytes = current;
+    _sentBytes = current;
 
     if (self.uploadProgressBlock != nil) {
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -141,7 +100,7 @@
 {
     if ([self hasFinished]) return NO;
 
-    self.receivedBytes = current;
+    _receivedBytes = current;
 
     if (self.downloadProgressBlock != nil) {
         dispatch_async(dispatch_get_main_queue(), ^{

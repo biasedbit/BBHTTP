@@ -23,9 +23,9 @@
 
 #import <sys/time.h>
 
-#if TARGET_OS_IPHONE
+#if defined(__IPHONE_OS_VERSION_MIN_REQUIRED)
     #import <MobileCoreServices/MobileCoreServices.h>
-#else
+#elif defined(__MAC_OS_X_VERSION_MIN_REQUIRED)
     #import <CoreServices/CoreServices.h>
 #endif
 

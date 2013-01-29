@@ -84,7 +84,7 @@ BBHTTPProtocolVersion BBHTTPProtocolVersionFromNSString(NSString* string)
     NSString* statusCodeString = [statusLine substringWithRange:statusCodeRange];
 
     BBHTTPProtocolVersion version = BBHTTPProtocolVersionFromNSString(versionString);
-    NSUInteger statusCode = [statusCodeString integerValue];
+    NSUInteger statusCode = (NSUInteger)[statusCodeString integerValue];
 
     NSString* message = [statusLine substringFromIndex:NSMaxRange(statusCodeRange) + 1];
 
