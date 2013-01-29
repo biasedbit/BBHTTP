@@ -51,8 +51,8 @@
 {
     if (![self isAcceptableResponseCode:statusCode]) {
         if (error != NULL) {
-            *error = BBHTTPCreateNSErrorWithFormat(statusCode, @"Unnacceptable response: %lu %@",
-                                                   (unsigned long)statusCode, message);
+            *error = BBHTTPErrorWithFormat(statusCode, @"Unnacceptable response: %lu %@",
+                                           (unsigned long)statusCode, message);
         }
         return NO;
     }
@@ -60,8 +60,8 @@
     NSString* contentType = headers[H(ContentType)]; // might be nil
     if (![self isAcceptableContentType:contentType]) {
         if (error != NULL) {
-            *error = BBHTTPCreateNSError(BBHTTPErrorCodeUnnacceptableContentType,
-                                         [@"Unnacceptable response content: " stringByAppendingString:contentType]);
+            *error = BBHTTPError(BBHTTPErrorCodeUnnacceptableContentType,
+                                 [@"Unnacceptable response content: " stringByAppendingString:contentType]);
         }
         return NO;
     }

@@ -176,13 +176,13 @@ NSString* const kBBHTTPRequestDefaultUserAgentString = @"BBHotpotato/1.0";
 
     unsigned long long size = [attributes fileSize];
     if (size == 0) {
-        if (error != NULL) *error = BBHTTPCreateNSError(-1, @"File is empty (0 bytes)");
+        if (error != NULL) *error = BBHTTPError(-1, @"File is empty (0 bytes)");
         BBHTTPLogError(@"File is empty (0 bytes)");
         return NO;
     } else if (size > NSUIntegerMax) {
         // This can probably be relaxed...
         BBHTTPLogError(@"File is too large (>%lu bytes)", NSUIntegerMax);
-        if (error != NULL) *error = BBHTTPCreateNSErrorWithFormat(-2, @"File is too large (>%lu bytes)", NSUIntegerMax);
+        if (error != NULL) *error = BBHTTPErrorWithFormat(-2, @"File is too large (>%lu bytes)", NSUIntegerMax);
         return NO;
     }
 

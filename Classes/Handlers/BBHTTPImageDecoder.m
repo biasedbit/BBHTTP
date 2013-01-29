@@ -57,8 +57,7 @@
     NSImage* image = [[NSImage alloc] initWithData:data];
 #endif
     if (image == nil) {
-        if (error != NULL) *error = BBHTTPCreateNSError(BBHTTPErrorCodeImageDecodingFailed,
-                                                        @"Image decoding failed");
+        if (error != NULL) *error = BBHTTPError(BBHTTPErrorCodeImageDecodingFailed, @"Image decoding failed");
         return data;
     }
 
