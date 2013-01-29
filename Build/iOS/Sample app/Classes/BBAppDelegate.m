@@ -84,7 +84,7 @@
 
 - (void)postExample
 {
-    BBHTTPRequest* upload = [BBHTTPRequest postFile:@"/path/to/file" to:@"http://api.target.url/"];
+    BBHTTPRequest* upload = [BBHTTPRequest createResource:@"http://target.api/" withContentsOfFile:@"/path/to/file"];
     upload.uploadProgressBlock = ^(NSUInteger current, NSUInteger total) {
         NSLog(@"--> %u/%u", current, total);
     };
