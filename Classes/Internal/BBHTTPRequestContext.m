@@ -33,6 +33,9 @@
     NSMutableArray* _receivedResponses;
     NSInputStream* _uploadStream;
     BOOL _discardBodyForCurrentResponse;
+    BOOL _uploadAccepted;
+    BOOL _uploadPaused;
+    BOOL _uploadAborted;
 }
 
 
@@ -52,6 +55,8 @@
         _handle = handle;
 
         _uploadAborted = NO;
+        _uploadAccepted = YES;
+        _uploadPaused = NO;
         _receivedResponses = [NSMutableArray array];
     }
 
@@ -67,7 +72,11 @@
 
     id parsedContent = nil;
 
-    if (_currentResponse.code == 100) {
+    BBHTTPResponseState nextState = BBHTTPResponseStateFinished; // Mark request as finished...
+
+    if ([self isCurrentResponse100Continue]) {
+        nextState = BBHTTPResponseStateReadingStatusLine; // ... unless it's a 100-Continue; if so, go back to the start
+        // TODO I'm assuming 100-Continue's never have data...
         _uploadAccepted = YES;
     } else if (!_discardBodyForCurrentResponse) {
         NSError* error = nil;
@@ -75,6 +84,8 @@
 
         if (error != nil) _error = error;
     }
+
+    [self switchToState:nextState];
 
     [_currentResponse finishWithContent:parsedContent size:_downloadedBytes successful:(_error == nil)];
     BBHTTPResponse* response = _currentResponse;
@@ -92,14 +103,45 @@
     }
 }
 
-- (void)finishWithError:(NSError*)error
+- (BOOL)prepareToReceiveData
+{
+    if (_request.responseContentHandler == nil) {
+        _discardBodyForCurrentResponse = YES;
+        return YES;
+    }
+
+    NSError* error = nil;
+    BOOL parserAcceptsResponse = [_request.responseContentHandler
+                                  prepareForResponse:_currentResponse.code message:_currentResponse.message
+                                  headers:_currentResponse.headers error:&error];
+
+    if (!parserAcceptsResponse) {
+        _discardBodyForCurrentResponse = YES;
+        if (error != nil) _error = error;
+    }
+
+    if (_error != nil) {
+        BBHTTPLogError(@"%@ | Request handler rejected %lu %@ response with error: %@",
+                       self, (unsigned long)_currentResponse.code, _currentResponse.message,
+                       [_error localizedDescription]);
+        return NO;
+    }
+
+    BBHTTPLogDebug(@"%@ | Request handler accepted %lu %@ response.",
+                   self, (unsigned long)_currentResponse.code, _currentResponse.message);
+
+    [self switchToState:BBHTTPResponseStateReadingData];
+    return YES;
+}
+
+- (void)requestFinishedWithError:(NSError*)error
 {
     if (_error == nil) _error = error;
 
-    [self finish];
+    [self requestFinished];
 }
 
-- (void)finish
+- (void)requestFinished
 {
     if (_error != nil) {
         [_request executionFailedWithError:_error];
@@ -110,13 +152,47 @@
         [self cleanup:YES];
 
         BBHTTPResponse* response = [self lastResponse];
-        NSAssert(response != nil, @"response is nil?"); // TODO can this ever happen?
         [_request executionFinishedWithFinalResponse:response];
     }
 }
 
 
 #pragma mark Managing the upload
+
+- (void)waitFor100ContinueBeforeUploading
+{
+    _uploadAccepted = NO;
+}
+
+- (BOOL)hasUploadBeenAccepted
+{
+    return _uploadAccepted;
+}
+
+- (BOOL)isUploadPaused
+{
+    return _uploadPaused;
+}
+
+- (void)pauseUpload
+{
+    _uploadPaused = YES;
+}
+
+- (void)unpauseUpload
+{
+    _uploadPaused = NO;
+}
+
+- (BOOL)hasUploadBeenAborted
+{
+    return _uploadAborted;
+}
+
+- (void)abortUpload
+{
+    _uploadAborted = YES;
+}
 
 - (BOOL)is100ContinueRequired
 {
@@ -128,15 +204,16 @@
     if (![_request isUpload]) return -1;
 
     if (_uploadStream == nil) {
+        [self switchToState:BBHTTPResponseStateSendingData];
         if (_request.uploadStream != nil) {
             _uploadStream = _request.uploadStream;
 
         } else if (_request.uploadFile != nil) {
             _uploadStream = [NSInputStream inputStreamWithFileAtPath:_request.uploadFile];
             if (_uploadStream == nil) {
-                _error = BBHTTPCreateNSErrorWithReason(BBHTTPErrorCodeUploadFileStreamError,
-                                                       @"Couldn't upload file",
-                                                       @"File does not exist or cannot be read.");
+                _error = BBHTTPErrorWithReason(BBHTTPErrorCodeUploadFileStreamError,
+                                               @"Couldn't upload file",
+                                               @"File does not exist or cannot be read.");
                 return -1;
             }
             BBHTTPLogTrace(@"%@ | Created input stream from file '%@' for upload.", self, _request.uploadFile);
@@ -144,9 +221,9 @@
         } else {
             _uploadStream = [NSInputStream inputStreamWithData:_request.uploadData];
             if (_uploadStream == nil) {
-                _error = BBHTTPCreateNSErrorWithReason(BBHTTPErrorCodeUploadDataStreamError,
-                                                       @"Couldn't upload data",
-                                                       @"Upload data is not instance of NSData.");
+                _error = BBHTTPErrorWithReason(BBHTTPErrorCodeUploadDataStreamError,
+                                               @"Couldn't upload data",
+                                               @"Upload data is not instance of NSData.");
                 return -1;
             }
             BBHTTPLogTrace(@"%@ | Created input stream from in-memory NSData for upload.", self);
@@ -163,6 +240,11 @@
     } else {
         _uploadedBytes += read;
         [_request uploadProgressedToCurrent:_uploadedBytes ofTotal:_request.uploadSize];
+        BBHTTPLogTrace(@"%@ | Transferred %ld b to server.", self, (long)read);
+        if (read < limit) {
+            BBHTTPLogTrace(@"%@ | Upload finished.", self);
+            [self uploadFinished];
+        }
     }
 
     return read;
@@ -188,6 +270,7 @@
         BBHTTPLogTrace(@"%@ | ShouldAbortUpload flag set (final non-success response received)", self);
     }
 
+    [self switchToState:BBHTTPResponseStateReadingHeaders];
     return YES;
 }
 
@@ -202,32 +285,6 @@
 {
     if (_currentResponse == nil) return NO;
     if (_discardBodyForCurrentResponse) return YES;
-
-    if (_downloadedBytes == 0) { // first piece of response body arrives
-        if (_request.responseContentHandler == nil) {
-            _discardBodyForCurrentResponse = YES;
-            return YES;
-        }
-
-        NSError* error = nil;
-        BOOL parserAcceptsResponse = [_request.responseContentHandler
-                                      prepareForResponse:_currentResponse.code message:_currentResponse.message
-                                      headers:_currentResponse.headers error:&error];
-
-        if (!parserAcceptsResponse) {
-            _discardBodyForCurrentResponse = YES;
-            if (error != nil) _error = error;
-        }
-
-        if (_error != nil) {
-            BBHTTPLogError(@"%@ | Request handler rejected %lu %@ response with error: %@",
-                           self, (unsigned long)_currentResponse.code, _currentResponse.message,
-                           [_error localizedDescription]);
-            return NO;
-        }
-
-        // fall to code below
-    }
 
     if ([self transferBytes:bytes withLength:length toHandler:_request.responseContentHandler]) {
         _downloadedBytes += length;
@@ -246,8 +303,20 @@
     return [_receivedResponses lastObject];
 }
 
+- (BOOL)isCurrentResponse100Continue
+{
+    if (_currentResponse == nil) return NO;
+
+    return _currentResponse.code == 100;
+}
+
 
 #pragma mark Private helpers
+
+- (void)uploadFinished
+{
+    [self switchToState:BBHTTPResponseStateReadingStatusLine];
+}
 
 - (BOOL)parseHeaderLine:(NSString*)headerLine andAddToResponse:(BBHTTPResponse*)response
 {
@@ -274,16 +343,19 @@
     NSInteger written = [handler appendResponseBytes:bytes withLength:length error:&error];
     if (error != nil) {
         _error = error;
+        BBHTTPLogError(@"%@ | Error raised while attempting to transfer %lub to response content handler: %@",
+                       self, (unsigned long)length, [error localizedDescription]);
         return NO;
     } else if (written < length) {
-        _error = BBHTTPCreateNSErrorWithReason(BBHTTPErrorCodeDownloadCannotWriteToHandler,
-                                               @"Error handling response content",
-                                               @"Response handler capacity reached before content was fully read.");
+        _error = BBHTTPErrorWithReason(BBHTTPErrorCodeDownloadCannotWriteToHandler,
+                                       @"Error handling response content",
+                                       @"Response handler capacity reached before content was fully read.");
         BBHTTPLogError(@"%@ | Could only write %ld bytes to response handler (expecting %lu)",
                        self, (long)written, (unsigned long)length);
         return NO;
     }
 
+    BBHTTPLogTrace(@"%@ | Transferred %lub to response content handler.", self, (unsigned long)length);
     return YES;
 }
 
@@ -297,11 +369,38 @@
     }
 }
 
+- (void)switchToState:(BBHTTPResponseState)state
+{
+    BBHTTPResponseState oldState = _state;
+    _state = state;
+    BBHTTPLogTrace(@"%@ | Transitioned from state: '%@'", self, [self humanReadableState:oldState]);
+}
+
+
 #pragma mark Debug
+
+- (NSString*)humanReadableState:(BBHTTPResponseState)state
+{
+    switch (state) {
+        case BBHTTPResponseStateReady:
+            if ([_request isUpload]) return @"wait send ";
+            else return @"wait resp ";
+        case BBHTTPResponseStateSendingData:
+            return @"tx request";
+        case BBHTTPResponseStateReadingStatusLine:
+            return @"wait resp ";
+        case BBHTTPResponseStateReadingHeaders:
+            return @"rx headers";
+        case BBHTTPResponseStateReadingData:
+            return @"rx content";
+        default:
+            return @"terminated";
+    }
+}
 
 - (NSString*)description
 {
-    return [_request description];
+    return [NSString stringWithFormat:@"%@ | %@", _request, [self humanReadableState:_state]];
 }
 
 @end

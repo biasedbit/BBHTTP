@@ -27,9 +27,12 @@
 #pragma mark - Enums
 
 typedef NS_ENUM(NSUInteger, BBHTTPResponseState) {
-    BBHTTPResponseStateReadingStatusLine = 0,
+    BBHTTPResponseStateReady = 0,
+    BBHTTPResponseStateSendingData,
+    BBHTTPResponseStateReadingStatusLine,
     BBHTTPResponseStateReadingHeaders,
-    BBHTTPResponseStateReadingData
+    BBHTTPResponseStateReadingData,
+    BBHTTPResponseStateFinished
 };
 
 
@@ -61,12 +64,11 @@ typedef NS_ENUM(NSUInteger, BBHTTPResponseState) {
 /// @name Managing state transitions
 /// --------------------------------
 
-@property(assign, nonatomic) BBHTTPResponseState state;
-
 - (BOOL)finishCurrentResponse;
+- (BOOL)prepareToReceiveData;
 - (void)cleanup:(BOOL)success;
-- (void)finish;
-- (void)finishWithError:(NSError*)error;
+- (void)requestFinished;
+- (void)requestFinishedWithError:(NSError*)error;
 
 
 #pragma mark Managing the upload
@@ -75,13 +77,17 @@ typedef NS_ENUM(NSUInteger, BBHTTPResponseState) {
 /// @name Managing the upload
 /// -------------------------
 
-@property(assign, nonatomic) BOOL uploadAccepted;
-@property(assign, nonatomic) BOOL uploadPaused;
-@property(assign, nonatomic, readonly) BOOL uploadAborted;
+@property(assign, nonatomic, readonly, getter = hasUploadBeenAccepted) BOOL uploadAccepted;
+@property(assign, nonatomic, readonly, getter = isUploadPaused) BOOL uploadPaused;
+@property(assign, nonatomic, readonly, getter = hasUploadBeenAborted) BOOL uploadAborted;
 @property(assign, nonatomic, readonly) NSUInteger uploadedBytes;
 @property(assign, nonatomic, readonly) NSUInteger downloadSize;
 @property(assign, nonatomic, readonly) NSUInteger downloadedBytes;
 
+- (void)waitFor100ContinueBeforeUploading;
+- (void)pauseUpload;
+- (void)unpauseUpload;
+- (void)abortUpload;
 - (BOOL)is100ContinueRequired;
 - (NSInteger)transferInputToBuffer:(uint8_t*)buffer limit:(NSUInteger)limit;
 
@@ -109,5 +115,8 @@ typedef NS_ENUM(NSUInteger, BBHTTPResponseState) {
 @property(strong, nonatomic, readonly) NSError* error;
 @property(strong, nonatomic, readonly) BBHTTPResponse* currentResponse;
 @property(strong, nonatomic, readonly) BBHTTPResponse* lastResponse;
+@property(assign, nonatomic, readonly) BBHTTPResponseState state;
+
+- (BOOL)isCurrentResponse100Continue;
 
 @end

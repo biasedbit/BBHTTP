@@ -56,40 +56,42 @@ static size_t BBHTTPExecutorReadStatusLine(uint8_t* buffer, size_t size, size_t 
     BBHTTPEnsureSuccessOrReturn0([context beginResponseWithLine:line]);
 
     // Subsequent callbacks will hit BBHTTPExecutorReadHeader()
-    context.state = BBHTTPResponseStateReadingHeaders;
-
     return length;
 }
 
 static size_t BBHTTPExecutorReadHeader(uint8_t* buffer, size_t size, size_t length, BBHTTPRequestContext* context)
 {
-    if (BBHTTPExecutorIsFinalHeader(buffer, size, length)) { // Finished receiving headers
-        BBHTTPResponse* currentResponse = [context currentResponse];
-        if (currentResponse.code == 100) {
-            // 100-Continue responses cannot contain body so we switch state to read status line which will
-            // cause the next call to this callback to create a new response
-            [context finishCurrentResponse];
+    BOOL endOfHeaders = BBHTTPExecutorIsFinalHeader(buffer, size, length);
 
-            // Subsequent callbacks will hit BBHTTPExecutorReadStatusLine()
-            context.state = BBHTTPResponseStateReadingStatusLine;
-        } else {
-            // Subsequent callbacks will hit BBHTTPExecutorAppendData()
-            context.state = BBHTTPResponseStateReadingData;
-        }
-
-        // If upload was paused, unpause it. We either got 100-Continue or any other response will be considered error.
-        if (context.uploadPaused) {
-            BBHTTPLogTrace(@"%@ | Response received (%lu) and upload was paused; unpausing...",
-                           context, (unsigned long)currentResponse.code);
-            context.uploadPaused = NO;
-            curl_easy_pause(context.handle, CURLPAUSE_SEND_CONT);
-        }
-    } else {
+    if (!endOfHeaders) {
         NSString* headerLine = BBHTTPExecutorConvertToNSString(buffer, length);
         BBHTTPEnsureSuccessOrReturn0([context addHeaderToCurrentResponse:headerLine]);
+
+        // Subsequent callbacks will keep hitting BBHTTPExecutorReadHeader()
+        return length;
     }
 
-    return length;
+    // End of headers reached, data will follow
+    BBHTTPLogTrace(@"%@ | All headers received.", context);
+    BOOL canProceed = YES;
+    if ([context isCurrentResponse100Continue]) {
+        // Subsequent callbacks will hit BBHTTPExecutorReadStatusLine()
+        [context finishCurrentResponse];
+    } else {
+        // Subsequent callbacks will hit BBHTTPExecutorAppendData()
+        // Response content handler may reject (or fail to accept) this request, in which case this will return NO
+        canProceed = [context prepareToReceiveData];
+    }
+
+    // If upload was paused, we always have to unpause it, otherwise curl gets stuck.
+    if ([context isUploadPaused]) {
+        BBHTTPLogTrace(@"%@ | Response received (%lu) and upload was paused; unpausing...",
+                       context, (unsigned long)[context currentResponse].code);
+        [context unpauseUpload];
+        curl_easy_pause(context.handle, CURLPAUSE_SEND_CONT);
+    }
+
+    return canProceed ? length : 0;
 }
 
 static size_t BBHTTPExecutorAppendData(uint8_t* buffer, size_t size, size_t length, BBHTTPRequestContext* context)
@@ -109,19 +111,17 @@ static size_t BBHTTPExecutorSendCallback(uint8_t* buffer, size_t size, size_t le
 
     if ([context.request wasCancelled] ||
         ![context.request isUpload] ||
-        context.uploadAborted) return CURL_READFUNC_ABORT;
+        [context hasUploadBeenAborted]) return CURL_READFUNC_ABORT;
 
-    if (context.uploadAccepted) {
-        NSInteger written = [context transferInputToBuffer:buffer limit:length];
-        BBHTTPLogTrace(@"%@ | Wrote %ld (max: %lu) bytes to server", context, (long)written, length);
-        return written;
+    if ([context hasUploadBeenAccepted]) {
+        return [context transferInputToBuffer:buffer limit:length];
 
     } else {
         // Curl has a hardcoded 1 second hiatus for 100-Continue. While that's a decent value under normal
         // circumstances, it's still a very short window. Thus, even if curl decides it's time to start writing to the
         // server (even though 100-Continue hasn't been received), we hold upload until we receive it. This may cause
         // the request to fail due to timeout.
-        context.uploadPaused = YES;
+        [context pauseUpload];
         BBHTTPLogTrace(@"%@ | ReadCallback: 100-Continue hasn't been received yet, holding off upload.", context);
         return CURL_READFUNC_PAUSE;
     }
@@ -132,6 +132,7 @@ static size_t BBHTTPExecutorReceiveCallback(uint8_t* buffer, size_t size, size_t
     if ([context.request wasCancelled]) return 0;
 
     switch (context.state) {
+        case BBHTTPResponseStateReady:
         case BBHTTPResponseStateReadingStatusLine:
             return BBHTTPExecutorReadStatusLine(buffer, size, length, context);
 
@@ -142,6 +143,7 @@ static size_t BBHTTPExecutorReceiveCallback(uint8_t* buffer, size_t size, size_t
             return BBHTTPExecutorAppendData(buffer, size, length, context);
 
         default:
+            NSLog(@"Ohhhh diabo! %d", context.state);
             // never happens...
             return 0;
     }
@@ -331,10 +333,7 @@ static BOOL BBHTTPExecutorInitialized = NO;
     if ([context is100ContinueRequired]) {
         // Whenever we send out the Expect: 100-Continue header, we first must receive confirmation before sending data.
         // This part is just the setup, check out BBHTTPExecutorSendCallback() for the logic.
-        context.uploadAccepted = NO;
-    } else {
-        // Don't wait for 100-Continue from the server, just pump data after sending headers.
-        context.uploadAccepted = YES;
+        [context waitFor100ContinueBeforeUploading];
     }
 
     if ([request isUpload] &&
@@ -498,22 +497,22 @@ static BOOL BBHTTPExecutorInitialized = NO;
     curl_easy_reset(handle);
 
     if ([request wasCancelled]) {
-        static NSError* cancelError = nil;
-        if (cancelError == nil) cancelError = BBHTTPCreateNSError(BBHTTPErrorCodeCancelled, @"Request cancelled.");
-        [context finishWithError:cancelError];
+        BBHTTPSingleton(NSError, cancelError, BBHTTPError(BBHTTPErrorCodeCancelled, @"Request cancelled."));
+        [context requestFinishedWithError:cancelError];
         BBHTTPLogInfo(@"%@ | Request cancelled.", context);
 
     } else if (curlResult != CURLE_OK) {
         NSError* error = context.error;
         if (error != nil) {
-            [context finish];
+            [context requestFinished];
         } else {
             error = [self convertCURLCodeToNSError:curlResult context:context];
-            [context finishWithError:error];
+            [context requestFinishedWithError:error];
         }
         BBHTTPLogInfo(@"%@ | Request abnormally terminated: %@", context, [error localizedDescription]);
+
     } else {
-        [context finish];
+        [context requestFinished];
         BBHTTPLogInfo(@"%@ | Request finished.", context);
     }
 }
@@ -713,8 +712,8 @@ static BOOL BBHTTPExecutorInitialized = NO;
             break;
     }
 
-    if (reason == nil) return BBHTTPCreateNSError(code, description);
-    else return BBHTTPCreateNSErrorWithReason(code, description, reason);
+    if (reason == nil) return BBHTTPError(code, description);
+    else return BBHTTPErrorWithReason(code, description, reason);
 }
 
 @end
