@@ -43,17 +43,13 @@
 }
 
 
-#if defined(__IPHONE_OS_VERSION_MIN_REQUIRED)
-- (UIImage*)parseContent:(NSError**)error
-#elif defined(__MAC_OS_X_VERSION_MIN_REQUIRED)
-- (NSImage*)parseContent:(NSError**)error
-#endif
+#pragma mark BBHTTPAccumulator behavior override
+
+- (id)parseContent:(NSError**)error
 {
     // super ensures we have a valid response code and a valid content type
     NSData* data = [super parseContent:error];
-
-    if ((error != NULL) && (*error != nil)) return nil;
-    if (data == nil) return nil;
+    if (((error != NULL) && (*error != nil)) || (data == nil)) return nil;
 
 #if defined(__IPHONE_OS_VERSION_MIN_REQUIRED)
     UIImage* image = [UIImage imageWithData:data];
@@ -63,7 +59,7 @@
     if (image == nil) {
         if (error != NULL) *error = BBHTTPCreateNSError(BBHTTPErrorCodeImageDecodingFailed,
                                                         @"Image decoding failed");
-        return nil;
+        return data;
     }
 
     return image;

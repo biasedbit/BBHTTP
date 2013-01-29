@@ -28,14 +28,12 @@
 @implementation BBHTTPToStringConverter
 
 
-#pragma mark BBHTTPAccumulator behavior overrides
+#pragma mark BBHTTPAccumulator behavior override
 
 - (NSString*)parseContent:(NSError**)error
 {
     NSData* data = [super parseContent:error];
-
-    if ((error != NULL) && (*error != nil)) return nil;
-    if (data == nil) return nil;
+    if (((error != NULL) && (*error != nil)) || (data == nil)) return nil;
 
     return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 }

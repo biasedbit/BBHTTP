@@ -36,7 +36,7 @@
 {
     self = [super init];
     if (self != nil) {
-        _acceptableResponses = @[@200, @201, @202, @203, @204];
+        _acceptableResponses = @[@200, @201, @202, @203];
         _acceptableContentTypes = nil; // accept everything
     }
 

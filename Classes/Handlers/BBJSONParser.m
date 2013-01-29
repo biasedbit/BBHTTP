@@ -69,18 +69,16 @@ static NSArray* _DefaultAcceptableContentTypes;
 }
 
 
-#pragma mark BBHTTPAccumulator behavior overrides
+#pragma mark BBHTTPAccumulator behavior override
 
 - (id)parseContent:(NSError**)error
 {
     // super ensures we have a valid response code and a valid content type
     NSData* data = [super parseContent:error];
-
-    if ((error != NULL) && (*error != nil)) return nil;
-    if (data == nil) return nil;
+    if (((error != NULL) && (*error != nil)) || (data == nil)) return nil;
 
     id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:error];
-    if (((error != NULL) && (*error != nil)) || (json == nil)) return nil;
+    if (((error != NULL) && (*error != nil)) || (json == nil)) return data;
 
     // If it's a dictionary, wrap it in BBHTTPDictionary; allows keypath retrieval via subscript operators.
     if ([json isKindOfClass:[NSDictionary class]]) return [[BBJSONDictionary alloc] initWithDictionary:json];

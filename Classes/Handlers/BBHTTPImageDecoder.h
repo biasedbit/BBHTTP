@@ -26,12 +26,4 @@
 #pragma mark -
 
 @interface BBHTTPImageDecoder : BBHTTPAccumulator
-
-
-#if defined(__IPHONE_OS_VERSION_MIN_REQUIRED)
-- (UIImage*)parseContent:(NSError**)error;
-#elif defined(__MAC_OS_X_VERSION_MIN_REQUIRED)
-- (NSImage*)parseContent:(NSError**)error;
-#endif
-
 @end
