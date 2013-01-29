@@ -29,8 +29,8 @@
 		15A14DE916B640B100392F98 /* BBHTTPFileWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 15A14DC816B640B100392F98 /* BBHTTPFileWriter.m */; };
 		15A14DEA16B640B100392F98 /* BBHTTPImageDecoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 15A14DC916B640B100392F98 /* BBHTTPImageDecoder.h */; };
 		15A14DEB16B640B100392F98 /* BBHTTPImageDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 15A14DCA16B640B100392F98 /* BBHTTPImageDecoder.m */; };
-		15A14DEC16B640B100392F98 /* BBHTTPSelectiveHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 15A14DCB16B640B100392F98 /* BBHTTPSelectiveHandler.h */; };
-		15A14DED16B640B100392F98 /* BBHTTPSelectiveHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 15A14DCC16B640B100392F98 /* BBHTTPSelectiveHandler.m */; };
+		15A14DEC16B640B100392F98 /* BBHTTPSelectiveDiscarder.h in Headers */ = {isa = PBXBuildFile; fileRef = 15A14DCB16B640B100392F98 /* BBHTTPSelectiveDiscarder.h */; };
+		15A14DED16B640B100392F98 /* BBHTTPSelectiveDiscarder.m in Sources */ = {isa = PBXBuildFile; fileRef = 15A14DCC16B640B100392F98 /* BBHTTPSelectiveDiscarder.m */; };
 		15A14DEE16B640B100392F98 /* BBHTTPStreamWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 15A14DCD16B640B100392F98 /* BBHTTPStreamWriter.h */; };
 		15A14DEF16B640B100392F98 /* BBHTTPStreamWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 15A14DCE16B640B100392F98 /* BBHTTPStreamWriter.m */; };
 		15A14DF016B640B100392F98 /* BBHTTPToStringConverter.h in Headers */ = {isa = PBXBuildFile; fileRef = 15A14DCF16B640B100392F98 /* BBHTTPToStringConverter.h */; };
@@ -92,8 +92,8 @@
 		15A14DC816B640B100392F98 /* BBHTTPFileWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBHTTPFileWriter.m; sourceTree = "<group>"; };
 		15A14DC916B640B100392F98 /* BBHTTPImageDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBHTTPImageDecoder.h; sourceTree = "<group>"; };
 		15A14DCA16B640B100392F98 /* BBHTTPImageDecoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBHTTPImageDecoder.m; sourceTree = "<group>"; };
-		15A14DCB16B640B100392F98 /* BBHTTPSelectiveHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBHTTPSelectiveHandler.h; sourceTree = "<group>"; };
-		15A14DCC16B640B100392F98 /* BBHTTPSelectiveHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBHTTPSelectiveHandler.m; sourceTree = "<group>"; };
+		15A14DCB16B640B100392F98 /* BBHTTPSelectiveDiscarder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBHTTPSelectiveDiscarder.h; sourceTree = "<group>"; };
+		15A14DCC16B640B100392F98 /* BBHTTPSelectiveDiscarder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBHTTPSelectiveDiscarder.m; sourceTree = "<group>"; };
 		15A14DCD16B640B100392F98 /* BBHTTPStreamWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBHTTPStreamWriter.h; sourceTree = "<group>"; };
 		15A14DCE16B640B100392F98 /* BBHTTPStreamWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBHTTPStreamWriter.m; sourceTree = "<group>"; };
 		15A14DCF16B640B100392F98 /* BBHTTPToStringConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBHTTPToStringConverter.h; sourceTree = "<group>"; };
@@ -267,8 +267,8 @@
 				15A14DC816B640B100392F98 /* BBHTTPFileWriter.m */,
 				15A14DC916B640B100392F98 /* BBHTTPImageDecoder.h */,
 				15A14DCA16B640B100392F98 /* BBHTTPImageDecoder.m */,
-				15A14DCB16B640B100392F98 /* BBHTTPSelectiveHandler.h */,
-				15A14DCC16B640B100392F98 /* BBHTTPSelectiveHandler.m */,
+				15A14DCB16B640B100392F98 /* BBHTTPSelectiveDiscarder.h */,
+				15A14DCC16B640B100392F98 /* BBHTTPSelectiveDiscarder.m */,
 				15A14DCD16B640B100392F98 /* BBHTTPStreamWriter.h */,
 				15A14DCE16B640B100392F98 /* BBHTTPStreamWriter.m */,
 				15A14DCF16B640B100392F98 /* BBHTTPToStringConverter.h */,
@@ -315,7 +315,7 @@
 				15A14DE716B640B100392F98 /* BBHTTPContentHandler.h in Headers */,
 				15A14DE816B640B100392F98 /* BBHTTPFileWriter.h in Headers */,
 				15A14DEA16B640B100392F98 /* BBHTTPImageDecoder.h in Headers */,
-				15A14DEC16B640B100392F98 /* BBHTTPSelectiveHandler.h in Headers */,
+				15A14DEC16B640B100392F98 /* BBHTTPSelectiveDiscarder.h in Headers */,
 				15A14DEE16B640B100392F98 /* BBHTTPStreamWriter.h in Headers */,
 				15A14DF016B640B100392F98 /* BBHTTPToStringConverter.h in Headers */,
 				15A14DF216B640B100392F98 /* BBJSONParser.h in Headers */,
@@ -425,7 +425,7 @@
 				15A14DE616B640B100392F98 /* BBHTTPAccumulator.m in Sources */,
 				15A14DE916B640B100392F98 /* BBHTTPFileWriter.m in Sources */,
 				15A14DEB16B640B100392F98 /* BBHTTPImageDecoder.m in Sources */,
-				15A14DED16B640B100392F98 /* BBHTTPSelectiveHandler.m in Sources */,
+				15A14DED16B640B100392F98 /* BBHTTPSelectiveDiscarder.m in Sources */,
 				15A14DEF16B640B100392F98 /* BBHTTPStreamWriter.m in Sources */,
 				15A14DF116B640B100392F98 /* BBHTTPToStringConverter.m in Sources */,
 				15A14DF316B640B100392F98 /* BBJSONParser.m in Sources */,

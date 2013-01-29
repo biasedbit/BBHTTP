@@ -19,25 +19,14 @@
 //  Copyright (c) 2013 BiasedBit. All rights reserved.
 //
 
-#import "BBHTTPSelectiveHandler.h"
+#import "BBHTTPSelectiveDiscarder.h"
 
 
 
 #pragma mark -
 
-@interface BBHTTPAccumulator : BBHTTPSelectiveHandler
-
-
-#pragma mark BBHTTPResponseProcessor interface overrides
-
 /**
  Convert request body to `NSData`.
-
- @param error On input, a pointer to an error object. If an error occurs, this pointer is set to an actual error object
- containing the error information. You may specify nil for this parameter if you do not want the error information.
-
- @return A `NSData` object containing the content of the response body or `nil` if body was empty.
  */
-- (NSData*)parseContent:(NSError**)error;
-
+@interface BBHTTPAccumulator : BBHTTPSelectiveDiscarder
 @end

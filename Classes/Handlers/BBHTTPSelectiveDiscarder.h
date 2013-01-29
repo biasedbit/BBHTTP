@@ -26,10 +26,24 @@
 #pragma mark -
 
 /**
- Abstract class that includes logic to accept or reject requests, based on their response status code and content type
- headers.
+ Semi-abstract response content handler that includes logic to accept or reject requests, based on their response
+ status code and content type headers.
+ 
+ It is a completely stateless implementation so instead of creating new instances, the `<sharedDiscarder>` should be
+ used to obtain the singleton.
+ 
+ ### Subclassing notes
+ 
+ The behavior of this class is to completely discard any bytes received. To avoid this, subclasses must override
+ the following methods from the `<BBHTTPContentHandler>` protocol:
+ 
+ * `<appendResponse:withLength:error:>`
+ * `<parseContent:>`
+
+ The method `<prepareForResponse:message:headers:error:>` should only be overridden if the subclass needs to perform
+ additional validations; this class already calls `<isAcceptableResponseCode:>` and `<isAcceptableContentType:>`.
  */
-@interface BBHTTPSelectiveHandler : NSObject <BBHTTPContentHandler>
+@interface BBHTTPSelectiveDiscarder : NSObject <BBHTTPContentHandler>
 
 
 #pragma mark Defining response pre-conditions for content parsing
@@ -69,6 +83,11 @@
  Setting this property to `nil` or to an empty array will cause any content type to be accepted.
  */
 @property(copy, nonatomic) NSArray* acceptableContentTypes;
+
+
+#pragma mark Obtaining the singleton
+
++ (instancetype)sharedDiscarder;
 
 
 #pragma mark Determining eligibility for content parsing (for subclasses)

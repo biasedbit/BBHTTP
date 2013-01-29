@@ -19,7 +19,7 @@
 //  Copyright (c) 2013 BiasedBit. All rights reserved.
 //
 
-#import "BBHTTPSelectiveHandler.h"
+#import "BBHTTPSelectiveDiscarder.h"
 
 
 
@@ -36,7 +36,7 @@
  
  If the stream does not have enough space available, the request will fail.
  */
-@interface BBHTTPStreamWriter : BBHTTPSelectiveHandler
+@interface BBHTTPStreamWriter : BBHTTPSelectiveDiscarder
 
 
 #pragma mark Creating a new stream writer

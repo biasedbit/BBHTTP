@@ -19,7 +19,7 @@
 //  Copyright (c) 2013 BiasedBit. All rights reserved.
 //
 
-#import "BBHTTPSelectiveHandler.h"
+#import "BBHTTPSelectiveDiscarder.h"
 
 #import "BBHTTPUtils.h"
 
@@ -27,7 +27,7 @@
 
 #pragma mark -
 
-@implementation BBHTTPSelectiveHandler
+@implementation BBHTTPSelectiveDiscarder
 
 
 #pragma mark Creation
@@ -77,6 +77,15 @@
 - (id)parseContent:(NSError**)error
 {
     return nil;
+}
+
+
+#pragma mark Obtaining the singleton
+
++ (instancetype)sharedDiscarder
+{
+    BBHTTPSingleton(BBHTTPSelectiveDiscarder, instance, [[BBHTTPSelectiveDiscarder alloc] init]);
+    return instance;
 }
 
 

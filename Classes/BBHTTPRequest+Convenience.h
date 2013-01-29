@@ -96,13 +96,6 @@
 #pragma mark Configure how
 
 /**
- Completely discard any data received as the body of the response.
- 
- Sets `<responseContentHandler>` to `nil`.
- */
-- (void)discardResponseContent;
-
-/**
  Treat the reponse body as `NSData`.
  
  When a successful response is received, a `NSData` will be available at at the `content` property of the response.
@@ -161,6 +154,13 @@
  @param stream The output stream to write to.
  */
 - (void)downloadToStream:(NSOutputStream*)stream;
+
+/**
+ Completely discard any data received as the body of the response.
+
+ Sets `<responseContentHandler>` to `<[BBHTTPSelectiveDiscarder sharedDiscarder]>`.
+ */
+- (void)discardResponseContent;
 
 /**
  Fluent syntax shortcut for `<downloadContentAsData>`.

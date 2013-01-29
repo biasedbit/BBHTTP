@@ -19,7 +19,7 @@
 //  Copyright (c) 2013 BiasedBit. All rights reserved.
 //
 
-#import "BBHTTPSelectiveHandler.h"
+#import "BBHTTPSelectiveDiscarder.h"
 
 
 #pragma mark -
@@ -32,7 +32,7 @@
 
  If an error occurs while transferring data to the the file, the partial file will automatically be deleted.
  */
-@interface BBHTTPFileWriter : BBHTTPSelectiveHandler
+@interface BBHTTPFileWriter : BBHTTPSelectiveDiscarder
 
 
 #pragma mark Creating a new file writer

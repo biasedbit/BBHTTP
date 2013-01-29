@@ -90,11 +90,6 @@
 
 #pragma mark Response handling
 
-- (void)discardResponseContent
-{
-    self.responseContentHandler = nil;
-}
-
 - (void)downloadContentAsData
 {
     self.responseContentHandler = [[BBHTTPAccumulator alloc] init];
@@ -123,6 +118,11 @@
 - (void)downloadToStream:(NSOutputStream*)stream
 {
     self.responseContentHandler = [[BBHTTPStreamWriter alloc] initWithOutputStream:stream];
+}
+
+- (void)discardResponseContent
+{
+    self.responseContentHandler = [BBHTTPSelectiveDiscarder sharedDiscarder];
 }
 
 - (instancetype)asData

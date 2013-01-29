@@ -25,7 +25,7 @@
 		15A14D3E16B5C10C00392F98 /* BBHTTPRequest+Convenience.m in Sources */ = {isa = PBXBuildFile; fileRef = 15A14D3316B5C10C00392F98 /* BBHTTPRequest+Convenience.m */; };
 		15A14D3F16B5C10C00392F98 /* BBHTTPResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 15A14D3516B5C10C00392F98 /* BBHTTPResponse.m */; };
 		15A14D6416B5F56000392F98 /* BBHTTPAccumulator.m in Sources */ = {isa = PBXBuildFile; fileRef = 15A14D5A16B5F56000392F98 /* BBHTTPAccumulator.m */; };
-		15A14D6616B5F56000392F98 /* BBHTTPSelectiveHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 15A14D5F16B5F56000392F98 /* BBHTTPSelectiveHandler.m */; };
+		15A14D6616B5F56000392F98 /* BBHTTPSelectiveDiscarder.m in Sources */ = {isa = PBXBuildFile; fileRef = 15A14D5F16B5F56000392F98 /* BBHTTPSelectiveDiscarder.m */; };
 		15A14D6716B5F56000392F98 /* BBHTTPStreamWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 15A14D6116B5F56000392F98 /* BBHTTPStreamWriter.m */; };
 		15A14D6816B5F56000392F98 /* BBHTTPToStringConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 15A14D6316B5F56000392F98 /* BBHTTPToStringConverter.m */; };
 		15A14D6E16B6077300392F98 /* BBHTTPFileWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 15A14D6D16B6077300392F98 /* BBHTTPFileWriter.m */; };
@@ -90,7 +90,7 @@
 		15A14D5916B5F56000392F98 /* BBHTTPAccumulator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBHTTPAccumulator.h; sourceTree = "<group>"; };
 		15A14D5A16B5F56000392F98 /* BBHTTPAccumulator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBHTTPAccumulator.m; sourceTree = "<group>"; };
 		15A14D5D16B5F56000392F98 /* BBHTTPContentHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBHTTPContentHandler.h; sourceTree = "<group>"; };
-		15A14D5F16B5F56000392F98 /* BBHTTPSelectiveHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBHTTPSelectiveHandler.m; sourceTree = "<group>"; };
+		15A14D5F16B5F56000392F98 /* BBHTTPSelectiveDiscarder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBHTTPSelectiveDiscarder.m; sourceTree = "<group>"; };
 		15A14D6016B5F56000392F98 /* BBHTTPStreamWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBHTTPStreamWriter.h; sourceTree = "<group>"; };
 		15A14D6116B5F56000392F98 /* BBHTTPStreamWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBHTTPStreamWriter.m; sourceTree = "<group>"; };
 		15A14D6216B5F56000392F98 /* BBHTTPToStringConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBHTTPToStringConverter.h; sourceTree = "<group>"; };
@@ -101,7 +101,7 @@
 		15A14DB316B63D2900392F98 /* BBHTTPImageDecoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBHTTPImageDecoder.m; sourceTree = "<group>"; };
 		15A14DBC16B6407D00392F98 /* BBJSONDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBJSONDictionary.h; sourceTree = "<group>"; };
 		15A14DBD16B6407D00392F98 /* BBJSONDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBJSONDictionary.m; sourceTree = "<group>"; };
-		15A14DBF16B6408B00392F98 /* BBHTTPSelectiveHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBHTTPSelectiveHandler.h; sourceTree = "<group>"; };
+		15A14DBF16B6408B00392F98 /* BBHTTPSelectiveDiscarder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBHTTPSelectiveDiscarder.h; sourceTree = "<group>"; };
 		15A14DC016B6408B00392F98 /* BBJSONParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBJSONParser.h; sourceTree = "<group>"; };
 		15A14DC116B6408C00392F98 /* BBJSONParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBJSONParser.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -261,8 +261,8 @@
 				15A14D6D16B6077300392F98 /* BBHTTPFileWriter.m */,
 				15A14DB216B63D2800392F98 /* BBHTTPImageDecoder.h */,
 				15A14DB316B63D2900392F98 /* BBHTTPImageDecoder.m */,
-				15A14DBF16B6408B00392F98 /* BBHTTPSelectiveHandler.h */,
-				15A14D5F16B5F56000392F98 /* BBHTTPSelectiveHandler.m */,
+				15A14DBF16B6408B00392F98 /* BBHTTPSelectiveDiscarder.h */,
+				15A14D5F16B5F56000392F98 /* BBHTTPSelectiveDiscarder.m */,
 				15A14D6016B5F56000392F98 /* BBHTTPStreamWriter.h */,
 				15A14D6116B5F56000392F98 /* BBHTTPStreamWriter.m */,
 				15A14D6216B5F56000392F98 /* BBHTTPToStringConverter.h */,
@@ -372,7 +372,7 @@
 				15A14D3E16B5C10C00392F98 /* BBHTTPRequest+Convenience.m in Sources */,
 				15A14D3F16B5C10C00392F98 /* BBHTTPResponse.m in Sources */,
 				15A14D6416B5F56000392F98 /* BBHTTPAccumulator.m in Sources */,
-				15A14D6616B5F56000392F98 /* BBHTTPSelectiveHandler.m in Sources */,
+				15A14D6616B5F56000392F98 /* BBHTTPSelectiveDiscarder.m in Sources */,
 				15A14D6716B5F56000392F98 /* BBHTTPStreamWriter.m in Sources */,
 				15A14D6816B5F56000392F98 /* BBHTTPToStringConverter.m in Sources */,
 				15A14D6E16B6077300392F98 /* BBHTTPFileWriter.m in Sources */,

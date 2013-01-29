@@ -33,7 +33,7 @@
 }
 
 
-#pragma mark BBHTTPContentHandler
+#pragma mark BBHTTPSelectiveDiscarder behavior overrides
 
 - (NSInteger)appendResponseBytes:(uint8_t*)bytes withLength:(NSUInteger)length error:(NSError**)error
 {
