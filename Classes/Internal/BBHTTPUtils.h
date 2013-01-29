@@ -47,30 +47,28 @@
 
 extern NSUInteger BBHTTPLogLevel;
 
-extern void BBHTTPLog(NSUInteger level, NSString* prefix, NSString* format, ...) NS_FORMAT_FUNCTION(3, 4);
+extern void BBHTTPLog(NSUInteger level, NSString* prefix, NSString* (^statement)());
 
-#define BBHTTPLogError(fmt, ...)  BBHTTPLog(1, @"ERROR", fmt, ##__VA_ARGS__);
-#define BBHTTPLogWarn(fmt, ...)   BBHTTPLog(2, @" WARN", fmt, ##__VA_ARGS__);
-#define BBHTTPLogInfo(fmt, ...)   BBHTTPLog(3, @" INFO", fmt, ##__VA_ARGS__);
-#define BBHTTPLogDebug(fmt, ...)  BBHTTPLog(4, @"DEBUG", fmt, ##__VA_ARGS__);
-#define BBHTTPLogTrace(fmt, ...)  BBHTTPLog(5, @"TRACE", fmt, ##__VA_ARGS__);
+#define BBHTTPLogError(fmt, ...)  BBHTTPLog(1, @"ERROR", ^{ return [NSString stringWithFormat:fmt, ##__VA_ARGS__]; });
+#define BBHTTPLogWarn(fmt, ...)   BBHTTPLog(2, @" WARN", ^{ return [NSString stringWithFormat:fmt, ##__VA_ARGS__]; });
+#define BBHTTPLogInfo(fmt, ...)   BBHTTPLog(3, @" INFO", ^{ return [NSString stringWithFormat:fmt, ##__VA_ARGS__]; });
+#define BBHTTPLogDebug(fmt, ...)  BBHTTPLog(4, @"DEBUG", ^{ return [NSString stringWithFormat:fmt, ##__VA_ARGS__]; });
+#define BBHTTPLogTrace(fmt, ...)  BBHTTPLog(5, @"TRACE", ^{ return [NSString stringWithFormat:fmt, ##__VA_ARGS__]; });
 
 
 
 #pragma mark - DRY macros
 
-#define BBHTTPCreateNSErrorWithFormat(c, fmt, ...) \
+#define BBHTTPErrorWithFormat(c, fmt, ...) \
     [NSError errorWithDomain:@"com.biasedbit.hotpotato" code:c \
                     userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithFormat:fmt, ##__VA_ARGS__]}]
 
-// We need two variants because passing a non-statically initialized NSString* instance as fmt will raise warning
-// (becase we could be passing a ton of unmatched %@'s which would cause NSString to start reading from god-knows-where
-// in memory and wreak havoc).
-#define BBHTTPCreateNSError(c, description) \
+// We need this variant because passing a non-statically initialized NSString* instance as fmt raises a warning
+#define BBHTTPError(c, description) \
     [NSError errorWithDomain:@"com.biasedbit.hotpotato" code:c \
                     userInfo:@{NSLocalizedDescriptionKey: description}]
 
-#define BBHTTPCreateNSErrorWithReason(c, description, reason) \
+#define BBHTTPErrorWithReason(c, description, reason) \
     [NSError errorWithDomain:@"com.biasedbit.hotpotato" code:c \
                     userInfo:@{NSLocalizedDescriptionKey: description, NSLocalizedFailureReasonErrorKey: reason}]
 
