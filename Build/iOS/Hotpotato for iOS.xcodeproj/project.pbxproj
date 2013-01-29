@@ -10,13 +10,13 @@
 		151CCAF4169E93FB00726297 /* BBAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 151CCAEB169E93FB00726297 /* BBAppDelegate.m */; };
 		151CCAF7169E93FB00726297 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 151CCAF1169E93FB00726297 /* main.m */; };
 		151CCAF8169E93FB00726297 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 151CCAF3169E93FB00726297 /* Default-568h@2x.png */; };
-		151CCB06169E940400726297 /* libcurl.iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 151CCB01169E940400726297 /* libcurl.iOS.a */; };
 		151CCB0A169E945400726297 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 151CCB09169E945400726297 /* libz.dylib */; };
 		151CCB0B169E945900726297 /* libHotpotato.iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 151CCB07169E940400726297 /* libHotpotato.iOS.a */; };
 		151CCB0D169E945F00726297 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 151CCB0C169E945F00726297 /* Foundation.framework */; };
 		151CCB0F169E946600726297 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 151CCB0E169E946600726297 /* Security.framework */; };
 		151CCB11169E946D00726297 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 151CCB10169E946D00726297 /* MobileCoreServices.framework */; };
 		151CCB13169E947200726297 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 151CCB12169E947200726297 /* UIKit.framework */; };
+		1541D30E16B8144700DE63C1 /* libcurl.iOS.dev.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1541D30D16B8144700DE63C1 /* libcurl.iOS.dev.a */; };
 		15A14D3616B5C10C00392F98 /* BBHTTPRequest+PrivateInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 15A14D2116B5C10C00392F98 /* BBHTTPRequest+PrivateInterface.m */; };
 		15A14D3716B5C10C00392F98 /* BBHTTPRequestContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 15A14D2316B5C10C00392F98 /* BBHTTPRequestContext.m */; };
 		15A14D3816B5C10C00392F98 /* BBHTTPUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 15A14D2516B5C10C00392F98 /* BBHTTPUtils.m */; };
@@ -60,7 +60,6 @@
 		151CCAFE169E940400726297 /* curlrules.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = curlrules.h; sourceTree = "<group>"; };
 		151CCAFF169E940400726297 /* curlver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = curlver.h; sourceTree = "<group>"; };
 		151CCB00169E940400726297 /* easy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = easy.h; sourceTree = "<group>"; };
-		151CCB01169E940400726297 /* libcurl.iOS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcurl.iOS.a; sourceTree = "<group>"; };
 		151CCB02169E940400726297 /* mprintf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mprintf.h; sourceTree = "<group>"; };
 		151CCB03169E940400726297 /* multi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = multi.h; sourceTree = "<group>"; };
 		151CCB04169E940400726297 /* stdcheaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stdcheaders.h; sourceTree = "<group>"; };
@@ -72,6 +71,7 @@
 		151CCB10169E946D00726297 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		151CCB12169E947200726297 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		151CCB3E169E95FD00726297 /* Hotpotato.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hotpotato.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1541D30D16B8144700DE63C1 /* libcurl.iOS.dev.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcurl.iOS.dev.a; sourceTree = "<group>"; };
 		15A14D2016B5C10C00392F98 /* BBHTTPRequest+PrivateInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BBHTTPRequest+PrivateInterface.h"; sourceTree = "<group>"; };
 		15A14D2116B5C10C00392F98 /* BBHTTPRequest+PrivateInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "BBHTTPRequest+PrivateInterface.m"; sourceTree = "<group>"; };
 		15A14D2216B5C10C00392F98 /* BBHTTPRequestContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBHTTPRequestContext.h; sourceTree = "<group>"; };
@@ -111,7 +111,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				151CCB06169E940400726297 /* libcurl.iOS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -125,6 +124,7 @@
 				151CCB0D169E945F00726297 /* Foundation.framework in Frameworks */,
 				151CCB0F169E946600726297 /* Security.framework in Frameworks */,
 				151CCB13169E947200726297 /* UIKit.framework in Frameworks */,
+				1541D30E16B8144700DE63C1 /* libcurl.iOS.dev.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -182,7 +182,7 @@
 		151CCAFB169E940400726297 /* libcurl */ = {
 			isa = PBXGroup;
 			children = (
-				151CCB01169E940400726297 /* libcurl.iOS.a */,
+				1541D30D16B8144700DE63C1 /* libcurl.iOS.dev.a */,
 				151CCAFC169E940400726297 /* curl.h */,
 				151CCAFD169E940400726297 /* curlbuild.h */,
 				151CCAFE169E940400726297 /* curlrules.h */,
@@ -447,6 +447,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Sample app/Other/BBHotpotato-Prefix.pch";
 				INFOPLIST_FILE = "Sample app/Other/BBHotpotato-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Static lib/libcurl\"",
+				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -461,6 +465,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Sample app/Other/BBHotpotato-Prefix.pch";
 				INFOPLIST_FILE = "Sample app/Other/BBHotpotato-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Static lib/libcurl\"",
+				);
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";

@@ -8,7 +8,7 @@ It is an ARC-only library that uses [features](http://clang.llvm.org/docs/Object
 If boasts an extremely simple and compact interface that allows you to reduce your code to fire off HTTP requests down to a couple of clean lines, while preserving full flexibility should you ever need it.
 
 ```objc
-[[BBHTTPRequest getFrom:@"http://biasedbit.com"] execute:^(BBHTTPResponse* r) {
+[[BBHTTPRequest getResource:@"http://biasedbit.com"] execute:^(BBHTTPResponse* r) {
      NSLog(@"Finished: %u %@ -- received %u bytes of '%@'.",
            r.code, r.message, r.contentSize, r[@"Content-Type"]);
  } error:^(NSError* e) {
@@ -18,11 +18,9 @@ If boasts an extremely simple and compact interface that allows you to reduce yo
 // Finished: 200 OK -- received 68364 bytes of 'text/html'.
 ```
 
-> **IMPORTANT NOTE:**  
-> SSL uploads are currently broken for content above ~1MB due to a bug in curl. I [reported it](http://curl.haxx.se/mail/lib-2013-01/0295.html) and Nick Zitzmann got me a patch that fixes it. You'll have to [build your own curl](https://github.com/brunodecarvalho/curl-ios-build-scripts) with that patch &mdash; it's the attachment on Nick's reply to my original email. [Ping me](https://twitter.com/biasedbit) if you want the patched static libs or need help patching curl.
-
-
 At this stage there are still a lot of rough edges to polish, bugs to fix and features missing to bring it up-to-par with other similar projects. I want to add those over time but help is always more than welcome so be sure to open issues for the features you'd love to see or drop me a mention [@biasedbit](http://twitter.com/biasedbit) on Twitter.
+
+The API is **very** likely to keep mutating until this reaches 1.0.
 
 
 ## Highlights
@@ -30,7 +28,7 @@ At this stage there are still a lot of rough edges to polish, bugs to fix and fe
 * Concise asynchronous-driven usage
 
     ```objc
-    [[BBHTTPRequest getFrom:@"http://biasedbit.com"] execute:^(BBHTTPResponse* response) {
+    [[BBHTTPRequest deleteResource:@"http://biasedbit.com"] execute:^(BBHTTPResponse* response) {
         // handle response
     } error:nil]];
     ```
@@ -41,7 +39,7 @@ At this stage there are still a lot of rough edges to polish, bugs to fix and fe
 * Handy common usage patterns
 
     ```objc
-    [[BBHTTPRequest getFrom:@"http://biasedbit.com"] setup:^(id request) {
+    [[BBHTTPRequest getResource:@"http://biasedbit.com"] setup:^(id request) {
         // Prepare request...
     } execute:^(BBHTTPResponse* response) {
         // Handle response...
@@ -55,7 +53,7 @@ At this stage there are still a lot of rough edges to polish, bugs to fix and fe
 * Get JSON effortlessly
 
     ```objc
-    [[[BBHTTPRequest getFrom:@"http://foo.bar"] asJSON] execute:^(BBHTTPResponse* response) {
+    [[[BBHTTPRequest getResource:@"http://foo.bar"] asJSON] execute:^(BBHTTPResponse* response) {
         NSLog(@"User email: %@", response.content[@"user.email"]);
         NSLog(@"# of followers: %@", response.content[@"user.followers.@count"]);
     } error:^(NSError* error) {
@@ -69,7 +67,7 @@ At this stage there are still a lot of rough edges to polish, bugs to fix and fe
 * and images too!
 
     ```objc
-    [[BBHTTPRequest getFrom:@"http://biasedbit.com/images/badge_dark.png"] setup:^(id request) {
+    [[BBHTTPRequest getResource:@"http://biasedbit.com/images/badge_dark.png"] setup:^(id request) {
         [request downloadContentAsImage];
     } execute:^(BBHTTPResponse* response) {
         UIImage* image = response.content; // NSImage on OSX
@@ -82,7 +80,7 @@ At this stage there are still a lot of rough edges to polish, bugs to fix and fe
 * Stream uploads from a `NSInputStream` or directly from a file:
 
     ```objc
-    [[BBHTTPRequest postFile:@"/path/to/file" to:@"http://api.target.url/"]
+    [[BBHTTPRequest createResource:@"http://api.target.url/files withContentsOfFile:@"/path/to/file"]
      setup:^(BBHTTPRequest* request) {
          request[@"Extra-Header"] = @"something else";
      } execute:^(BBHTTPResponse* response) {
@@ -96,7 +94,7 @@ At this stage there are still a lot of rough edges to polish, bugs to fix and fe
 * Download to memory buffers or stream directly to file/`NSOutputStream`:
 
     ```objc
-    [[BBHTTPRequest getFrom:@"http://biasedbit.com"] setup:^(BBHTTPRequest* request) {
+    [[BBHTTPRequest getResource:@"http://biasedbit.com"] setup:^(BBHTTPRequest* request) {
         [request downloadToFile:@"/path/to/file"];
     } execute:^(BBHTTPResponse* response) {
         // handle response
@@ -126,7 +124,7 @@ At this stage there are still a lot of rough edges to polish, bugs to fix and fe
     ```
 
 
-## TODO list
+## Likely TODO list
 
 * Multipart upload helpers
 * Request queue
@@ -165,14 +163,13 @@ A couple of quick tests with command line version of curl proved that curl knew 
 
 ## Dependencies
 
-* `libcurl`
+* `libcurl` (read below)
 * `libz.dylib`
 * `Security.framework`
-* `CoreServices.framework` on OSX
-* `MobileCoreServices.framework` on iOS
+* `CoreServices.framework` on OSX, `MobileCoreServices.framework` on iOS
+* `AppKit.framework` on OSX, `UIKit.framework` on iOS
 
-> **Note:**  
-> You can find libcurl binaries and headers under `Build/iOS/Static lib/libcurl` and `Build/OSX/Static lib/libcurl`. The iOS version was compiled against 6.0 SDK with support for i386 (simulator), armv7 and armv7s (iPhone 3GS and newer). The OSX version was compiled against 10.8 SDK with support for x86_64 (64 bit Intel). If you'd like to build your own custom version, try [this](https://github.com/brunodecarvalho/curl-ios-build-scripts).
+> **Note:** You can find libcurl 7.28.2-DEV binaries and headers under `Build/iOS/Static lib/libcurl` and `Build/OSX/Static lib/libcurl`. There are two versions for iOS, compiled against 6.1 SDK. `libcurl.iOS.dev.a` has support for for i386 (simulator), armv7 and armv7s (iPhone 3GS and newer) while `libcurl.iOS.appstore.a` only has support for arm architectures &mdash; making it smaller in size and thus optimized for releases. The OSX version was compiled against 10.8 SDK with support for x86_64 (64 bit Intel). If you'd like to build your own custom version, try [this](https://github.com/brunodecarvalho/curl-ios-build-scripts).
 
 
 ## Documentation
