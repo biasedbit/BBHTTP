@@ -107,28 +107,29 @@
 {
     if (_request.responseContentHandler == nil) {
         _discardBodyForCurrentResponse = YES;
-        return YES;
+        BBHTTPLogDebug(@"%@ | Response %lu %@ accepted but content will be discarded (no content handler).",
+                       self, (unsigned long)_currentResponse.code, _currentResponse.message);
+    } else {
+        NSError* error = nil;
+        BOOL parserAcceptsResponse = [_request.responseContentHandler
+                                      prepareForResponse:_currentResponse.code message:_currentResponse.message
+                                      headers:_currentResponse.headers error:&error];
+
+        if (!parserAcceptsResponse) {
+            _discardBodyForCurrentResponse = YES;
+            if (error != nil) _error = error;
+        }
+
+        if (_error != nil) {
+            BBHTTPLogError(@"%@ | Request handler rejected %lu %@ response with error: %@",
+                           self, (unsigned long)_currentResponse.code, _currentResponse.message,
+                           [_error localizedDescription]);
+            return NO;
+        }
+
+        BBHTTPLogDebug(@"%@ | Request handler accepted %lu %@ response.",
+                       self, (unsigned long)_currentResponse.code, _currentResponse.message);
     }
-
-    NSError* error = nil;
-    BOOL parserAcceptsResponse = [_request.responseContentHandler
-                                  prepareForResponse:_currentResponse.code message:_currentResponse.message
-                                  headers:_currentResponse.headers error:&error];
-
-    if (!parserAcceptsResponse) {
-        _discardBodyForCurrentResponse = YES;
-        if (error != nil) _error = error;
-    }
-
-    if (_error != nil) {
-        BBHTTPLogError(@"%@ | Request handler rejected %lu %@ response with error: %@",
-                       self, (unsigned long)_currentResponse.code, _currentResponse.message,
-                       [_error localizedDescription]);
-        return NO;
-    }
-
-    BBHTTPLogDebug(@"%@ | Request handler accepted %lu %@ response.",
-                   self, (unsigned long)_currentResponse.code, _currentResponse.message);
 
     [self switchToState:BBHTTPResponseStateReadingData];
     return YES;

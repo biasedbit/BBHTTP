@@ -36,7 +36,7 @@
 {
     self = [super init];
     if (self != nil) {
-        _acceptableResponses = @[@200, @201, @202, @203];
+        _acceptableResponses = @[@200, @201, @202, @203, @204];
         _acceptableContentTypes = nil; // accept everything
     }
 
@@ -60,8 +60,8 @@
     NSString* contentType = headers[H(ContentType)]; // might be nil
     if (![self isAcceptableContentType:contentType]) {
         if (error != NULL) {
-            *error = BBHTTPError(BBHTTPErrorCodeUnnacceptableContentType,
-                                 [@"Unnacceptable response content: " stringByAppendingString:contentType]);
+            *error = BBHTTPErrorWithFormat(BBHTTPErrorCodeUnnacceptableContentType,
+                                           @"Unnacceptable response content: %@", contentType);
         }
         return NO;
     }
@@ -102,10 +102,10 @@
 
 - (BOOL)isAcceptableContentType:(NSString*)contentType
 {
-    if (contentType == nil) return NO; // Reject responses without content type header
-
     // When no acceptable response content types are defined, accept everything
     if ((_acceptableContentTypes == nil) || ([_acceptableContentTypes count] == 0)) return YES;
+
+    if (contentType == nil) return NO; // Reject responses without content type header
 
     // Go through each of the acceptable content types and return when first is matched.
     // For the time being, parameterized content types are not supported.

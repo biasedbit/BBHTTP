@@ -47,9 +47,9 @@
     return written;
 }
 
-- (NSData*)parseContent:(NSError**)error
+- (id)parseContent:(NSError**)error
 {
-    NSAssert(_stream != nil, @"No data to parse or this method was already called");
+    if (_stream == nil) return nil; // No data received
 
     if ([_stream streamError] != nil) {
         if (error != NULL) *error = [_stream streamError];
