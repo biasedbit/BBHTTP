@@ -25,7 +25,7 @@ The API is **very** likely to keep mutating until this reaches 1.0.
 
 ## Highlights
 
-* Concise asynchronous-driven usage
+* Concise asynchronous-driven usage:
 
     ```objc
     [[BBHTTPRequest deleteResource:@"http://foo.bar/baz/1"] execute:^(BBHTTPResponse* r) {
@@ -36,7 +36,7 @@ The API is **very** likely to keep mutating until this reaches 1.0.
     > You don't even need to keep references to the requests, just fire and forget.
 
 
-* Handy common usage patterns
+* Handy common usage patterns:
 
     ```objc
     [[BBHTTPRequest getResource:@"http://foo.bar/baz/1"] setup:^(id request) {
@@ -50,7 +50,7 @@ The API is **very** likely to keep mutating until this reaches 1.0.
     }];
 
 
-* Get JSON effortlessly
+* Get JSON effortlessly:
 
     ```objc
     [[[BBHTTPRequest getResource:@"http://foo.bar/baz.json"] asJSON] execute:^(BBHTTPResponse* r) {
@@ -64,7 +64,7 @@ The API is **very** likely to keep mutating until this reaches 1.0.
     > Notice the keyed subscript operator behaves as `valueForKeyPath:` rather than `valueForKey:`. That's because JSON responses that would yield a `NSDictionary` get wrapped by `BBJSONDictionary`.
     > Read more about the collection operators [here](http://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/KeyValueCoding/Articles/CollectionOperators.html);
 
-* and images too!
+* Images too:
 
     ```objc
     [[BBHTTPRequest getResource:@"http://foo.bar/baz.png"] setup:^(id request) {
@@ -104,7 +104,7 @@ The API is **very** likely to keep mutating until this reaches 1.0.
     > No need to delete the file if the download fails midway; hotpotato will take care of keeping everything clean.
 
 
-* A *power-dev* API when you need that extra bit control
+* A *power-dev* API when you need that extra bit of control:
 
     ```objc
     BBHTTPExecutor* twitterExecutor = [BBHTTPExecutor initWithId:@"twitter.com"];
