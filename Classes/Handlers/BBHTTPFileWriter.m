@@ -47,10 +47,10 @@
 
 #pragma mark BBHTTPContentHandler
 
-- (BOOL)prepareWithResponse:(NSUInteger)statusCode message:(NSString*)message headers:(NSDictionary*)headers
+- (BOOL)prepareForResponse:(NSUInteger)statusCode message:(NSString*)message headers:(NSDictionary*)headers
                       error:(NSError**)error
 {
-    if (![super prepareWithResponse:statusCode message:message headers:headers error:error]) return NO;
+    if (![super prepareForResponse:statusCode message:message headers:headers error:error]) return NO;
 
     _stream = [NSOutputStream outputStreamToFileAtPath:_pathToFile append:NO];
     [_stream open];

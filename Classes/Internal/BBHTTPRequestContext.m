@@ -211,7 +211,7 @@
 
         NSError* error = nil;
         BOOL parserAcceptsResponse = [_request.responseContentHandler
-                                      prepareWithResponse:_currentResponse.code message:_currentResponse.message
+                                      prepareForResponse:_currentResponse.code message:_currentResponse.message
                                       headers:_currentResponse.headers error:&error];
 
         if (!parserAcceptsResponse) {

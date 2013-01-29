@@ -46,8 +46,8 @@
 
 #pragma mark BBHTTPContentHandler
 
-- (BOOL)prepareWithResponse:(NSUInteger)statusCode message:(NSString*)message headers:(NSDictionary*)headers
-                      error:(NSError**)error
+- (BOOL)prepareForResponse:(NSUInteger)statusCode message:(NSString*)message headers:(NSDictionary*)headers
+                     error:(NSError**)error
 {
     if (![self isAcceptableResponseCode:statusCode]) {
         if (error != NULL) {

@@ -37,7 +37,7 @@
 /**
  @return `YES` if this content handler accepts the response, `NO` otherwise.
  */
-- (BOOL)prepareWithResponse:(NSUInteger)statusCode message:(NSString*)message headers:(NSDictionary*)headers
+- (BOOL)prepareForResponse:(NSUInteger)statusCode message:(NSString*)message headers:(NSDictionary*)headers
                       error:(NSError**)error;
 - (NSInteger)appendResponseBytes:(uint8_t*)bytes withLength:(NSUInteger)length error:(NSError**)error;
 - (id)parseContent:(NSError**)error;
