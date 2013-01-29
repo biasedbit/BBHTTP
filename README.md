@@ -8,7 +8,7 @@ It is an ARC-only library that uses [features](http://clang.llvm.org/docs/Object
 It boasts an extremely simple and compact interface that allows you to reduce your code to fire off HTTP requests down to a couple of clean lines, while preserving full flexibility should you ever need it.
 
 ```objc
-[[BBHTTPRequest getResource:@"http://biasedbit.com"] execute:^(BBHTTPResponse* r) {
+[[BBHTTPRequest getResource:@"http://foo.bar/baz"] execute:^(BBHTTPResponse* r) {
      NSLog(@"Finished: %u %@ -- received %u bytes of '%@'.",
            r.code, r.message, r.contentSize, r[@"Content-Type"]);
  } error:^(NSError* e) {
@@ -28,7 +28,7 @@ The API is **very** likely to keep mutating until this reaches 1.0.
 * Concise asynchronous-driven usage
 
     ```objc
-    [[BBHTTPRequest deleteResource:@"http://biasedbit.com"] execute:^(BBHTTPResponse* response) {
+    [[BBHTTPRequest deleteResource:@"http://foo.bar/baz/1"] execute:^(BBHTTPResponse* response) {
         // handle response
     } error:nil]];
     ```
@@ -39,7 +39,7 @@ The API is **very** likely to keep mutating until this reaches 1.0.
 * Handy common usage patterns
 
     ```objc
-    [[BBHTTPRequest getResource:@"http://biasedbit.com"] setup:^(id request) {
+    [[BBHTTPRequest getResource:@"http://foo.bar/baz/1"] setup:^(id request) {
         // Prepare request...
     } execute:^(BBHTTPResponse* response) {
         // Handle response...
@@ -53,7 +53,7 @@ The API is **very** likely to keep mutating until this reaches 1.0.
 * Get JSON effortlessly
 
     ```objc
-    [[[BBHTTPRequest getResource:@"http://foo.bar"] asJSON] execute:^(BBHTTPResponse* response) {
+    [[[BBHTTPRequest getResource:@"http://foo.bar/baz.json"] asJSON] execute:^(BBHTTPResponse* response) {
         NSLog(@"User email: %@", response.content[@"user.email"]);
         NSLog(@"# of followers: %@", response.content[@"user.followers.@count"]);
     } error:^(NSError* error) {
@@ -67,7 +67,7 @@ The API is **very** likely to keep mutating until this reaches 1.0.
 * and images too!
 
     ```objc
-    [[BBHTTPRequest getResource:@"http://biasedbit.com/images/badge_dark.png"] setup:^(id request) {
+    [[BBHTTPRequest getResource:@"http://foo.bar/baz.png"] setup:^(id request) {
         [request downloadContentAsImage];
     } execute:^(BBHTTPResponse* response) {
         UIImage* image = response.content; // NSImage on OSX
@@ -80,7 +80,7 @@ The API is **very** likely to keep mutating until this reaches 1.0.
 * Stream uploads from a `NSInputStream` or directly from a file:
 
     ```objc
-    [[BBHTTPRequest createResource:@"http://api.target.url/files withContentsOfFile:@"/path/to/file"]
+    [[BBHTTPRequest createResource:@"http://foo.bar/baz withContentsOfFile:@"/path/to/file"]
      setup:^(BBHTTPRequest* request) {
          request[@"Extra-Header"] = @"something else";
      } execute:^(BBHTTPResponse* response) {
@@ -94,7 +94,7 @@ The API is **very** likely to keep mutating until this reaches 1.0.
 * Download to memory buffers or stream directly to file/`NSOutputStream`:
 
     ```objc
-    [[BBHTTPRequest getResource:@"http://biasedbit.com"] setup:^(BBHTTPRequest* request) {
+    [[BBHTTPRequest getResource:@"http://foo.bar/baz"] setup:^(BBHTTPRequest* request) {
         [request downloadToFile:@"/path/to/file"];
     } execute:^(BBHTTPResponse* response) {
         // handle response
@@ -113,7 +113,7 @@ The API is **very** likely to keep mutating until this reaches 1.0.
     facebookExecutor.maxParallelRequests = 2;
     ...
     BBHTTPRequest* request = [[BBHTTPRequest alloc]
-                              initWithURL:[NSURL URLWithString:@"http://twitter.com"]
+                              initWithURL:[NSURL URLWithString:@"http://twitter.com/resource"]
                               andVerb:@"GET"];
 
     request[@"Accept-Language"] = @"en-us";
