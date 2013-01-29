@@ -21,7 +21,7 @@
 
 #pragma mark - Constants
 
-#define BBHTTPVersion @"0.9.1"
+#define BBHTTPVersion @"0.9.2"
 
 
 
@@ -49,11 +49,11 @@ extern NSUInteger BBHTTPLogLevel;
 
 extern void BBHTTPLog(NSUInteger level, NSString* prefix, NSString* format, ...) NS_FORMAT_FUNCTION(3, 4);
 
-#define BBHTTPLogTrace(fmt, ...)  BBHTTPLog(5, @"TRACE", fmt, ##__VA_ARGS__);
-#define BBHTTPLogDebug(fmt, ...)  BBHTTPLog(4, @"DEBUG", fmt, ##__VA_ARGS__);
-#define BBHTTPLogInfo(fmt, ...)   BBHTTPLog(3, @" INFO", fmt, ##__VA_ARGS__);
-#define BBHTTPLogWarn(fmt, ...)   BBHTTPLog(2, @" WARN", fmt, ##__VA_ARGS__);
 #define BBHTTPLogError(fmt, ...)  BBHTTPLog(1, @"ERROR", fmt, ##__VA_ARGS__);
+#define BBHTTPLogWarn(fmt, ...)   BBHTTPLog(2, @" WARN", fmt, ##__VA_ARGS__);
+#define BBHTTPLogInfo(fmt, ...)   BBHTTPLog(3, @" INFO", fmt, ##__VA_ARGS__);
+#define BBHTTPLogDebug(fmt, ...)  BBHTTPLog(4, @"DEBUG", fmt, ##__VA_ARGS__);
+#define BBHTTPLogTrace(fmt, ...)  BBHTTPLog(5, @"TRACE", fmt, ##__VA_ARGS__);
 
 
 
@@ -78,22 +78,29 @@ extern void BBHTTPLog(NSUInteger level, NSString* prefix, NSString* format, ...)
 
 #define BBHTTPEnsureSuccessOrReturn0(condition) do { if (!(condition)) return 0; } while(0)
 
-#define BBHTTPCreateSingleton(name, type, value) \
-    static type name; \
-    if ((name) == nil) { \
+#define BBHTTPSingleton(class, name, value) \
+    static class* name = nil; \
+    if (name == nil) { \
         static dispatch_once_t name ## _token; \
-        dispatch_once(&name##_token, ^{ name = (value); }); \
+        dispatch_once(&name##_token, ^{ name = value; }); \
     }
 
-#define BBHTTPCreateSingletonBlock(name, type, block) \
-    static type name; \
-    if ((name) == nil) { \
+#define BBHTTPSingletonString(name, fmt, ...) \
+    static NSString* name = nil; \
+    if (name == nil) { \
+        static dispatch_once_t name ## _token; \
+        dispatch_once(&name##_token, ^{ name = [NSString stringWithFormat:fmt, ##__VA_ARGS__]; }); \
+    }
+
+#define BBHTTPSingletonBlock(class, name, block) \
+    static class* name = nil; \
+    if (name == nil) { \
         static dispatch_once_t name ## _token; \
         dispatch_once(&name##_token, block); \
     }
 
-#define BBHTTPHeaderName(name, override) static NSString* const BBHTTPHeaderName_##name = (override);
-#define BBHTTPHeaderValue(value, override) static NSString* const BBHTTPHeaderValue_##value = (override);
+#define BBHTTPDefineHeaderName(name, override) static NSString* const BBHTTPHeaderName_##name = (override);
+#define BBHTTPDefineHeaderValue(value, override) static NSString* const BBHTTPHeaderValue_##value = (override);
 #define H(name) BBHTTPHeaderName_##name
 #define HV(value) BBHTTPHeaderValue_##value
 
@@ -101,23 +108,23 @@ extern void BBHTTPLog(NSUInteger level, NSString* prefix, NSString* format, ...)
 
 #pragma mark - Headers names
 
-BBHTTPHeaderName(Host,              @"Host") // Will create BBHTTPHeaderName_Host
-BBHTTPHeaderName(UserAgent,         @"User-Agent")
-BBHTTPHeaderName(ContentType,       @"Content-Type")
-BBHTTPHeaderName(ContentLength,     @"Content-Length")
-BBHTTPHeaderName(Accept,            @"Accept")
-BBHTTPHeaderName(AcceptLanguage,    @"Accept-Language")
-BBHTTPHeaderName(Expect,            @"Expect")
-BBHTTPHeaderName(TransferEncoding,  @"Transfer-Encoding")
-BBHTTPHeaderName(Date,              @"Date")
-BBHTTPHeaderName(Authorization,     @"Authorization")
+BBHTTPDefineHeaderName(Host,              @"Host") // Will create BBHTTPHeaderName_Host
+BBHTTPDefineHeaderName(UserAgent,         @"User-Agent")
+BBHTTPDefineHeaderName(ContentType,       @"Content-Type")
+BBHTTPDefineHeaderName(ContentLength,     @"Content-Length")
+BBHTTPDefineHeaderName(Accept,            @"Accept")
+BBHTTPDefineHeaderName(AcceptLanguage,    @"Accept-Language")
+BBHTTPDefineHeaderName(Expect,            @"Expect")
+BBHTTPDefineHeaderName(TransferEncoding,  @"Transfer-Encoding")
+BBHTTPDefineHeaderName(Date,              @"Date")
+BBHTTPDefineHeaderName(Authorization,     @"Authorization")
 
 
 
 #pragma mark - Header values
 
-BBHTTPHeaderValue(100Continue,   @"100-Continue") // Will create BBHTTPHeaderValue_100Continue
-BBHTTPHeaderValue(Chunked,       @"chunked");
+BBHTTPDefineHeaderValue(100Continue,   @"100-Continue") // Will create BBHTTPHeaderValue_100Continue
+BBHTTPDefineHeaderValue(Chunked,       @"chunked");
 
 
 

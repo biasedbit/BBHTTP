@@ -85,26 +85,24 @@ NSString* const kBBHTTPRequestDefaultUserAgentString = @"BBHotpotato/1.0";
         [self setValue:hostHeaderValue forHeader:H(Host)];
         [self setValue:@"*/*" forHeader:H(Accept)];
 
-        BBHTTPCreateSingleton(appName, NSString*,
-                           [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString*)kCFBundleExecutableKey]);
-        BBHTTPCreateSingleton(appVersion, NSString*,
-                              [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]);
+        BBHTTPSingleton(NSString, appName,
+                        [[[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString*)kCFBundleExecutableKey]
+                         stringByReplacingOccurrencesOfString:@" " withString:@"-"]);
+        BBHTTPSingleton(NSString, appVersion,
+                        [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]);
 
 #if defined(__IPHONE_OS_VERSION_MIN_REQUIRED)
-        BBHTTPCreateSingleton(model, NSString*, [[UIDevice currentDevice] model]);
-        BBHTTPCreateSingleton(systemVersion, NSString*, [[UIDevice currentDevice] systemVersion]);
-        NSString* userAgentString = [NSString stringWithFormat:@"BBHotpotato/%@ %@/%@ (%@; iOS %@; Scale/%0.2f)",
-                                     BBHTTPVersion, appName, appVersion, model, systemVersion,
-                                     [[UIScreen mainScreen] scale]];
-
+        BBHTTPSingletonString(userAgent, @"BBHotpotato/%@ %@/%@ (%@; iOS %@; Scale/%0.2f)",
+                              BBHTTPVersion, appName, appVersion,
+                              [[UIDevice currentDevice] model],
+                              [[UIDevice currentDevice] systemVersion],
+                              [[UIScreen mainScreen] scale]);
 #elif defined(__MAC_OS_X_VERSION_MIN_REQUIRED)
-        // untested branch...
-        NSString* osVersion = [[NSProcessInfo processInfo] operatingSystemVersionString];
-        NSString* userAgentString = [NSString stringWithFormat:@"BBHotpotato/%@ %@/%@ (Mac OS X %@)",
-                                     BBHTTPVersion, appName, appVersion, osVersion];
-
+        BBHTTPSingletonString(userAgent, @"BBHotpotato/%@ %@/%@ (Mac OS X %@)",
+                              BBHTTPVersion, appName, appVersion,
+                              [[NSProcessInfo processInfo] operatingSystemVersionString]);
 #endif
-         [self setValue:userAgentString forHeader:H(UserAgent)];
+        [self setValue:userAgent forHeader:H(UserAgent)];
     }
 
     return self;

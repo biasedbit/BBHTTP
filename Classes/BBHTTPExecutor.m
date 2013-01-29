@@ -223,7 +223,7 @@ static BOOL BBHTTPExecutorInitialized = NO;
 
 + (instancetype)sharedExecutor
 {
-    BBHTTPCreateSingleton(instance, BBHTTPExecutor*, [[self alloc] initWithId:@"Shared"]);
+    BBHTTPSingleton(BBHTTPExecutor, instance, [[self alloc] initWithId:@"Shared"]);
 
     return instance;
 }
