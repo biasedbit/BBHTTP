@@ -34,6 +34,9 @@
  */
 @protocol BBHTTPContentHandler <NSObject>
 
+
+@required
+
 /**
  @return `YES` if this content handler accepts the response, `NO` otherwise.
  */
@@ -41,5 +44,13 @@
                       error:(NSError**)error;
 - (NSInteger)appendResponseBytes:(uint8_t*)bytes withLength:(NSUInteger)length error:(NSError**)error;
 - (id)parseContent:(NSError**)error;
+
+
+@optional
+
+/**
+ Perform additional cleanup, if needed.
+ */
+- (void)cleanup;
 
 @end

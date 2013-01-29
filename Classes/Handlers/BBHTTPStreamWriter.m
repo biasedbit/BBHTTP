@@ -66,11 +66,15 @@
 - (id)parseContent:(NSError**)error
 {
     if (([_stream streamError] != nil) && (error != NULL)) *error = [_stream streamError];
-
     if ([_stream streamStatus] != NSStreamStatusClosed) [_stream close];
 
     // There's never anything to return here, this parser merely pumps data to the output stream.
     return nil;
+}
+
+- (void)cleanup
+{
+    if ([_stream streamStatus] != NSStreamStatusClosed) [_stream close];
 }
 
 @end

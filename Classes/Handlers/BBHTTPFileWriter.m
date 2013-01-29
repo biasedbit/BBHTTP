@@ -31,6 +31,7 @@
 {
     NSString* _pathToFile;
     NSOutputStream* _stream;
+    BOOL _needsCleanup;
 }
 
 
@@ -39,7 +40,10 @@
 - (id)initWithTargetFile:(NSString*)pathToFile
 {
     self = [super init];
-    if (self != nil) _pathToFile = pathToFile;
+    if (self != nil) {
+        _pathToFile = pathToFile;
+        _needsCleanup = NO;
+    }
 
     return self;
 }
@@ -54,6 +58,7 @@
 
     _stream = [NSOutputStream outputStreamToFileAtPath:_pathToFile append:NO];
     [_stream open];
+    _needsCleanup = YES;
 
     return YES;
 }
@@ -61,10 +66,7 @@
 - (NSInteger)appendResponseBytes:(uint8_t*)bytes withLength:(NSUInteger)length error:(NSError**)error
 {
     NSInteger written = [_stream write:bytes maxLength:length];
-    if (written <= 0) {
-        [_stream close];
-        [self deleteFileInBackground];
-    }
+    if (written <= 0) [self cleanup];
     if ((written < 0) && (error != NULL)) *error = [_stream streamError];
 
     return written;
@@ -72,12 +74,21 @@
 
 - (id)parseContent:(NSError**)error
 {
+    _needsCleanup = NO;
     if (([_stream streamError] != nil) && (error != NULL)) *error = [_stream streamError];
-
     if ([_stream streamStatus] != NSStreamStatusClosed) [_stream close];
 
     // There's never anything to return here, this parser merely pumps data to the output stream.
     return nil;
+}
+
+- (void)cleanup
+{
+    if (!_needsCleanup) return;
+
+    _needsCleanup = NO;
+    [_stream close];
+    [self deleteFileInBackground];
 }
 
 

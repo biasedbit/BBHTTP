@@ -290,6 +290,11 @@
 - (void)cleanup:(BOOL)success
 {
     if (_uploadStream != nil) [_uploadStream close];
+
+    if ((_request.responseContentHandler != nil) &&
+        [_request.responseContentHandler respondsToSelector:@selector(cleanup)]) {
+        [_request.responseContentHandler cleanup];
+    }
 }
 
 #pragma mark Debug
