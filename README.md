@@ -28,7 +28,7 @@ The API is **very** likely to keep mutating until this reaches 1.0.
 * Concise asynchronous-driven usage
 
     ```objc
-    [[BBHTTPRequest deleteResource:@"http://foo.bar/baz/1"] execute:^(BBHTTPResponse* response) {
+    [[BBHTTPRequest deleteResource:@"http://foo.bar/baz/1"] execute:^(BBHTTPResponse* r) {
         // handle response
     } error:nil]];
     ```
@@ -53,9 +53,9 @@ The API is **very** likely to keep mutating until this reaches 1.0.
 * Get JSON effortlessly
 
     ```objc
-    [[[BBHTTPRequest getResource:@"http://foo.bar/baz.json"] asJSON] execute:^(BBHTTPResponse* response) {
-        NSLog(@"User email: %@", response.content[@"user.email"]);
-        NSLog(@"# of followers: %@", response.content[@"user.followers.@count"]);
+    [[[BBHTTPRequest getResource:@"http://foo.bar/baz.json"] asJSON] execute:^(BBHTTPResponse* r) {
+        NSLog(@"User email: %@", r.content[@"user.email"]);
+        NSLog(@"# of followers: %@", r.content[@"user.followers.@count"]);
     } error:^(NSError* error) {
         // Handle request *or* JSON decoding error
     }];
@@ -80,7 +80,7 @@ The API is **very** likely to keep mutating until this reaches 1.0.
 * Stream uploads from a `NSInputStream` or directly from a file:
 
     ```objc
-    [[BBHTTPRequest createResource:@"http://foo.bar/baz withContentsOfFile:@"/path/to/file"]
+    [[BBHTTPRequest createResource:@"http://foo.bar/baz" withContentsOfFile:@"/path/to/file"]
      setup:^(BBHTTPRequest* request) {
          request[@"Extra-Header"] = @"something else";
      } execute:^(BBHTTPResponse* response) {
