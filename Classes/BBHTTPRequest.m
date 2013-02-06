@@ -69,9 +69,9 @@
         _version = version;
         _maxRedirects = 0;
         _allowInvalidSSLCertificates = NO;
-        _discardBodyForNon200Responses = YES;
         _connectionTimeout = 10;
         _responseReadTimeout = 10;
+        _callbackQueue = dispatch_get_main_queue();
 
         NSString* hostHeaderValue = [_url host];
         NSUInteger port = [self port];
@@ -338,8 +338,12 @@
     _endTimestamp = now;
 
     if (_finishBlock != nil) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            self.finishBlock(self);
+        dispatch_async(_callbackQueue, ^{
+            _finishBlock(self);
+
+            _uploadProgressBlock = nil;
+            _downloadProgressBlock = nil;
+            _finishBlock = nil;
         });
     }
 

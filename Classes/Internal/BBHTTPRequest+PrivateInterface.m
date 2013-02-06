@@ -38,8 +38,9 @@
 
     _startTimestamp = BBHTTPCurrentTimeMillis();
     if (self.startBlock != nil) {
-        dispatch_async(dispatch_get_main_queue(), ^{
+        dispatch_async(self.callbackQueue, ^{
             self.startBlock();
+
             self.startBlock = nil;
         });
     }
@@ -55,8 +56,11 @@
     _error = error;
 
     if (self.finishBlock != nil) {
-        dispatch_async(dispatch_get_main_queue(), ^{
+        dispatch_async(self.callbackQueue, ^{
             self.finishBlock(self);
+
+            self.uploadProgressBlock = nil;
+            self.downloadProgressBlock = nil;
             self.finishBlock = nil;
         });
     }
@@ -72,8 +76,11 @@
     _response = response;
 
     if (self.finishBlock != nil) {
-        dispatch_async(dispatch_get_main_queue(), ^{
+        dispatch_async(self.callbackQueue, ^{
             self.finishBlock(self);
+
+            self.uploadProgressBlock = nil;
+            self.downloadProgressBlock = nil;
             self.finishBlock = nil;
         });
     }
@@ -88,7 +95,7 @@
     _sentBytes = current;
 
     if (self.uploadProgressBlock != nil) {
-        dispatch_async(dispatch_get_main_queue(), ^{
+        dispatch_async(self.callbackQueue, ^{
             self.uploadProgressBlock(current, total);
         });
     }
@@ -103,7 +110,7 @@
     _receivedBytes = current;
 
     if (self.downloadProgressBlock != nil) {
-        dispatch_async(dispatch_get_main_queue(), ^{
+        dispatch_async(self.callbackQueue, ^{
             self.downloadProgressBlock(current, total);
         });
     }

@@ -331,6 +331,17 @@
 @property(assign, nonatomic) NSUInteger maxRedirects;
 
 /**
+ The queue where events (start, progress, finish) will be dispatched to.
+ 
+ Defaults to `dispatch_get_main_queue()`
+ */
+#if OS_OBJECT_USE_OBJC
+@property(strong, nonatomic) dispatch_queue_t callbackQueue;
+#else
+@property(assign, nonatomic) dispatch_queue_t callbackQueue;
+#endif
+
+/**
  Explicitly avoid using the `Expect: 100-Continue` header.
 
  Do not touch this unless the server responded with a `417` code ("Expectation failed") to your previous request.
@@ -342,15 +353,6 @@
  expectations and cope with error responses midway through upload.
  */
 @property(assign, nonatomic) BOOL dontSendExpect100Continue;
-
-/**
- Flag that determines whether the body for non successful responses should be discarded.
- 
- When this flag is set to `YES` the HTTP response body will be discarded.
- 
- Defaults to `YES`.
- */
-@property(assign, nonatomic) BOOL discardBodyForNon200Responses;
 
 /**
  Flag that indicates that this request should used chunked transfer encoding.

@@ -143,7 +143,6 @@ static size_t BBHTTPExecutorReceiveCallback(uint8_t* buffer, size_t size, size_t
             return BBHTTPExecutorAppendData(buffer, size, length, context);
 
         default:
-            NSLog(@"Ohhhh diabo! %d", context.state);
             // never happens...
             return 0;
     }
@@ -486,6 +485,8 @@ static BOOL BBHTTPExecutorInitialized = NO;
     curl_easy_setopt(handle, CURLOPT_NOPROGRESS, YES);
     curl_easy_setopt(handle, CURLOPT_FAILONERROR, NO); // Handle >= 400 codes as success at this layer
     curl_easy_setopt(handle, CURLOPT_SSL_VERIFYPEER, !context.request.allowInvalidSSLCertificates);
+
+    BBHTTPLogInfo(@"%@ | Request starting…", context);
 
     // Emit start notification
     [request executionStarted];
