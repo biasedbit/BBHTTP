@@ -179,7 +179,8 @@ static BOOL BBHTTPExecutorInitialized = NO;
         if (result != CURLE_OK) {
             BBHTTPLogError(@"curl_global_init() failed with code %d; some functionalities may be impaired.", result);
         } else {
-            BBHTTPLogInfo(@"curl_global_init() executed with success.");
+            BBHTTPLogInfo(@"curl_global_init() successfully executed; BBHTTP booted with libcurl '%s'.",
+                          LIBCURL_VERSION);
             BBHTTPExecutorInitialized = YES;
         }
     }
