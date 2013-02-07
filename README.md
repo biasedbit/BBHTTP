@@ -127,9 +127,11 @@ The API is **very** likely to keep mutating until this reaches 1.0.
 ## Likely TODO list
 
 * Multipart upload helpers
-* Request queue
+* Follow redirects
 * Use curl's multi handles
 * *Your bright idea here*
+
+For a comprehensive list, be sure to visit the [Roadmap](https://github.com/brunodecarvalho/BBHotpotato/wiki/Roadmap) wiki page.
 
 
 ## Why?

@@ -38,10 +38,35 @@
 @required
 
 /**
+ Prepares the response content handler for a response.
+ 
+ If after inspecting the status code, message and headers the handler decides it does not want to accept the response,
+ it should return `NO`.
+
+ @param statusCode The response status code.
+ @param message The response message from the response line (e.g. the "OK" in "200 OK" or
+ "The Bees They're In My Eyes" in "500 The Bees They're In My Eyes").
+ @param headers Dictionary with the response headers.
+ @param error On input, a pointer to an error object. If an error occurs, this pointer is set to an actual error object
+ containing the error information. You may specify nil for this parameter if you do not want the error information.
+
  @return `YES` if this content handler accepts the response, `NO` otherwise.
  */
 - (BOOL)prepareForResponse:(NSUInteger)statusCode message:(NSString*)message headers:(NSDictionary*)headers
                       error:(NSError**)error;
+/**
+ Feed response body data to the handler.
+ 
+ If this method does not return the same number as the one it receives with the `length` parameter, the executor will
+ assume error and abort the request.
+ 
+ @param bytes Array of bytes.
+ @param length Length of the byte array.
+ @param error On input, a pointer to an error object. If an error occurs, this pointer is set to an actual error object
+ containing the error information. You may specify nil for this parameter if you do not want the error information.
+
+ @return The number of bytes handled. If this number is inferior to `length`, the download will be aborted.
+ */
 - (NSInteger)appendResponseBytes:(uint8_t*)bytes withLength:(NSUInteger)length error:(NSError**)error;
 - (id)parseContent:(NSError**)error;
 
