@@ -62,7 +62,7 @@ The API is **very** likely to keep mutating until this reaches 1.0.
     ```
 
     > Notice the keyed subscript operator behaves as `valueForKeyPath:` rather than `valueForKey:`. That's because JSON responses that would yield a `NSDictionary` get wrapped by `BBJSONDictionary`.
-    > Read more about the collection operators [here](http://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/KeyValueCoding/Articles/CollectionOperators.html);
+    > Read more about the collection operators [here](http://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/KeyValueCoding/Articles/CollectionOperators.html).
 
 * Images too:
 
