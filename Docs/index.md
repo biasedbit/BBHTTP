@@ -1,4 +1,4 @@
-Hotpotato is a rich wrapper for libcurl written in Objective-C. Its name derives from the not-so-common misspelling of HTTP as HPTT.
+BBHTTP is a rich wrapper for libcurl written in Objective-C. Its name derives from the not-so-common misspelling of HTTP as HPTT.
 
 It is an ARC-only library that uses features introduced by Clang 3.1. Thus, it is only suitable for iOS 5+ and OSX 10.7+.
 
