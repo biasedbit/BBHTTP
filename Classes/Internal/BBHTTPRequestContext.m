@@ -243,7 +243,7 @@
     } else {
         _uploadedBytes += read;
         [_request uploadProgressedToCurrent:_uploadedBytes ofTotal:_request.uploadSize];
-        BBHTTPLogTrace(@"%@ | Transferred %ld b to server.", self, (long)read);
+        BBHTTPLogTrace(@"%@ | Transferred %ldb to server.", self, (long)read);
         if (read < limit) {
             BBHTTPLogTrace(@"%@ | Upload finished.", self);
             [self uploadFinished];

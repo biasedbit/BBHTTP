@@ -348,7 +348,6 @@ static BOOL BBHTTPExecutorInitialized = NO;
     CURL* handle = [self getOrCreatePooledCurlHandle];
     BBHTTPRequestContext* context = [[BBHTTPRequestContext alloc] initWithRequest:request andCurlHandle:handle];
     [self prepareContextForExecution:context];
-
     [self addToRunning:request];
 
     dispatch_async(_requestExecutionQueue, ^{
