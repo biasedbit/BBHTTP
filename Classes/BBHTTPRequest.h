@@ -226,7 +226,7 @@
 @property(copy, nonatomic) NSString* uploadFile;
 
 /** The in-memory buffer of data to upload, if any. */
-@property(retain, nonatomic, readonly) NSData* uploadData;
+@property(strong, nonatomic, readonly) NSData* uploadData;
 
 @property(assign, nonatomic, readonly) double uploadProgress;
 @property(assign, nonatomic, readonly) double uploadTransferRate;
