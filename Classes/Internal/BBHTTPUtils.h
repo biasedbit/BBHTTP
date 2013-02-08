@@ -123,7 +123,7 @@ BBHTTPDefineHeaderName(Authorization,     @"Authorization")
 #pragma mark - Header values
 
 BBHTTPDefineHeaderValue(100Continue,   @"100-Continue") // Will create BBHTTPHeaderValue_100Continue
-BBHTTPDefineHeaderValue(Chunked,       @"chunked");
+BBHTTPDefineHeaderValue(Chunked,       @"chunked")
 
 
 
