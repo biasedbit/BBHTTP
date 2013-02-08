@@ -461,7 +461,7 @@ static BOOL BBHTTPExecutorInitialized = NO;
     // Setup - request line
     if (request.version == BBHTTPProtocolVersion_1_0) {
         curl_easy_setopt(handle, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_0);
-    } else if (request.version == BBHTTPProtocolVersion_1_0) {
+    } else if (request.version == BBHTTPProtocolVersion_1_1) {
         curl_easy_setopt(handle, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
     } // else leave it up to libcurl to decide
 
