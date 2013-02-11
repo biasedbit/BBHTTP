@@ -54,6 +54,7 @@ extern void BBHTTPLog(NSUInteger level, NSString* prefix, NSString* (^statement)
 #define BBHTTPLogInfo(fmt, ...)   BBHTTPLog(3, @" INFO", ^{ return [NSString stringWithFormat:fmt, ##__VA_ARGS__]; });
 #define BBHTTPLogDebug(fmt, ...)  BBHTTPLog(4, @"DEBUG", ^{ return [NSString stringWithFormat:fmt, ##__VA_ARGS__]; });
 #define BBHTTPLogTrace(fmt, ...)  BBHTTPLog(5, @"TRACE", ^{ return [NSString stringWithFormat:fmt, ##__VA_ARGS__]; });
+#define BBHTTPCurlDebug(fmt, ...) BBHTTPLog(1, @" CURL", ^{ return [NSString stringWithFormat:fmt, ##__VA_ARGS__]; });
 
 
 
@@ -122,7 +123,7 @@ BBHTTPDefineHeaderName(Authorization,     @"Authorization")
 #pragma mark - Header values
 
 BBHTTPDefineHeaderValue(100Continue,   @"100-Continue") // Will create BBHTTPHeaderValue_100Continue
-BBHTTPDefineHeaderValue(Chunked,       @"chunked");
+BBHTTPDefineHeaderValue(Chunked,       @"chunked")
 
 
 

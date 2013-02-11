@@ -113,9 +113,10 @@
 @property(assign, nonatomic) BOOL manageNetworkActivityIndicator;
 #endif
 
-
 /** For debug/bug-reporting purposes only; this turns on verbose mode for the underlying libcurl handles. */
 @property(assign, nonatomic) BOOL verbose;
+/** Opens and closes a connection for each request. */
+@property(assign, nonatomic) BOOL dontReuseConnections;
 
 
 #pragma mark Executing requests

@@ -148,6 +148,38 @@ static size_t BBHTTPExecutorReceiveCallback(uint8_t* buffer, size_t size, size_t
     }
 }
 
+static int BBHTTPExecutorDebugCallback(CURL* handle, curl_infotype type, char* text, size_t length, void* context)
+{
+    switch (type) {
+        case CURLINFO_TEXT: {
+            NSString* message = [[NSString alloc] initWithBytes:text length:length encoding:NSASCIIStringEncoding];
+            BBHTTPCurlDebug(@"%@", message);
+            break;
+        }
+
+        case CURLINFO_DATA_IN:
+            BBHTTPCurlDebug(@"DATA IN << %lub", (unsigned long)length);
+            break;
+
+        case CURLINFO_DATA_OUT:
+            BBHTTPCurlDebug(@"DATA OUT >> %lub", (unsigned long)length);
+            break;
+
+        case CURLINFO_SSL_DATA_IN:
+            BBHTTPCurlDebug(@"SSL DATA IN << %lub", (unsigned long)length);
+            break;
+
+        case CURLINFO_SSL_DATA_OUT:
+            BBHTTPCurlDebug(@"SSL DATA OUT >> %lub", (unsigned long)length);
+            break;
+
+        default: // ignored
+            break;
+    }
+
+    return 0;
+}
+
 
 
 #pragma mark -
@@ -348,7 +380,6 @@ static BOOL BBHTTPExecutorInitialized = NO;
     CURL* handle = [self getOrCreatePooledCurlHandle];
     BBHTTPRequestContext* context = [[BBHTTPRequestContext alloc] initWithRequest:request andCurlHandle:handle];
     [self prepareContextForExecution:context];
-
     [self addToRunning:request];
 
     dispatch_async(_requestExecutionQueue, ^{
@@ -377,7 +408,7 @@ static BOOL BBHTTPExecutorInitialized = NO;
             return;
         }
 
-        if (nextRequest.cancelled) continue; // Loop again to find an executable request
+        if ([nextRequest wasCancelled]) continue; // Loop again to find an executable request
 
         // Executable operation found, break the loop; next operation finishing will trigger this method again
         [self createContextAndExecuteRequest:nextRequest];
@@ -419,12 +450,18 @@ static BOOL BBHTTPExecutorInitialized = NO;
 {
     BBHTTPRequest* request = context.request;
 
-    if (_verbose) curl_easy_setopt(handle, CURLOPT_VERBOSE, 1);
+    // Handle setup
+    curl_easy_setopt(handle, CURLOPT_NOSIGNAL, 1L); // If this isn't set, curl will eventually crash the app
+    curl_easy_setopt(handle, CURLOPT_FORBID_REUSE, _dontReuseConnections ? 1L : 0L);
+    if (_verbose) {
+        curl_easy_setopt(handle, CURLOPT_VERBOSE, 1L);
+        curl_easy_setopt(handle, CURLOPT_DEBUGFUNCTION, BBHTTPExecutorDebugCallback);
+    }
 
     // Setup - request line
     if (request.version == BBHTTPProtocolVersion_1_0) {
         curl_easy_setopt(handle, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_0);
-    } else if (request.version == BBHTTPProtocolVersion_1_0) {
+    } else if (request.version == BBHTTPProtocolVersion_1_1) {
         curl_easy_setopt(handle, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
     } // else leave it up to libcurl to decide
 
@@ -445,18 +482,19 @@ static BOOL BBHTTPExecutorInitialized = NO;
         // if Expect header wasn't set until now, make sure libcurl doesn't add it
         curl_slist_append(headers, "Expect: ");
     }
-    curl_easy_setopt(handle, CURLOPT_HEADER, YES);
+
+    curl_easy_setopt(handle, CURLOPT_HEADER, 1L);
     curl_easy_setopt(handle, CURLOPT_HTTPHEADER, headers);
 
     // Setup - prepare upload if required
     if ([request isUpload]) {
-        curl_easy_setopt(handle, CURLOPT_UPLOAD, YES);
+        curl_easy_setopt(handle, CURLOPT_UPLOAD, 1L);
         curl_easy_setopt(handle, CURLOPT_INFILESIZE, [request uploadSize]);
         curl_easy_setopt(handle, CURLOPT_READFUNCTION, BBHTTPExecutorSendCallback);
         curl_easy_setopt(handle, CURLOPT_READDATA, context);
     } else {
-        curl_easy_setopt(handle, CURLOPT_UPLOAD, NO);
-        curl_easy_setopt(handle, CURLOPT_INFILESIZE, 0);
+        curl_easy_setopt(handle, CURLOPT_UPLOAD, 0L);
+        curl_easy_setopt(handle, CURLOPT_INFILESIZE, 0L);
         curl_easy_setopt(handle, CURLOPT_READFUNCTION, NULL);
         curl_easy_setopt(handle, CURLOPT_READDATA, NULL);
     }
@@ -469,22 +507,21 @@ static BOOL BBHTTPExecutorInitialized = NO;
     curl_easy_setopt(handle, CURLOPT_CONNECTTIMEOUT, context.request.connectionTimeout);
 
     // TODO expose options to configure these - right now, if transfer's below 1KB/s for 15 seconds, abort
-    curl_easy_setopt(handle, CURLOPT_LOW_SPEED_LIMIT, 1024);
-    curl_easy_setopt(handle, CURLOPT_LOW_SPEED_TIME, 15);
-//    curl_easy_setopt(handle, CURLOPT_TIMEOUT, context.request.responseReadTimeout);
+    curl_easy_setopt(handle, CURLOPT_LOW_SPEED_LIMIT, 1024L);
+    curl_easy_setopt(handle, CURLOPT_LOW_SPEED_TIME, 15L);
 
     // Setup - configure redirections
-    if (context.request.maxRedirects == 0) {
-        curl_easy_setopt(handle, CURLOPT_FOLLOWLOCATION, NO);
-    } else {
-        curl_easy_setopt(handle, CURLOPT_FOLLOWLOCATION, YES);
-        curl_easy_setopt(handle, CURLOPT_MAXREDIRS, context.request.maxRedirects);
-    }
+//    if (context.request.maxRedirects == 0) {
+//        curl_easy_setopt(handle, CURLOPT_FOLLOWLOCATION, NO);
+//    } else {
+//        curl_easy_setopt(handle, CURLOPT_FOLLOWLOCATION, YES);
+//        curl_easy_setopt(handle, CURLOPT_MAXREDIRS, context.request.maxRedirects);
+//    }
 
     // Setup - misc configuration
-    curl_easy_setopt(handle, CURLOPT_NOPROGRESS, YES);
-    curl_easy_setopt(handle, CURLOPT_FAILONERROR, NO); // Handle >= 400 codes as success at this layer
-    curl_easy_setopt(handle, CURLOPT_SSL_VERIFYPEER, !context.request.allowInvalidSSLCertificates);
+    curl_easy_setopt(handle, CURLOPT_NOPROGRESS, 1L);
+    curl_easy_setopt(handle, CURLOPT_FAILONERROR, 0L); // Handle >= 400 codes as success at this layer
+    curl_easy_setopt(handle, CURLOPT_SSL_VERIFYPEER, context.request.allowInvalidSSLCertificates ? 0L : 1L);
 
     BBHTTPLogInfo(@"%@ | Request starting…", context);
 
@@ -494,7 +531,7 @@ static BOOL BBHTTPExecutorInitialized = NO;
     // Execute
     CURLcode curlResult = curl_easy_perform(handle);
 
-    // Cleanup the headers & resent handle to a pristine state
+    // Cleanup the headers & reset handle to a pristine state
     curl_slist_free_all(headers);
     curl_easy_reset(handle);
 
@@ -588,7 +625,7 @@ static BOOL BBHTTPExecutorInitialized = NO;
         case CURLE_OPERATION_TIMEDOUT: // 28
             // Since we manually pause the upload until we receive 100-Continue, a timeout may occur. If that happens,
             // make sure we convey the correct error message.
-            if (context.uploadPaused) {
+            if ([context isUploadPaused]) {
                 description = @"Expectation failed";
                 reason = @"Request timed out while waiting for 100-Continue response from the server.";
             }
