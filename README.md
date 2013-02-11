@@ -171,7 +171,8 @@ A couple of quick tests with command line version of curl proved that curl knew 
 * `CoreServices.framework` on OSX, `MobileCoreServices.framework` on iOS
 * `AppKit.framework` on OSX, `UIKit.framework` on iOS
 
-> **Note:** You can find libcurl 7.28.2-DEV binaries and headers under `Build/iOS/Static lib/libcurl` and `Build/OSX/Static lib/libcurl`. There are two versions for iOS, compiled against 6.1 SDK. `libcurl.iOS.dev.a` has support for for i386 (simulator), armv7 and armv7s (iPhone 3GS and newer) while `libcurl.iOS.appstore.a` only has support for arm architectures &mdash; making it smaller in size and thus optimized for releases. The OSX version was compiled against 10.8 SDK with support for x86_64 (64 bit Intel). If you'd like to build your own custom version, try [this](https://github.com/brunodecarvalho/curl-ios-build-scripts).
+> **Note:** You can find libcurl 7.29.1-DEV binaries and headers under `Build/iOS/Static lib/libcurl` and `Build/OSX/Static lib/libcurl`. There are two versions for iOS, compiled against 6.1 SDK. `libcurl.iOS.dev.a` has support for for i386 (simulator), armv7 and armv7s (iPhone 3GS and newer) while `libcurl.iOS.appstore.a` only has support for arm architectures &mdash; making it smaller in size and thus optimized for releases. The OSX version was compiled against 10.8 SDK with support for x86_64 (64 bit Intel). If you'd like to build your own custom version, try [this](https://github.com/brunodecarvalho/curl-ios-build-scripts).
+> All binaries are compiled with debug symbols so even though they appear large, they'll end up with 400~600KB.
 
 
 ## Documentation
