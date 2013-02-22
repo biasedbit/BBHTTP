@@ -123,6 +123,8 @@ The API is **very** likely to keep mutating until this reaches 1.0.
     [twitterExecutor executeRequest:request];
     ```
 
+There are other built-in ways to handle content from responses. Be sure to read up the [In-depth guide to response content handling](https://github.com/brunodecarvalho/BBHotpotato/wiki/Response-content-handling).
+
 
 ## Likely TODO list
 
