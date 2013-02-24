@@ -19,11 +19,13 @@
 //  Copyright (c) 2013 BiasedBit. All rights reserved.
 //
 
-#import "BBAppDelegate.h"
+#pragma mark -
 
-int main(int argc, char* argv[])
-{
-    @autoreleasepool {
-        return UIApplicationMain(argc, argv, nil, NSStringFromClass([BBAppDelegate class]));
-    }
-}
+@interface AppDelegate : NSObject <NSApplicationDelegate>
+
+
+#pragma mark Properties
+
+@property(weak, nonatomic) IBOutlet NSWindow* window;
+
+@end

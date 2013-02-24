@@ -19,7 +19,7 @@
 //  Copyright (c) 2013 BiasedBit. All rights reserved.
 //
 
-#import "BBAppDelegate.h"
+#import "AppDelegate.h"
 
 #import "BBHotpotato.h"
 
@@ -27,7 +27,7 @@
 
 #pragma mark -
 
-@implementation BBAppDelegate
+@implementation AppDelegate
 
 
 #pragma mark UIApplicationDelegate
@@ -57,13 +57,13 @@
 - (void)getJsonExample
 {
     NSString* yahooWeather = @"http://query.yahooapis.com/v1/public/yql?format=json&q="
-                              "select%20*%20from%20weather.forecast%20where%20woeid%3D2502265";
+    "select%20*%20from%20weather.forecast%20where%20woeid%3D2502265";
 
     [[[BBHTTPRequest getResource:yahooWeather] asJSON] execute:^(BBHTTPResponse* response) {
         NSLog(@"%@: %@",
               response.content[@"query.results.channel.description"],
               response.content[@"query.results.channel.item.condition.text"]);
-//        DOBJ(response.content); // dump the whole JSON response
+        //        DOBJ(response.content); // dump the whole JSON response
 
     } error:^(NSError* error) {
         NSLog(@"Error: %@", [error localizedDescription]);
@@ -73,13 +73,13 @@
 - (void)getExample
 {
     [[BBHTTPRequest getResource:@"http://biasedbit.com"] execute:^(BBHTTPResponse* response) {
-         NSLog(@"Finished: %u %@ -- received %u bytes of '%@' %@",
-               response.code, response.message, response.contentSize,
-               response[@"Content-Type"], response.headers);
+        NSLog(@"Finished: %u %@ -- received %u bytes of '%@' %@",
+              response.code, response.message, response.contentSize,
+              response[@"Content-Type"], response.headers);
 
-     } error:^(NSError* error) {
-         NSLog(@"Error: %@", [error localizedDescription]);
-     }];
+    } error:^(NSError* error) {
+        NSLog(@"Error: %@", [error localizedDescription]);
+    }];
 }
 
 - (void)postExample

@@ -21,5 +21,5 @@
 
 #pragma mark -
 
-@interface BBAppDelegate : UIResponder <UIApplicationDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate>
 @end

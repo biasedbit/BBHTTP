@@ -1,0 +1,995 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		15F5AE9B16D9D7060051FC4A /* libHotpotato.OSX.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 15F5ADD316D97C9E0051FC4A /* libHotpotato.OSX.a */; };
+		15F5AE9C16D9D70B0051FC4A /* libHotpotato.iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 15F5ADC016D97C180051FC4A /* libHotpotato.iOS.a */; };
+		15F5AEC516D9DB010051FC4A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 15F5AEBA16D9DB010051FC4A /* AppDelegate.m */; };
+		15F5AEC616D9DB010051FC4A /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 15F5AEBC16D9DB010051FC4A /* Default-568h@2x.png */; };
+		15F5AEC716D9DB010051FC4A /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 15F5AEBD16D9DB010051FC4A /* Default.png */; };
+		15F5AEC816D9DB010051FC4A /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 15F5AEBE16D9DB010051FC4A /* Default@2x.png */; };
+		15F5AEC916D9DB010051FC4A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 15F5AEC016D9DB010051FC4A /* InfoPlist.strings */; };
+		15F5AECB16D9DB010051FC4A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 15F5AEC416D9DB010051FC4A /* main.m */; };
+		15F5AED916D9DB440051FC4A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 15F5AECE16D9DB440051FC4A /* AppDelegate.m */; };
+		15F5AEDB16D9DB440051FC4A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 15F5AED216D9DB440051FC4A /* InfoPlist.strings */; };
+		15F5AEDC16D9DB440051FC4A /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 15F5AED416D9DB440051FC4A /* MainMenu.xib */; };
+		15F5AEDD16D9DB440051FC4A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 15F5AED616D9DB440051FC4A /* main.m */; };
+		15F5AEE616D9DE470051FC4A /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15F5AEE516D9DE470051FC4A /* Security.framework */; };
+		15F5AEE816D9DE4F0051FC4A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 15F5AEE716D9DE4F0051FC4A /* libz.dylib */; };
+		15F5AEEA16D9DE580051FC4A /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15F5AEE916D9DE580051FC4A /* MobileCoreServices.framework */; };
+		15F5AEED16D9DE830051FC4A /* libcurl.iOS.dev.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 15F5AEEC16D9DE830051FC4A /* libcurl.iOS.dev.a */; };
+		15F5AEEF16D9DE960051FC4A /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15F5AEEE16D9DE960051FC4A /* CoreServices.framework */; };
+		15F5AEF216D9DEA70051FC4A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 15F5AEF116D9DEA70051FC4A /* libz.dylib */; };
+		15F5AEF416D9DEB30051FC4A /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15F5AEF316D9DEB30051FC4A /* AppKit.framework */; };
+		15F5AEF616D9DEC20051FC4A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15F5AEF516D9DEC20051FC4A /* UIKit.framework */; };
+		15F5AEF816D9DED20051FC4A /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15F5AEF716D9DED20051FC4A /* Security.framework */; };
+		15F5AEFA16D9DEE10051FC4A /* libcurl.OSX.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 15F5AEF916D9DEE10051FC4A /* libcurl.OSX.a */; };
+		15F5AF1E16D9E1060051FC4A /* BBHotpotato.h in Headers */ = {isa = PBXBuildFile; fileRef = 15F5AEFC16D9E1060051FC4A /* BBHotpotato.h */; };
+		15F5AF1F16D9E1060051FC4A /* BBHTTPExecutor.h in Headers */ = {isa = PBXBuildFile; fileRef = 15F5AEFD16D9E1060051FC4A /* BBHTTPExecutor.h */; };
+		15F5AF2016D9E1060051FC4A /* BBHTTPExecutor.m in Sources */ = {isa = PBXBuildFile; fileRef = 15F5AEFE16D9E1060051FC4A /* BBHTTPExecutor.m */; };
+		15F5AF2116D9E1060051FC4A /* BBHTTPExecutor.m in Sources */ = {isa = PBXBuildFile; fileRef = 15F5AEFE16D9E1060051FC4A /* BBHTTPExecutor.m */; };
+		15F5AF2216D9E1060051FC4A /* BBHTTPRequest+Convenience.h in Headers */ = {isa = PBXBuildFile; fileRef = 15F5AEFF16D9E1060051FC4A /* BBHTTPRequest+Convenience.h */; };
+		15F5AF2316D9E1060051FC4A /* BBHTTPRequest+Convenience.m in Sources */ = {isa = PBXBuildFile; fileRef = 15F5AF0016D9E1060051FC4A /* BBHTTPRequest+Convenience.m */; };
+		15F5AF2416D9E1060051FC4A /* BBHTTPRequest+Convenience.m in Sources */ = {isa = PBXBuildFile; fileRef = 15F5AF0016D9E1060051FC4A /* BBHTTPRequest+Convenience.m */; };
+		15F5AF2516D9E1060051FC4A /* BBHTTPRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 15F5AF0116D9E1060051FC4A /* BBHTTPRequest.h */; };
+		15F5AF2616D9E1060051FC4A /* BBHTTPRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 15F5AF0216D9E1060051FC4A /* BBHTTPRequest.m */; };
+		15F5AF2716D9E1060051FC4A /* BBHTTPRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 15F5AF0216D9E1060051FC4A /* BBHTTPRequest.m */; };
+		15F5AF2816D9E1060051FC4A /* BBHTTPResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 15F5AF0316D9E1060051FC4A /* BBHTTPResponse.h */; };
+		15F5AF2916D9E1060051FC4A /* BBHTTPResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 15F5AF0416D9E1060051FC4A /* BBHTTPResponse.m */; };
+		15F5AF2A16D9E1060051FC4A /* BBHTTPResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 15F5AF0416D9E1060051FC4A /* BBHTTPResponse.m */; };
+		15F5AF2B16D9E1060051FC4A /* BBHTTPAccumulator.h in Headers */ = {isa = PBXBuildFile; fileRef = 15F5AF0616D9E1060051FC4A /* BBHTTPAccumulator.h */; };
+		15F5AF2C16D9E1060051FC4A /* BBHTTPAccumulator.m in Sources */ = {isa = PBXBuildFile; fileRef = 15F5AF0716D9E1060051FC4A /* BBHTTPAccumulator.m */; };
+		15F5AF2D16D9E1060051FC4A /* BBHTTPAccumulator.m in Sources */ = {isa = PBXBuildFile; fileRef = 15F5AF0716D9E1060051FC4A /* BBHTTPAccumulator.m */; };
+		15F5AF2E16D9E1060051FC4A /* BBHTTPContentHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 15F5AF0816D9E1060051FC4A /* BBHTTPContentHandler.h */; };
+		15F5AF2F16D9E1060051FC4A /* BBHTTPFileWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 15F5AF0916D9E1060051FC4A /* BBHTTPFileWriter.h */; };
+		15F5AF3016D9E1060051FC4A /* BBHTTPFileWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 15F5AF0A16D9E1060051FC4A /* BBHTTPFileWriter.m */; };
+		15F5AF3116D9E1060051FC4A /* BBHTTPFileWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 15F5AF0A16D9E1060051FC4A /* BBHTTPFileWriter.m */; };
+		15F5AF3216D9E1060051FC4A /* BBHTTPImageDecoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 15F5AF0B16D9E1060051FC4A /* BBHTTPImageDecoder.h */; };
+		15F5AF3316D9E1060051FC4A /* BBHTTPImageDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 15F5AF0C16D9E1060051FC4A /* BBHTTPImageDecoder.m */; };
+		15F5AF3416D9E1060051FC4A /* BBHTTPImageDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 15F5AF0C16D9E1060051FC4A /* BBHTTPImageDecoder.m */; };
+		15F5AF3516D9E1060051FC4A /* BBHTTPSelectiveDiscarder.h in Headers */ = {isa = PBXBuildFile; fileRef = 15F5AF0D16D9E1060051FC4A /* BBHTTPSelectiveDiscarder.h */; };
+		15F5AF3616D9E1060051FC4A /* BBHTTPSelectiveDiscarder.m in Sources */ = {isa = PBXBuildFile; fileRef = 15F5AF0E16D9E1060051FC4A /* BBHTTPSelectiveDiscarder.m */; };
+		15F5AF3716D9E1060051FC4A /* BBHTTPSelectiveDiscarder.m in Sources */ = {isa = PBXBuildFile; fileRef = 15F5AF0E16D9E1060051FC4A /* BBHTTPSelectiveDiscarder.m */; };
+		15F5AF3816D9E1060051FC4A /* BBHTTPStreamWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 15F5AF0F16D9E1060051FC4A /* BBHTTPStreamWriter.h */; };
+		15F5AF3916D9E1060051FC4A /* BBHTTPStreamWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 15F5AF1016D9E1060051FC4A /* BBHTTPStreamWriter.m */; };
+		15F5AF3A16D9E1060051FC4A /* BBHTTPStreamWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 15F5AF1016D9E1060051FC4A /* BBHTTPStreamWriter.m */; };
+		15F5AF3B16D9E1060051FC4A /* BBHTTPToStringConverter.h in Headers */ = {isa = PBXBuildFile; fileRef = 15F5AF1116D9E1060051FC4A /* BBHTTPToStringConverter.h */; };
+		15F5AF3C16D9E1060051FC4A /* BBHTTPToStringConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 15F5AF1216D9E1060051FC4A /* BBHTTPToStringConverter.m */; };
+		15F5AF3D16D9E1060051FC4A /* BBHTTPToStringConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 15F5AF1216D9E1060051FC4A /* BBHTTPToStringConverter.m */; };
+		15F5AF3E16D9E1060051FC4A /* BBJSONParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 15F5AF1316D9E1060051FC4A /* BBJSONParser.h */; };
+		15F5AF3F16D9E1060051FC4A /* BBJSONParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 15F5AF1416D9E1060051FC4A /* BBJSONParser.m */; };
+		15F5AF4016D9E1060051FC4A /* BBJSONParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 15F5AF1416D9E1060051FC4A /* BBJSONParser.m */; };
+		15F5AF4116D9E1060051FC4A /* BBHTTPRequest+PrivateInterface.h in Headers */ = {isa = PBXBuildFile; fileRef = 15F5AF1616D9E1060051FC4A /* BBHTTPRequest+PrivateInterface.h */; };
+		15F5AF4216D9E1060051FC4A /* BBHTTPRequest+PrivateInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 15F5AF1716D9E1060051FC4A /* BBHTTPRequest+PrivateInterface.m */; };
+		15F5AF4316D9E1060051FC4A /* BBHTTPRequest+PrivateInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 15F5AF1716D9E1060051FC4A /* BBHTTPRequest+PrivateInterface.m */; };
+		15F5AF4416D9E1060051FC4A /* BBHTTPRequestContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 15F5AF1816D9E1060051FC4A /* BBHTTPRequestContext.h */; };
+		15F5AF4516D9E1060051FC4A /* BBHTTPRequestContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 15F5AF1916D9E1060051FC4A /* BBHTTPRequestContext.m */; };
+		15F5AF4616D9E1060051FC4A /* BBHTTPRequestContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 15F5AF1916D9E1060051FC4A /* BBHTTPRequestContext.m */; };
+		15F5AF4716D9E1060051FC4A /* BBHTTPUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 15F5AF1A16D9E1060051FC4A /* BBHTTPUtils.h */; };
+		15F5AF4816D9E1060051FC4A /* BBHTTPUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 15F5AF1B16D9E1060051FC4A /* BBHTTPUtils.m */; };
+		15F5AF4916D9E1060051FC4A /* BBHTTPUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 15F5AF1B16D9E1060051FC4A /* BBHTTPUtils.m */; };
+		15F5AF4A16D9E1060051FC4A /* BBJSONDictionary.h in Headers */ = {isa = PBXBuildFile; fileRef = 15F5AF1C16D9E1060051FC4A /* BBJSONDictionary.h */; };
+		15F5AF4B16D9E1060051FC4A /* BBJSONDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 15F5AF1D16D9E1060051FC4A /* BBJSONDictionary.m */; };
+		15F5AF4C16D9E1060051FC4A /* BBJSONDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 15F5AF1D16D9E1060051FC4A /* BBJSONDictionary.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		15F5ADBE16D97C180051FC4A /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/${PRODUCT_NAME}";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		15F5ADC016D97C180051FC4A /* libHotpotato.iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libHotpotato.iOS.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		15F5ADD316D97C9E0051FC4A /* libHotpotato.OSX.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libHotpotato.OSX.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		15F5AE3B16D9D3BD0051FC4A /* OSX Sample app.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "OSX Sample app.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		15F5AE5B16D9D3D30051FC4A /* iOS Sample app.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iOS Sample app.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		15F5AEB916D9DB010051FC4A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		15F5AEBA16D9DB010051FC4A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		15F5AEBC16D9DB010051FC4A /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		15F5AEBD16D9DB010051FC4A /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		15F5AEBE16D9DB010051FC4A /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		15F5AEC116D9DB010051FC4A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		15F5AEC216D9DB010051FC4A /* iOS Sample app-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "iOS Sample app-Info.plist"; sourceTree = "<group>"; };
+		15F5AEC316D9DB010051FC4A /* iOS Sample app-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "iOS Sample app-Prefix.pch"; sourceTree = "<group>"; };
+		15F5AEC416D9DB010051FC4A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		15F5AECD16D9DB440051FC4A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		15F5AECE16D9DB440051FC4A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		15F5AED316D9DB440051FC4A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		15F5AED516D9DB440051FC4A /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		15F5AED616D9DB440051FC4A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		15F5AED716D9DB440051FC4A /* OSX Sample app-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "OSX Sample app-Info.plist"; sourceTree = "<group>"; };
+		15F5AED816D9DB440051FC4A /* OSX Sample app-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OSX Sample app-Prefix.pch"; sourceTree = "<group>"; };
+		15F5AEE516D9DE470051FC4A /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
+		15F5AEE716D9DE4F0051FC4A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/usr/lib/libz.dylib; sourceTree = DEVELOPER_DIR; };
+		15F5AEE916D9DE580051FC4A /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/MobileCoreServices.framework; sourceTree = DEVELOPER_DIR; };
+		15F5AEEC16D9DE830051FC4A /* libcurl.iOS.dev.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.iOS.dev.a; path = ../../External/libcurl.iOS/libcurl.iOS.dev.a; sourceTree = "<group>"; };
+		15F5AEEE16D9DE960051FC4A /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/CoreServices.framework; sourceTree = DEVELOPER_DIR; };
+		15F5AEF116D9DEA70051FC4A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/usr/lib/libz.dylib; sourceTree = DEVELOPER_DIR; };
+		15F5AEF316D9DEB30051FC4A /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/AppKit.framework; sourceTree = DEVELOPER_DIR; };
+		15F5AEF516D9DEC20051FC4A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		15F5AEF716D9DED20051FC4A /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
+		15F5AEF916D9DEE10051FC4A /* libcurl.OSX.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.OSX.a; path = ../../External/libcurl.OSX/libcurl.OSX.a; sourceTree = "<group>"; };
+		15F5AEFC16D9E1060051FC4A /* BBHotpotato.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBHotpotato.h; sourceTree = "<group>"; };
+		15F5AEFD16D9E1060051FC4A /* BBHTTPExecutor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBHTTPExecutor.h; sourceTree = "<group>"; };
+		15F5AEFE16D9E1060051FC4A /* BBHTTPExecutor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBHTTPExecutor.m; sourceTree = "<group>"; };
+		15F5AEFF16D9E1060051FC4A /* BBHTTPRequest+Convenience.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BBHTTPRequest+Convenience.h"; sourceTree = "<group>"; };
+		15F5AF0016D9E1060051FC4A /* BBHTTPRequest+Convenience.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "BBHTTPRequest+Convenience.m"; sourceTree = "<group>"; };
+		15F5AF0116D9E1060051FC4A /* BBHTTPRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBHTTPRequest.h; sourceTree = "<group>"; };
+		15F5AF0216D9E1060051FC4A /* BBHTTPRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBHTTPRequest.m; sourceTree = "<group>"; };
+		15F5AF0316D9E1060051FC4A /* BBHTTPResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBHTTPResponse.h; sourceTree = "<group>"; };
+		15F5AF0416D9E1060051FC4A /* BBHTTPResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBHTTPResponse.m; sourceTree = "<group>"; };
+		15F5AF0616D9E1060051FC4A /* BBHTTPAccumulator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBHTTPAccumulator.h; sourceTree = "<group>"; };
+		15F5AF0716D9E1060051FC4A /* BBHTTPAccumulator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBHTTPAccumulator.m; sourceTree = "<group>"; };
+		15F5AF0816D9E1060051FC4A /* BBHTTPContentHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBHTTPContentHandler.h; sourceTree = "<group>"; };
+		15F5AF0916D9E1060051FC4A /* BBHTTPFileWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBHTTPFileWriter.h; sourceTree = "<group>"; };
+		15F5AF0A16D9E1060051FC4A /* BBHTTPFileWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBHTTPFileWriter.m; sourceTree = "<group>"; };
+		15F5AF0B16D9E1060051FC4A /* BBHTTPImageDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBHTTPImageDecoder.h; sourceTree = "<group>"; };
+		15F5AF0C16D9E1060051FC4A /* BBHTTPImageDecoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBHTTPImageDecoder.m; sourceTree = "<group>"; };
+		15F5AF0D16D9E1060051FC4A /* BBHTTPSelectiveDiscarder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBHTTPSelectiveDiscarder.h; sourceTree = "<group>"; };
+		15F5AF0E16D9E1060051FC4A /* BBHTTPSelectiveDiscarder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBHTTPSelectiveDiscarder.m; sourceTree = "<group>"; };
+		15F5AF0F16D9E1060051FC4A /* BBHTTPStreamWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBHTTPStreamWriter.h; sourceTree = "<group>"; };
+		15F5AF1016D9E1060051FC4A /* BBHTTPStreamWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBHTTPStreamWriter.m; sourceTree = "<group>"; };
+		15F5AF1116D9E1060051FC4A /* BBHTTPToStringConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBHTTPToStringConverter.h; sourceTree = "<group>"; };
+		15F5AF1216D9E1060051FC4A /* BBHTTPToStringConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBHTTPToStringConverter.m; sourceTree = "<group>"; };
+		15F5AF1316D9E1060051FC4A /* BBJSONParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBJSONParser.h; sourceTree = "<group>"; };
+		15F5AF1416D9E1060051FC4A /* BBJSONParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBJSONParser.m; sourceTree = "<group>"; };
+		15F5AF1616D9E1060051FC4A /* BBHTTPRequest+PrivateInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BBHTTPRequest+PrivateInterface.h"; sourceTree = "<group>"; };
+		15F5AF1716D9E1060051FC4A /* BBHTTPRequest+PrivateInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "BBHTTPRequest+PrivateInterface.m"; sourceTree = "<group>"; };
+		15F5AF1816D9E1060051FC4A /* BBHTTPRequestContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBHTTPRequestContext.h; sourceTree = "<group>"; };
+		15F5AF1916D9E1060051FC4A /* BBHTTPRequestContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBHTTPRequestContext.m; sourceTree = "<group>"; };
+		15F5AF1A16D9E1060051FC4A /* BBHTTPUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBHTTPUtils.h; sourceTree = "<group>"; };
+		15F5AF1B16D9E1060051FC4A /* BBHTTPUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBHTTPUtils.m; sourceTree = "<group>"; };
+		15F5AF1C16D9E1060051FC4A /* BBJSONDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBJSONDictionary.h; sourceTree = "<group>"; };
+		15F5AF1D16D9E1060051FC4A /* BBJSONDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBJSONDictionary.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		15F5ADBD16D97C180051FC4A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		15F5ADD016D97C9E0051FC4A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		15F5AE3816D9D3BD0051FC4A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				15F5AE9B16D9D7060051FC4A /* libHotpotato.OSX.a in Frameworks */,
+				15F5AEFA16D9DEE10051FC4A /* libcurl.OSX.a in Frameworks */,
+				15F5AEF216D9DEA70051FC4A /* libz.dylib in Frameworks */,
+				15F5AEF416D9DEB30051FC4A /* AppKit.framework in Frameworks */,
+				15F5AEEF16D9DE960051FC4A /* CoreServices.framework in Frameworks */,
+				15F5AEF816D9DED20051FC4A /* Security.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		15F5AE5816D9D3D30051FC4A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				15F5AE9C16D9D70B0051FC4A /* libHotpotato.iOS.a in Frameworks */,
+				15F5AEED16D9DE830051FC4A /* libcurl.iOS.dev.a in Frameworks */,
+				15F5AEE816D9DE4F0051FC4A /* libz.dylib in Frameworks */,
+				15F5AEEA16D9DE580051FC4A /* MobileCoreServices.framework in Frameworks */,
+				15F5AEE616D9DE470051FC4A /* Security.framework in Frameworks */,
+				15F5AEF616D9DEC20051FC4A /* UIKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		15F5ADB516D97BB90051FC4A = {
+			isa = PBXGroup;
+			children = (
+				15F5AEFB16D9E1060051FC4A /* BBHTTP */,
+				15F5AE8916D9D6A00051FC4A /* iOS Sample app */,
+				15F5AE7716D9D67F0051FC4A /* OSX Sample app */,
+				15F5ADC116D97C180051FC4A /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		15F5ADC116D97C180051FC4A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				15F5ADC016D97C180051FC4A /* libHotpotato.iOS.a */,
+				15F5ADD316D97C9E0051FC4A /* libHotpotato.OSX.a */,
+				15F5AE3B16D9D3BD0051FC4A /* OSX Sample app.app */,
+				15F5AE5B16D9D3D30051FC4A /* iOS Sample app.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		15F5AE7716D9D67F0051FC4A /* OSX Sample app */ = {
+			isa = PBXGroup;
+			children = (
+				15F5AECC16D9DB440051FC4A /* Classes */,
+				15F5AECF16D9DB440051FC4A /* Supporting Files */,
+				15F5AEF016D9DE9C0051FC4A /* Libraries */,
+				15F5AEE416D9DE3A0051FC4A /* Frameworks */,
+			);
+			name = "OSX Sample app";
+			path = "../Example/OSX Sample app";
+			sourceTree = "<group>";
+		};
+		15F5AE8916D9D6A00051FC4A /* iOS Sample app */ = {
+			isa = PBXGroup;
+			children = (
+				15F5AEB816D9DB010051FC4A /* Classes */,
+				15F5AEBF16D9DB010051FC4A /* Supporting Files */,
+				15F5AEEB16D9DE6F0051FC4A /* Libraries */,
+				15F5AEE316D9DE330051FC4A /* Frameworks */,
+				15F5AEBB16D9DB010051FC4A /* Resources */,
+			);
+			name = "iOS Sample app";
+			path = "../Example/iOS Sample app";
+			sourceTree = "<group>";
+		};
+		15F5AEB816D9DB010051FC4A /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				15F5AEB916D9DB010051FC4A /* AppDelegate.h */,
+				15F5AEBA16D9DB010051FC4A /* AppDelegate.m */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		15F5AEBB16D9DB010051FC4A /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				15F5AEBC16D9DB010051FC4A /* Default-568h@2x.png */,
+				15F5AEBD16D9DB010051FC4A /* Default.png */,
+				15F5AEBE16D9DB010051FC4A /* Default@2x.png */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		15F5AEBF16D9DB010051FC4A /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				15F5AEC016D9DB010051FC4A /* InfoPlist.strings */,
+				15F5AEC216D9DB010051FC4A /* iOS Sample app-Info.plist */,
+				15F5AEC316D9DB010051FC4A /* iOS Sample app-Prefix.pch */,
+				15F5AEC416D9DB010051FC4A /* main.m */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		15F5AECC16D9DB440051FC4A /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				15F5AECD16D9DB440051FC4A /* AppDelegate.h */,
+				15F5AECE16D9DB440051FC4A /* AppDelegate.m */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		15F5AECF16D9DB440051FC4A /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				15F5AED216D9DB440051FC4A /* InfoPlist.strings */,
+				15F5AED416D9DB440051FC4A /* MainMenu.xib */,
+				15F5AED616D9DB440051FC4A /* main.m */,
+				15F5AED716D9DB440051FC4A /* OSX Sample app-Info.plist */,
+				15F5AED816D9DB440051FC4A /* OSX Sample app-Prefix.pch */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		15F5AEE316D9DE330051FC4A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				15F5AEF516D9DEC20051FC4A /* UIKit.framework */,
+				15F5AEE916D9DE580051FC4A /* MobileCoreServices.framework */,
+				15F5AEE516D9DE470051FC4A /* Security.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		15F5AEE416D9DE3A0051FC4A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				15F5AEF716D9DED20051FC4A /* Security.framework */,
+				15F5AEF316D9DEB30051FC4A /* AppKit.framework */,
+				15F5AEEE16D9DE960051FC4A /* CoreServices.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		15F5AEEB16D9DE6F0051FC4A /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				15F5AEEC16D9DE830051FC4A /* libcurl.iOS.dev.a */,
+				15F5AEE716D9DE4F0051FC4A /* libz.dylib */,
+			);
+			name = Libraries;
+			sourceTree = "<group>";
+		};
+		15F5AEF016D9DE9C0051FC4A /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				15F5AEF916D9DEE10051FC4A /* libcurl.OSX.a */,
+				15F5AEF116D9DEA70051FC4A /* libz.dylib */,
+			);
+			name = Libraries;
+			sourceTree = "<group>";
+		};
+		15F5AEFB16D9E1060051FC4A /* BBHTTP */ = {
+			isa = PBXGroup;
+			children = (
+				15F5AEFC16D9E1060051FC4A /* BBHotpotato.h */,
+				15F5AEFD16D9E1060051FC4A /* BBHTTPExecutor.h */,
+				15F5AEFE16D9E1060051FC4A /* BBHTTPExecutor.m */,
+				15F5AEFF16D9E1060051FC4A /* BBHTTPRequest+Convenience.h */,
+				15F5AF0016D9E1060051FC4A /* BBHTTPRequest+Convenience.m */,
+				15F5AF0116D9E1060051FC4A /* BBHTTPRequest.h */,
+				15F5AF0216D9E1060051FC4A /* BBHTTPRequest.m */,
+				15F5AF0316D9E1060051FC4A /* BBHTTPResponse.h */,
+				15F5AF0416D9E1060051FC4A /* BBHTTPResponse.m */,
+				15F5AF0516D9E1060051FC4A /* Handlers */,
+				15F5AF1516D9E1060051FC4A /* Internal */,
+			);
+			name = BBHTTP;
+			path = ../BBHTTP;
+			sourceTree = "<group>";
+		};
+		15F5AF0516D9E1060051FC4A /* Handlers */ = {
+			isa = PBXGroup;
+			children = (
+				15F5AF0616D9E1060051FC4A /* BBHTTPAccumulator.h */,
+				15F5AF0716D9E1060051FC4A /* BBHTTPAccumulator.m */,
+				15F5AF0816D9E1060051FC4A /* BBHTTPContentHandler.h */,
+				15F5AF0916D9E1060051FC4A /* BBHTTPFileWriter.h */,
+				15F5AF0A16D9E1060051FC4A /* BBHTTPFileWriter.m */,
+				15F5AF0B16D9E1060051FC4A /* BBHTTPImageDecoder.h */,
+				15F5AF0C16D9E1060051FC4A /* BBHTTPImageDecoder.m */,
+				15F5AF0D16D9E1060051FC4A /* BBHTTPSelectiveDiscarder.h */,
+				15F5AF0E16D9E1060051FC4A /* BBHTTPSelectiveDiscarder.m */,
+				15F5AF0F16D9E1060051FC4A /* BBHTTPStreamWriter.h */,
+				15F5AF1016D9E1060051FC4A /* BBHTTPStreamWriter.m */,
+				15F5AF1116D9E1060051FC4A /* BBHTTPToStringConverter.h */,
+				15F5AF1216D9E1060051FC4A /* BBHTTPToStringConverter.m */,
+				15F5AF1316D9E1060051FC4A /* BBJSONParser.h */,
+				15F5AF1416D9E1060051FC4A /* BBJSONParser.m */,
+			);
+			path = Handlers;
+			sourceTree = "<group>";
+		};
+		15F5AF1516D9E1060051FC4A /* Internal */ = {
+			isa = PBXGroup;
+			children = (
+				15F5AF1616D9E1060051FC4A /* BBHTTPRequest+PrivateInterface.h */,
+				15F5AF1716D9E1060051FC4A /* BBHTTPRequest+PrivateInterface.m */,
+				15F5AF1816D9E1060051FC4A /* BBHTTPRequestContext.h */,
+				15F5AF1916D9E1060051FC4A /* BBHTTPRequestContext.m */,
+				15F5AF1A16D9E1060051FC4A /* BBHTTPUtils.h */,
+				15F5AF1B16D9E1060051FC4A /* BBHTTPUtils.m */,
+				15F5AF1C16D9E1060051FC4A /* BBJSONDictionary.h */,
+				15F5AF1D16D9E1060051FC4A /* BBJSONDictionary.m */,
+			);
+			path = Internal;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		15F5ADD116D97C9E0051FC4A /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				15F5AF1E16D9E1060051FC4A /* BBHotpotato.h in Headers */,
+				15F5AF1F16D9E1060051FC4A /* BBHTTPExecutor.h in Headers */,
+				15F5AF2216D9E1060051FC4A /* BBHTTPRequest+Convenience.h in Headers */,
+				15F5AF2516D9E1060051FC4A /* BBHTTPRequest.h in Headers */,
+				15F5AF2816D9E1060051FC4A /* BBHTTPResponse.h in Headers */,
+				15F5AF2B16D9E1060051FC4A /* BBHTTPAccumulator.h in Headers */,
+				15F5AF2E16D9E1060051FC4A /* BBHTTPContentHandler.h in Headers */,
+				15F5AF2F16D9E1060051FC4A /* BBHTTPFileWriter.h in Headers */,
+				15F5AF3216D9E1060051FC4A /* BBHTTPImageDecoder.h in Headers */,
+				15F5AF3516D9E1060051FC4A /* BBHTTPSelectiveDiscarder.h in Headers */,
+				15F5AF3816D9E1060051FC4A /* BBHTTPStreamWriter.h in Headers */,
+				15F5AF3B16D9E1060051FC4A /* BBHTTPToStringConverter.h in Headers */,
+				15F5AF3E16D9E1060051FC4A /* BBJSONParser.h in Headers */,
+				15F5AF4116D9E1060051FC4A /* BBHTTPRequest+PrivateInterface.h in Headers */,
+				15F5AF4416D9E1060051FC4A /* BBHTTPRequestContext.h in Headers */,
+				15F5AF4716D9E1060051FC4A /* BBHTTPUtils.h in Headers */,
+				15F5AF4A16D9E1060051FC4A /* BBJSONDictionary.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		15F5ADBF16D97C180051FC4A /* Hotpotato.iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 15F5ADCE16D97C180051FC4A /* Build configuration list for PBXNativeTarget "Hotpotato.iOS" */;
+			buildPhases = (
+				15F5ADBC16D97C180051FC4A /* Sources */,
+				15F5ADBD16D97C180051FC4A /* Frameworks */,
+				15F5ADBE16D97C180051FC4A /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Hotpotato.iOS;
+			productName = Hotpotato.iOS;
+			productReference = 15F5ADC016D97C180051FC4A /* libHotpotato.iOS.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		15F5ADD216D97C9E0051FC4A /* Hotpotato.OSX */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 15F5ADE116D97C9E0051FC4A /* Build configuration list for PBXNativeTarget "Hotpotato.OSX" */;
+			buildPhases = (
+				15F5ADCF16D97C9E0051FC4A /* Sources */,
+				15F5ADD016D97C9E0051FC4A /* Frameworks */,
+				15F5ADD116D97C9E0051FC4A /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Hotpotato.OSX;
+			productName = Hotpotato.OSX;
+			productReference = 15F5ADD316D97C9E0051FC4A /* libHotpotato.OSX.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		15F5AE3A16D9D3BD0051FC4A /* OSX Sample app */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 15F5AE5416D9D3BD0051FC4A /* Build configuration list for PBXNativeTarget "OSX Sample app" */;
+			buildPhases = (
+				15F5AE3716D9D3BD0051FC4A /* Sources */,
+				15F5AE3816D9D3BD0051FC4A /* Frameworks */,
+				15F5AE3916D9D3BD0051FC4A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "OSX Sample app";
+			productName = "OSX Sample app";
+			productReference = 15F5AE3B16D9D3BD0051FC4A /* OSX Sample app.app */;
+			productType = "com.apple.product-type.application";
+		};
+		15F5AE5A16D9D3D30051FC4A /* iOS Sample app */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 15F5AE7416D9D3D40051FC4A /* Build configuration list for PBXNativeTarget "iOS Sample app" */;
+			buildPhases = (
+				15F5AE5716D9D3D30051FC4A /* Sources */,
+				15F5AE5816D9D3D30051FC4A /* Frameworks */,
+				15F5AE5916D9D3D30051FC4A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "iOS Sample app";
+			productName = "iOS Sample app";
+			productReference = 15F5AE5B16D9D3D30051FC4A /* iOS Sample app.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		15F5ADB616D97BB90051FC4A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0460;
+			};
+			buildConfigurationList = 15F5ADB916D97BB90051FC4A /* Build configuration list for PBXProject "BBHTTP" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 15F5ADB516D97BB90051FC4A;
+			productRefGroup = 15F5ADC116D97C180051FC4A /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				15F5ADBF16D97C180051FC4A /* Hotpotato.iOS */,
+				15F5ADD216D97C9E0051FC4A /* Hotpotato.OSX */,
+				15F5AE3A16D9D3BD0051FC4A /* OSX Sample app */,
+				15F5AE5A16D9D3D30051FC4A /* iOS Sample app */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		15F5AE3916D9D3BD0051FC4A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				15F5AEDB16D9DB440051FC4A /* InfoPlist.strings in Resources */,
+				15F5AEDC16D9DB440051FC4A /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		15F5AE5916D9D3D30051FC4A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				15F5AEC616D9DB010051FC4A /* Default-568h@2x.png in Resources */,
+				15F5AEC716D9DB010051FC4A /* Default.png in Resources */,
+				15F5AEC816D9DB010051FC4A /* Default@2x.png in Resources */,
+				15F5AEC916D9DB010051FC4A /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		15F5ADBC16D97C180051FC4A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				15F5AF2016D9E1060051FC4A /* BBHTTPExecutor.m in Sources */,
+				15F5AF2316D9E1060051FC4A /* BBHTTPRequest+Convenience.m in Sources */,
+				15F5AF2616D9E1060051FC4A /* BBHTTPRequest.m in Sources */,
+				15F5AF2916D9E1060051FC4A /* BBHTTPResponse.m in Sources */,
+				15F5AF2C16D9E1060051FC4A /* BBHTTPAccumulator.m in Sources */,
+				15F5AF3016D9E1060051FC4A /* BBHTTPFileWriter.m in Sources */,
+				15F5AF3316D9E1060051FC4A /* BBHTTPImageDecoder.m in Sources */,
+				15F5AF3616D9E1060051FC4A /* BBHTTPSelectiveDiscarder.m in Sources */,
+				15F5AF3916D9E1060051FC4A /* BBHTTPStreamWriter.m in Sources */,
+				15F5AF3C16D9E1060051FC4A /* BBHTTPToStringConverter.m in Sources */,
+				15F5AF3F16D9E1060051FC4A /* BBJSONParser.m in Sources */,
+				15F5AF4216D9E1060051FC4A /* BBHTTPRequest+PrivateInterface.m in Sources */,
+				15F5AF4516D9E1060051FC4A /* BBHTTPRequestContext.m in Sources */,
+				15F5AF4816D9E1060051FC4A /* BBHTTPUtils.m in Sources */,
+				15F5AF4B16D9E1060051FC4A /* BBJSONDictionary.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		15F5ADCF16D97C9E0051FC4A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				15F5AF2116D9E1060051FC4A /* BBHTTPExecutor.m in Sources */,
+				15F5AF2416D9E1060051FC4A /* BBHTTPRequest+Convenience.m in Sources */,
+				15F5AF2716D9E1060051FC4A /* BBHTTPRequest.m in Sources */,
+				15F5AF2A16D9E1060051FC4A /* BBHTTPResponse.m in Sources */,
+				15F5AF2D16D9E1060051FC4A /* BBHTTPAccumulator.m in Sources */,
+				15F5AF3116D9E1060051FC4A /* BBHTTPFileWriter.m in Sources */,
+				15F5AF3416D9E1060051FC4A /* BBHTTPImageDecoder.m in Sources */,
+				15F5AF3716D9E1060051FC4A /* BBHTTPSelectiveDiscarder.m in Sources */,
+				15F5AF3A16D9E1060051FC4A /* BBHTTPStreamWriter.m in Sources */,
+				15F5AF3D16D9E1060051FC4A /* BBHTTPToStringConverter.m in Sources */,
+				15F5AF4016D9E1060051FC4A /* BBJSONParser.m in Sources */,
+				15F5AF4316D9E1060051FC4A /* BBHTTPRequest+PrivateInterface.m in Sources */,
+				15F5AF4616D9E1060051FC4A /* BBHTTPRequestContext.m in Sources */,
+				15F5AF4916D9E1060051FC4A /* BBHTTPUtils.m in Sources */,
+				15F5AF4C16D9E1060051FC4A /* BBJSONDictionary.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		15F5AE3716D9D3BD0051FC4A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				15F5AED916D9DB440051FC4A /* AppDelegate.m in Sources */,
+				15F5AEDD16D9DB440051FC4A /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		15F5AE5716D9D3D30051FC4A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				15F5AEC516D9DB010051FC4A /* AppDelegate.m in Sources */,
+				15F5AECB16D9DB010051FC4A /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		15F5AEC016D9DB010051FC4A /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				15F5AEC116D9DB010051FC4A /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		15F5AED216D9DB440051FC4A /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				15F5AED316D9DB440051FC4A /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		15F5AED416D9DB440051FC4A /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				15F5AED516D9DB440051FC4A /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		15F5ADBA16D97BB90051FC4A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+			};
+			name = Debug;
+		};
+		15F5ADBB16D97BB90051FC4A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+			};
+			name = Release;
+		};
+		15F5ADCC16D97C180051FC4A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DSTROOT = /tmp/Hotpotato_iOS.dst;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Hotpotato.iOS-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/../External/libcurl.iOS";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../External/libcurl.iOS";
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		15F5ADCD16D97C180051FC4A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DSTROOT = /tmp/Hotpotato_iOS.dst;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Hotpotato.iOS-Prefix.pch";
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/../External/libcurl.iOS";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../External/libcurl.iOS";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		15F5ADE216D97C9E0051FC4A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Hotpotato.OSX-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/../External/libcurl.OSX";
+				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../External/libcurl.OSX";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		15F5ADE316D97C9E0051FC4A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Hotpotato.OSX-Prefix.pch";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/../External/libcurl.OSX";
+				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../External/libcurl.OSX";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		15F5AE5516D9D3BD0051FC4A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/../Example/OSX Sample app/Supporting Files/OSX Sample app-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "$(SRCROOT)/../Example/OSX Sample app/Supporting Files/OSX Sample app-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../External/libcurl.OSX\"",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		15F5AE5616D9D3BD0051FC4A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/../Example/OSX Sample app/Supporting Files/OSX Sample app-Prefix.pch";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "$(SRCROOT)/../Example/OSX Sample app/Supporting Files/OSX Sample app-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../External/libcurl.OSX\"",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		15F5AE7516D9D3D40051FC4A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/../Example/iOS Sample app/Supporting Files/iOS Sample app-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../External/libcurl.iOS\"";
+				INFOPLIST_FILE = "$(SRCROOT)/../Example/iOS Sample app/Supporting Files/iOS Sample app-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../External/libcurl.iOS\"",
+				);
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		15F5AE7616D9D3D40051FC4A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/../Example/iOS Sample app/Supporting Files/iOS Sample app-Prefix.pch";
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../External/libcurl.iOS\"";
+				INFOPLIST_FILE = "$(SRCROOT)/../Example/iOS Sample app/Supporting Files/iOS Sample app-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../External/libcurl.iOS\"",
+				);
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		15F5ADB916D97BB90051FC4A /* Build configuration list for PBXProject "BBHTTP" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				15F5ADBA16D97BB90051FC4A /* Debug */,
+				15F5ADBB16D97BB90051FC4A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		15F5ADCE16D97C180051FC4A /* Build configuration list for PBXNativeTarget "Hotpotato.iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				15F5ADCC16D97C180051FC4A /* Debug */,
+				15F5ADCD16D97C180051FC4A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		15F5ADE116D97C9E0051FC4A /* Build configuration list for PBXNativeTarget "Hotpotato.OSX" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				15F5ADE216D97C9E0051FC4A /* Debug */,
+				15F5ADE316D97C9E0051FC4A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		15F5AE5416D9D3BD0051FC4A /* Build configuration list for PBXNativeTarget "OSX Sample app" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				15F5AE5516D9D3BD0051FC4A /* Debug */,
+				15F5AE5616D9D3BD0051FC4A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		15F5AE7416D9D3D40051FC4A /* Build configuration list for PBXNativeTarget "iOS Sample app" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				15F5AE7516D9D3D40051FC4A /* Debug */,
+				15F5AE7616D9D3D40051FC4A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 15F5ADB616D97BB90051FC4A /* Project object */;
+}

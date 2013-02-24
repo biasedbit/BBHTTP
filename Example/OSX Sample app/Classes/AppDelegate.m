@@ -19,7 +19,7 @@
 //  Copyright (c) 2013 BiasedBit. All rights reserved.
 //
 
-#import "BBAppDelegate.h"
+#import "AppDelegate.h"
 
 #import "BBHotpotato.h"
 
@@ -27,7 +27,7 @@
 
 #pragma mark -
 
-@implementation BBAppDelegate
+@implementation AppDelegate
 
 
 #pragma mark NSApplicationDelegate
