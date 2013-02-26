@@ -5,7 +5,7 @@ Pod::Spec.new do |s|
   s.homepage = "https://github.com/brunodecarvalho/BBHotpotato"
   s.license  = { :type => "Apache License, Version 2.0", :file => "LICENSE" }
   s.author   = { "Bruno de Carvalho" => "bruno@biasedbit.com" }
-  s.source   = { :git => "https://github.com/brunodecarvalho/BBHotpotato.git", :commit => "f73e6a1e75" }
+  s.source   = { :git => "https://github.com/brunodecarvalho/BBHotpotato.git", :commit => "5d6d7b9659" }
 
   s.requires_arc = true
   s.source_files = "BBHTTP/**/*.{h,m}"
