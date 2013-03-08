@@ -175,7 +175,13 @@
 }
 
 - (BOOL)execute:(void (^)(BBHTTPResponse* response))completed error:(void (^)(NSError* error))error
-        finally:(void (^)())finally
+      finally:(void (^)())finally
+{
+    return [self execute:completed error:error cancelled:nil finally:finally];
+}
+
+- (BOOL)execute:(void (^)(BBHTTPResponse* response))completed error:(void (^)(NSError* error))error
+      cancelled:(void (^)())cancelled finally:(void (^)())finally
 {
     // If nothing was specified, load body to memory -- perhaps an instance of BBHTTPDiscard would be better here?
     if (self.responseContentHandler == nil) [self downloadContentAsData];
@@ -183,8 +189,10 @@
     self.finishBlock = ^(BBHTTPRequest* request) {
         if (request.error != nil) {
             if (error != nil) error(request.error);
-        } else if (!request.cancelled) {
-            completed(request.response);
+        } else if ([request wasCancelled]) {
+            if (cancelled != nil) cancelled();
+        } else {
+            if (completed != nil) completed(request.response);
         }
 
         if (finally != nil) finally();
@@ -196,7 +204,8 @@
 - (BOOL)setup:(void (^)(id request))setup execute:(void (^)(BBHTTPResponse* response))completed
         error:(void (^)(NSError* error))error
 {
-    return [self setup:setup execute:completed error:error finally:nil];
+    if (setup != nil) setup(self);
+    return [self setup:setup execute:completed error:error];
 }
 
 - (BOOL)setup:(void (^)(id request))setup execute:(void (^)(BBHTTPResponse* response))completed
@@ -204,6 +213,13 @@
 {
     if (setup != nil) setup(self);
     return [self execute:completed error:error finally:finally];
+}
+
+- (BOOL)setup:(void (^)(id request))setup execute:(void (^)(BBHTTPResponse* response))completed
+        error:(void (^)(NSError* error))error cancelled:(void (^)())cancelled finally:(void (^)())finally
+{
+    if (setup != nil) setup(self);
+    return [self execute:completed error:error cancelled:cancelled finally:finally];
 }
 
 @end

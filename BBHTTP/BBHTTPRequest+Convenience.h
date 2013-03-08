@@ -223,6 +223,9 @@
 - (BOOL)execute:(void (^)(BBHTTPResponse* response))completed error:(void (^)(NSError* error))error
         finally:(void (^)())finally;
 
+- (BOOL)execute:(void (^)(BBHTTPResponse* response))completed error:(void (^)(NSError* error))error
+      cancelled:(void (^)())cancelled finally:(void (^)())finally;
+
 /**
  Convenience method allows for extra request preparation steps and executes this request in the singleton instance of
  `<BBHTTPExecutor>`.
@@ -241,5 +244,8 @@
 
 - (BOOL)setup:(void (^)(id request))setup execute:(void (^)(BBHTTPResponse* response))completed
         error:(void (^)(NSError* error))error finally:(void (^)())finally;
+
+- (BOOL)setup:(void (^)(id request))setup execute:(void (^)(BBHTTPResponse* response))completed
+        error:(void (^)(NSError* error))error cancelled:(void (^)())cancelled finally:(void (^)())finally;
 
 @end
