@@ -192,6 +192,13 @@
  */
 - (instancetype)asJSON;
 
+/**
+ Fluent syntax shortcut for `<downloadContentAsImage>`.
+
+ @return The current instance.
+ */
+- (instancetype)asImage;
+
 
 #pragma mark Executing the request
 
