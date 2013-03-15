@@ -96,8 +96,7 @@
     // When no acceptable response codes are defined, accept everything
     if ((_acceptableResponses == nil) || ([_acceptableResponses count] == 0)) return YES;
 
-    NSNumber* wrappedResponseCode = [NSNumber numberWithUnsignedInteger:statusCode];
-    return [_acceptableResponses containsObject:wrappedResponseCode];
+    return [_acceptableResponses containsObject:@(statusCode)];
 }
 
 - (BOOL)isAcceptableContentType:(NSString*)contentType
