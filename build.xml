@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="${module.name}" default="build"
+        >
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ CONFIGURATION ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <property file="build-configuration.properties"/>
+    <path id="headers">
+        <fileset dir="${source.main.dir}">
+            <include name="**/*.h"/>
+        </fileset>
+    </path>
+    <path id="classes">
+        <fileset dir="${source.main.dir}">
+            <include name="**/*.m"/>
+            <include name="**/*.mm"/>
+            <include name="**/*.cpp"/>
+            <exclude name="**/main.m"/>
+        </fileset>
+    </path>
+
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ PUBLIC TARGETS (can depend on other targets) ~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <target name="build" depends="
+        --init,
+        --clean,
+        --api.report,
+        --publish.site"/>
+
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ END PUBLIC TARGETS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+
+
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ PRIVATE TARGETS (MUST NOT depend on other targets!) ~~~~~~~~~~~~~~~~~~~ -->
+    <target name="--init">
+        <exec executable="xcode-select" outputproperty="xcode.path">
+            <arg line="-print-path"/>
+        </exec>
+        <property name="xcode.path.message">
+            Xcode path is not set. Please use run xcode-select from the cmd-line, to specify location of Xcode tools.
+            ${line.separator}Example: sudo xcode-select -switch /Applications/Xcode.app/Contents/Developer
+        </property>
+        <fail unless="xcode.path"
+              message="${xcode.path.message}"/>
+
+        <mkdir dir="${target.dir}"/>
+        <mkdir dir="${temp.dir}"/>
+        <mkdir dir="${temp.dir}/coverage-data"/>
+        <mkdir dir="${reports.dir}"/>
+        <mkdir dir="${reports.dir}/tests"/>
+    </target>
+
+    <target name="--clean" unless="fast">
+        <mkdir dir="${target.dir}"/>
+        <mkdir dir="${temp.dir}"/>
+        <fail unless="xcode.path" message="Xcode path is not set"/>
+
+        <echo message="Based on xcode-select, simulator path is: ${xcode.path}/${simulator.path}"/>
+
+        <echo file="${temp.dir}/quit-simulator.script">
+            tell application "${xcode.path}/${simulator.path}" to quit
+        </echo>
+        <exec executable="osascript" failonerror="true" failifexecutionfails="true">
+            <arg line="${temp.dir}/quit-simulator.script"/>
+        </exec>
+
+        <delete dir="${target.dir}"/>
+        <delete dir="${user.home}/Library/Developer/Xcode/DerivedData"/>
+    </target>
+
+    <target name="--api.report">
+        <mkdir dir="${reports.dir}/api"/>
+        <mkdir dir="${user.home}/Library/Developer/Shared"/>
+        <mkdir dir="${user.home}/Library/Developer/Shared/Documentation"/>
+        <mkdir dir="${user.home}/Library/Developer/Shared/Documentation/Docsets"/>
+        <!-- In case it's turned up somehow, despite cleaning up. -->
+        <delete file="${basedir}/docset-installed.txt"/>
+
+        <pathconvert pathsep=" " property="doc.files.list" refid="headers">
+            <map from="${source.main.dir}" to="${source.main.dir}"/>
+        </pathconvert>
+        <echo message="Documenting: ${doc.files.list}"/>
+
+        <exec executable="appledoc">
+            <env key="PATH" value="${tools.paths}"/>
+            <arg line="--project-name=${module.name}"/>
+            <arg line="--project-company=${module.company}"/>
+            <arg line="--company-id=${module.company}"/>
+            <arg line="-h --keep-undocumented-objects --keep-undocumented-members"/>
+            <arg line="${doc.files.list}"/>
+        </exec>
+
+        <loadfile srcfile="${basedir}/docset-installed.txt" property="docset.installed"/>
+        <fail unless="docset.installed" message="Error creating documentation"/>
+        <!-- Don't leave it lying around -->
+        <delete file="${basedir}/docset-installed.txt"/>
+
+        <property name="docs.dir" value="${user.home}/Library/Developer/Shared/Documentation/Docsets"/>
+        <copy todir="${reports.dir}/api">
+            <fileset dir="${docs.dir}/${module.company}.${module.name}.docset/Contents/Resources/Documents"/>
+        </copy>
+    </target>
+
+    <target name="--publish.site">
+        <echo file="${temp.dir}/publish-site.sh">
+            #!/bin/sh
+            cd ${basedir}
+            git remote add origin ${github.repo}
+            git remote set-url origin ${github.repo}
+            git fetch origin gh-pages:gh-pages
+            git fetch origin gh-pages
+            git checkout gh-pages
+            git pull
+
+            rm -fr ./api
+            cp -fr ${reports.dir}/api ./api
+            git add api
+
+            git commit -a -m "publish reports to gh-pages"
+            git push -u origin gh-pages
+            git checkout master
+        </echo>
+        <chmod perm="+x" file="${temp.dir}/publish-site.sh"/>
+        <exec executable="${temp.dir}/publish-site.sh" failonerror="true" failifexecutionfails="true"/>
+
+    </target>
+
+
+
+</project>
