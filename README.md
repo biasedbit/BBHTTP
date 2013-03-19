@@ -129,7 +129,7 @@ There are other built-in ways to handle content from responses. Be sure to read 
 # API Docs
 
 
-* <a href="http://jasperblues.github.com/BBHotpotatoe/api/index.html">API</a>
+* Published after each commit <a href="http://jasperblues.github.com/BBHotpotato/api/index.html">here</a>.
 
 ## Likely TODO list
 
