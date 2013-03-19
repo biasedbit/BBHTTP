@@ -54,9 +54,11 @@
 
 - (id)initWithURL:(NSURL*)url verb:(NSString*)verb andProtocolVersion:(BBHTTPProtocolVersion)version;
 {
-    NSParameterAssert(![url isFileReferenceURL]);
     BBHTTPEnsureNotNil(url);
     BBHTTPEnsureNotNil(verb);
+    NSParameterAssert(![url isFileReferenceURL]);
+    NSAssert([url host] != nil,
+             @"Host cannot be nil; make sure you provided a valid NSURL instance.\n\nOffending URL: '%@'", url);
 
     self = [super init];
     if (self != nil) {
