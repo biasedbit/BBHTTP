@@ -21,7 +21,7 @@
 
 #pragma mark - Constants
 
-#define BBHTTPVersion @"0.9.2"
+#define BBHTTPVersion @"0.9.3"
 
 
 
