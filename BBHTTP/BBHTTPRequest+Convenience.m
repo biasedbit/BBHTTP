@@ -182,7 +182,7 @@
 
 - (BOOL)execute:(void (^)(BBHTTPResponse* response))completed error:(void (^)(NSError* error))error
 {
-    return [self execute:completed error:error finally:nil];
+    return [self execute:completed error:error cancelled:nil finally:nil];
 }
 
 - (BOOL)execute:(void (^)(BBHTTPResponse* response))completed error:(void (^)(NSError* error))error
@@ -216,14 +216,14 @@
         error:(void (^)(NSError* error))error
 {
     if (setup != nil) setup(self);
-    return [self setup:setup execute:completed error:error];
+    return [self execute:completed error:error cancelled:nil finally:nil];
 }
 
 - (BOOL)setup:(void (^)(id request))setup execute:(void (^)(BBHTTPResponse* response))completed
         error:(void (^)(NSError* error))error finally:(void (^)())finally
 {
     if (setup != nil) setup(self);
-    return [self execute:completed error:error finally:finally];
+    return [self execute:completed error:error cancelled:nil finally:finally];
 }
 
 - (BOOL)setup:(void (^)(id request))setup execute:(void (^)(BBHTTPResponse* response))completed
