@@ -28,6 +28,22 @@
 @implementation BBHTTPToStringConverter
 
 
+#pragma mark Creation
+
+- (instancetype)init
+{
+    return [self initWithEncoding:NSUTF8StringEncoding];
+}
+
+- (instancetype)initWithEncoding:(NSStringEncoding)encoding
+{
+    self = [super init];
+    if (self != nil) _encoding = encoding;
+
+    return self;
+}
+
+
 #pragma mark BBHTTPAccumulator behavior override
 
 - (NSString*)parseContent:(NSError**)error
@@ -35,7 +51,7 @@
     NSData* data = [super parseContent:error];
     if (((error != NULL) && (*error != nil)) || (data == nil)) return nil;
 
-    return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    return [[NSString alloc] initWithData:data encoding:_encoding];
 }
 
 @end

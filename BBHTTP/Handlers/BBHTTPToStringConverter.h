@@ -26,4 +26,15 @@
  encoded `NSString`.
  */
 @interface BBHTTPToStringConverter : BBHTTPAccumulator
+
+
+#pragma mark Properties
+
+@property(assign, nonatomic) NSStringEncoding encoding;
+
+
+#pragma mark Creation
+
+- (instancetype)initWithEncoding:(NSStringEncoding)encoding;
+
 @end

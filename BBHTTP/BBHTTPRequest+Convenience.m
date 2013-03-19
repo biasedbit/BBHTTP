@@ -111,6 +111,11 @@
     self.responseContentHandler = [[BBHTTPToStringConverter alloc] init];
 }
 
+- (void)downloadContentAsStringWithEncoding:(NSStringEncoding)encoding
+{
+    self.responseContentHandler = [[BBHTTPToStringConverter alloc] initWithEncoding:encoding];
+}
+
 - (void)downloadContentAsJSON
 {
     self.responseContentHandler = [[BBJSONParser alloc] init];
@@ -145,6 +150,12 @@
 - (instancetype)asString
 {
     [self downloadContentAsString];
+    return self;
+}
+
+- (instancetype)asStringWithEncoding:(NSStringEncoding)encoding
+{
+    [self downloadContentAsStringWithEncoding:encoding];
     return self;
 }
 
