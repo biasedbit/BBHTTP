@@ -61,16 +61,16 @@ extern void BBHTTPLog(NSUInteger level, NSString* prefix, NSString* (^statement)
 #pragma mark - DRY macros
 
 #define BBHTTPErrorWithFormat(c, fmt, ...) \
-    [NSError errorWithDomain:@"com.biasedbit.hotpotato" code:c \
+    [NSError errorWithDomain:@"com.biasedbit.http" code:c \
                     userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithFormat:fmt, ##__VA_ARGS__]}]
 
 // We need this variant because passing a non-statically initialized NSString* instance as fmt raises a warning
 #define BBHTTPError(c, description) \
-    [NSError errorWithDomain:@"com.biasedbit.hotpotato" code:c \
+    [NSError errorWithDomain:@"com.biasedbit.http" code:c \
                     userInfo:@{NSLocalizedDescriptionKey: description}]
 
 #define BBHTTPErrorWithReason(c, description, reason) \
-    [NSError errorWithDomain:@"com.biasedbit.hotpotato" code:c \
+    [NSError errorWithDomain:@"com.biasedbit.http" code:c \
                     userInfo:@{NSLocalizedDescriptionKey: description, NSLocalizedFailureReasonErrorKey: reason}]
 
 #define BBHTTPEnsureNotNil(value) NSAssert((value) != nil, @"%s cannot be nil", #value)

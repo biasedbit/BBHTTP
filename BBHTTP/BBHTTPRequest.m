@@ -87,13 +87,13 @@
                         [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]);
 
 #if defined(__IPHONE_OS_VERSION_MIN_REQUIRED)
-        BBHTTPSingletonString(userAgent, @"BBHotpotato/%@ %@/%@ (%@; iOS %@; Scale/%0.2f)",
+        BBHTTPSingletonString(userAgent, @"BBHTTP/%@ %@/%@ (%@; iOS %@; Scale/%0.2f)",
                               BBHTTPVersion, appName, appVersion,
                               [[UIDevice currentDevice] model],
                               [[UIDevice currentDevice] systemVersion],
                               [[UIScreen mainScreen] scale]);
 #elif defined(__MAC_OS_X_VERSION_MIN_REQUIRED)
-        BBHTTPSingletonString(userAgent, @"BBHotpotato/%@ %@/%@ (Mac OS X %@)",
+        BBHTTPSingletonString(userAgent, @"BBHTTP/%@ %@/%@ (Mac OS X %@)",
                               BBHTTPVersion, appName, appVersion,
                               [[NSProcessInfo processInfo] operatingSystemVersionString]);
 #endif

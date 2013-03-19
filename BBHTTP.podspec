@@ -1,11 +1,11 @@
 Pod::Spec.new do |s|
-  s.name     = "BBHTTP"
-  s.version  = "0.9.2"
+  s.name     = "BBHotpotato"
+  s.version  = "0.9.3"
   s.summary  = "A modern HTTP client framework for iOS/OSX built on top of libcurl."
   s.homepage = "https://github.com/brunodecarvalho/BBHotpotato"
   s.license  = { :type => "Apache License, Version 2.0", :file => "LICENSE" }
   s.author   = { "Bruno de Carvalho" => "bruno@biasedbit.com" }
-  s.source   = { :git => "https://github.com/brunodecarvalho/BBHotpotato.git", :tag => "0.9.2" }
+  s.source   = { :git => "https://github.com/brunodecarvalho/BBHotpotato.git", :tag => "0.9.3" }
 
   s.requires_arc = true
   s.source_files = "BBHTTP/**/*.{h,m}"

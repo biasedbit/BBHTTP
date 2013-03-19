@@ -19,8 +19,8 @@
 //  Copyright (c) 2013 BiasedBit. All rights reserved.
 //
 
-#ifndef __BBHOTPOTATO
-#define __BBHOTPOTATO
+#ifndef __BBHTTP
+#define __BBHTTP
 
 #import "BBHTTPExecutor.h"
 #import "BBHTTPRequest+Convenience.h"

@@ -1,7 +1,7 @@
-BBHotpotato
-===========
+BBHTTP
+======
 
-Hotpotato is a rich wrapper for **libcurl** written in Objective-C. Its name derives from the not-so-common misspelling of HTTP as HPTT.
+BBHTTP is a rich wrapper for **libcurl** written in Objective-C.
 
 It is an ARC-only library that uses [features](http://clang.llvm.org/docs/ObjectiveCLiterals.html) introduced by Clang 3.1. Thus, it is only suitable for iOS 5+ and OSX 10.7+.
 
@@ -101,7 +101,7 @@ The API is **very** likely to keep mutating until this reaches 1.0.
     } error:nil];
     ```
 
-    > No need to delete the file if the download fails midway; hotpotato will take care of keeping everything clean.
+    > No need to delete the file if the download fails midway; BBHTTP will take care of keeping everything clean.
 
 
 * A *power-dev* API when you need that extra bit of control:
@@ -123,7 +123,7 @@ The API is **very** likely to keep mutating until this reaches 1.0.
     [twitterExecutor executeRequest:request];
     ```
 
-There are other built-in ways to handle content from responses. Be sure to read up the [In-depth guide to response content handling](https://github.com/brunodecarvalho/BBHotpotato/wiki/Response-content-handling).
+There are other built-in ways to handle content from responses. Be sure to read up the [In-depth guide to response content handling](https://github.com/brunodecarvalho/BBHTTP/wiki/Response-content-handling).
 
 
 ## Likely TODO list
@@ -133,14 +133,14 @@ There are other built-in ways to handle content from responses. Be sure to read 
 * Use curl's multi handles
 * *Your bright idea here*
 
-For a comprehensive list, be sure to visit the [Roadmap](https://github.com/brunodecarvalho/BBHotpotato/wiki/Roadmap) wiki page.
+For a comprehensive list, be sure to visit the [Roadmap](https://github.com/brunodecarvalho/BBHTTP/wiki/Roadmap) wiki page.
 
 
 ## Why?
 
 You mean other than its sleek API or the fact that it uses libcurl underneath?
 
-Well, unlike `NSURLConnection` and, consequently, any lib that relies on it, hotpotato...
+Well, unlike `NSURLConnection` and, consequently, any lib that relies on it, BBHTTP...
 
 * is strictly compliant with [section 8.2.3](http://tools.ietf.org/html/rfc2616#section-8.2.3) of RFC 2616, a.k.a. the misbeloved `Expect: 100-Continue` header;
 * can receive server error responses midway through upload &mdash; as opposed to continuing to pump data into socket eden, and eventually reporting connection timeout instead of the actual error response sent by the server.
@@ -179,7 +179,7 @@ A couple of quick tests with command line version of curl proved that curl knew 
 
 ## Documentation
 
-For guides on how to setup and start working with this lib, check out [the wiki pages](https://github.com/brunodecarvalho/BBHotpotato/wiki).
+For guides on how to setup and start working with this lib, check out [the wiki pages](https://github.com/brunodecarvalho/BBHTTP/wiki).
 
 The project also includes comprehensive class-level documentation. If you happen to have [appledoc](https://github.com/tomaz/appledoc) installed, just run the `generate` script on the `Docs` folder and it'll create html documentation for you under `Docs/html`.
 
@@ -193,7 +193,7 @@ The project also includes comprehensive class-level documentation. If you happen
 
 ## License
 
-Hotpotato is licensed under the Apache Software License version 2.0
+BBHTTP is licensed under the Apache Software License version 2.0
 
 
 ## Get in touch

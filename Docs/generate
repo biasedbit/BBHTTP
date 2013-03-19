@@ -18,7 +18,7 @@ appledoc \
   --explicit-crossref \
   --keep-merged-sections \
   \
-  --project-name    BBHotpotato \
+  --project-name    BBHTTP \
   --project-company BiasedBit \
   --company-id      com.biasedbit \
   --ignore          .m \
