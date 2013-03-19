@@ -454,9 +454,9 @@
 			productReference = 15F5ADD316D97C9E0051FC4A /* libBBHTTP.OSX.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		15F5AE3A16D9D3BD0051FC4A /* OSX Sample app */ = {
+		15F5AE3A16D9D3BD0051FC4A /* OSX Sample */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 15F5AE5416D9D3BD0051FC4A /* Build configuration list for PBXNativeTarget "OSX Sample app" */;
+			buildConfigurationList = 15F5AE5416D9D3BD0051FC4A /* Build configuration list for PBXNativeTarget "OSX Sample" */;
 			buildPhases = (
 				15F5AE3716D9D3BD0051FC4A /* Sources */,
 				15F5AE3816D9D3BD0051FC4A /* Frameworks */,
@@ -466,14 +466,14 @@
 			);
 			dependencies = (
 			);
-			name = "OSX Sample app";
+			name = "OSX Sample";
 			productName = "OSX Sample app";
 			productReference = 15F5AE3B16D9D3BD0051FC4A /* OSX Sample app.app */;
 			productType = "com.apple.product-type.application";
 		};
-		15F5AE5A16D9D3D30051FC4A /* iOS Sample app */ = {
+		15F5AE5A16D9D3D30051FC4A /* iOS Sample */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 15F5AE7416D9D3D40051FC4A /* Build configuration list for PBXNativeTarget "iOS Sample app" */;
+			buildConfigurationList = 15F5AE7416D9D3D40051FC4A /* Build configuration list for PBXNativeTarget "iOS Sample" */;
 			buildPhases = (
 				15F5AE5716D9D3D30051FC4A /* Sources */,
 				15F5AE5816D9D3D30051FC4A /* Frameworks */,
@@ -483,7 +483,7 @@
 			);
 			dependencies = (
 			);
-			name = "iOS Sample app";
+			name = "iOS Sample";
 			productName = "iOS Sample app";
 			productReference = 15F5AE5B16D9D3D30051FC4A /* iOS Sample app.app */;
 			productType = "com.apple.product-type.application";
@@ -510,8 +510,8 @@
 			targets = (
 				15F5ADBF16D97C180051FC4A /* BBHTTP.iOS */,
 				15F5ADD216D97C9E0051FC4A /* BBHTTP.OSX */,
-				15F5AE3A16D9D3BD0051FC4A /* OSX Sample app */,
-				15F5AE5A16D9D3D30051FC4A /* iOS Sample app */,
+				15F5AE3A16D9D3BD0051FC4A /* OSX Sample */,
+				15F5AE5A16D9D3D30051FC4A /* iOS Sample */,
 			);
 		};
 /* End PBXProject section */
@@ -975,7 +975,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		15F5AE5416D9D3BD0051FC4A /* Build configuration list for PBXNativeTarget "OSX Sample app" */ = {
+		15F5AE5416D9D3BD0051FC4A /* Build configuration list for PBXNativeTarget "OSX Sample" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				15F5AE5516D9D3BD0051FC4A /* Debug */,
@@ -984,7 +984,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		15F5AE7416D9D3D40051FC4A /* Build configuration list for PBXNativeTarget "iOS Sample app" */ = {
+		15F5AE7416D9D3D40051FC4A /* Build configuration list for PBXNativeTarget "iOS Sample" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				15F5AE7516D9D3D40051FC4A /* Debug */,
