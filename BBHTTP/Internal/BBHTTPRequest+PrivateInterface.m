@@ -48,31 +48,12 @@
     return YES;
 }
 
-- (BOOL)executionFailedWithError:(NSError*)error
+- (BOOL)executionFailedWithFinalResponse:(BBHTTPResponse*)response error:(NSError*)error
 {
     if ([self hasFinished]) return NO;
 
     _endTimestamp = BBHTTPCurrentTimeMillis();
     _error = error;
-
-    if (self.finishBlock != nil) {
-        dispatch_async(self.callbackQueue, ^{
-            self.finishBlock(self);
-
-            self.uploadProgressBlock = nil;
-            self.downloadProgressBlock = nil;
-            self.finishBlock = nil;
-        });
-    }
-
-    return YES;
-}
-
-- (BOOL)executionFinishedWithFinalResponse:(BBHTTPResponse*)response
-{
-    if ([self hasFinished]) return NO;
-
-    _endTimestamp = BBHTTPCurrentTimeMillis();
     _response = response;
 
     if (self.finishBlock != nil) {
@@ -84,7 +65,7 @@
             self.finishBlock = nil;
         });
     }
-
+    
     return YES;
 }
 

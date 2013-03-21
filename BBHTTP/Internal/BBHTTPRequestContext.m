@@ -124,6 +124,7 @@
             BBHTTPLogError(@"%@ | Request handler rejected %lu %@ response with error: %@",
                            self, (unsigned long)_currentResponse.code, _currentResponse.message,
                            [_error localizedDescription]);
+
             return NO;
         }
 
@@ -137,14 +138,10 @@
 
 - (void)requestFinished
 {
-    if (_error != nil) {
-        [self cleanup];
-        [_request executionFailedWithError:_error];
-    } else {
-        [self finishCurrentResponse];
-        [self cleanup];
-        [_request executionFinishedWithFinalResponse:[self lastResponse]];
-    }
+    [self finishCurrentResponse];
+    [self cleanup];
+
+    [_request executionFailedWithFinalResponse:[self lastResponse] error:_error];
 }
 
 - (void)requestFinishedWithError:(NSError*)error

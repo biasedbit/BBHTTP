@@ -31,8 +31,7 @@
 #pragma mark Events
 
 - (BOOL)executionStarted;
-- (BOOL)executionFailedWithError:(NSError*)error;
-- (BOOL)executionFinishedWithFinalResponse:(BBHTTPResponse*)response;
+- (BOOL)executionFailedWithFinalResponse:(BBHTTPResponse*)response error:(NSError*)error;
 - (BOOL)uploadProgressedToCurrent:(NSUInteger)current ofTotal:(NSUInteger)total;
 - (BOOL)downloadProgressedToCurrent:(NSUInteger)current ofTotal:(NSUInteger)total;
 
