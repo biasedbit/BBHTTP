@@ -25,6 +25,25 @@
 
 
 
+#pragma mark - Utility Functions
+
+BBTransferSpeed BBTransferSpeedMake(NSUInteger bytesPerSecond, NSTimeInterval duration)
+{
+    BBTransferSpeed transferSpeed;
+    transferSpeed.bytesPerSecond = bytesPerSecond;
+    transferSpeed.duration = duration;
+
+    return transferSpeed;
+}
+
+NSString* NSStringFromBBTransferSpeed(BBTransferSpeed transferSpeed)
+{
+    return [NSString stringWithFormat:@"%lu/s for %.0f seconds",
+            (unsigned long)transferSpeed.bytesPerSecond, transferSpeed.duration];
+}
+
+
+
 #pragma mark -
 
 @implementation BBHTTPRequest
@@ -72,7 +91,7 @@
         _maxRedirects = 0;
         _allowInvalidSSLCertificates = NO;
         _connectionTimeout = 10;
-        _responseReadTimeout = 10;
+        _downloadTimeout = BBTransferSpeedMake(1024, 20);
         _callbackQueue = dispatch_get_main_queue();
 
         NSString* hostHeaderValue = [_url host];

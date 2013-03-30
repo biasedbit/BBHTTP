@@ -24,6 +24,24 @@
 
 
 
+#pragma mark - Custom types
+
+struct BBTransferSpeed {
+    NSUInteger bytesPerSecond;
+    NSTimeInterval duration;
+};
+typedef struct BBTransferSpeed BBTransferSpeed;
+
+
+
+#pragma mark - Utility Functions
+
+extern BBTransferSpeed BBTransferSpeedMake(NSUInteger bytesPerSecond, NSTimeInterval duration);
+extern NSString* NSStringFromBBTransferSpeed(BBTransferSpeed transferSpeed);
+
+
+
+
 #pragma mark -
 
 /**
@@ -305,27 +323,34 @@
 - (void)setObject:(NSString*)value forKeyedSubscript:(NSString*)header;
 
 
-#pragma mark Configuring other request properties
+#pragma mark Timeout conditions and speed limits
 
-/// ------------------------------------------
-/// @name Configuring other request properties
-/// ------------------------------------------
+/// -----------------------------------------
+/// @name Timeout conditions and speed limits
+/// -----------------------------------------
 
 /**
  Time, in seconds, to wait for a connection to the server.
- 
+
  This value affects **only** the connection stage of the request.
  */
 @property(assign, nonatomic) NSUInteger connectionTimeout;
 
 /**
- Inactivity limit, in seconds, before considering the request as timed out.
- 
- If a request does not receive data for more than *responseReadTimeout* seconds, the request will fail.
- 
- @bug This is not working, for the time being.
+ Download timeout condition.
+
+ A request is aborted if the transfer rate falls below X bytes per second for more than Y seconds.
+
+ Defaults to 1KB/s over 20 seconds.
  */
-@property(assign, nonatomic) NSUInteger responseReadTimeout;
+@property(assign, nonatomic) BBTransferSpeed downloadTimeout;
+
+
+#pragma mark Configuring other request properties
+
+/// ------------------------------------------
+/// @name Configuring other request properties
+/// ------------------------------------------
 
 /* TODO: Not yet properly supported. */
 @property(assign, nonatomic) NSUInteger maxRedirects;

@@ -505,10 +505,9 @@ static BOOL BBHTTPExecutorInitialized = NO;
 
     // Setup - configure timeouts
     curl_easy_setopt(handle, CURLOPT_CONNECTTIMEOUT, context.request.connectionTimeout);
+    curl_easy_setopt(handle, CURLOPT_LOW_SPEED_LIMIT, context.request.downloadTimeout.bytesPerSecond);
+    curl_easy_setopt(handle, CURLOPT_LOW_SPEED_TIME, context.request.downloadTimeout.duration);
 
-    // TODO expose options to configure these - right now, if transfer's below 1KB/s for 15 seconds, abort
-    curl_easy_setopt(handle, CURLOPT_LOW_SPEED_LIMIT, 1024L);
-    curl_easy_setopt(handle, CURLOPT_LOW_SPEED_TIME, 15L);
 
     // Setup - configure redirections
 //    if (context.request.maxRedirects == 0) {
