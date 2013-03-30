@@ -92,6 +92,8 @@ NSString* NSStringFromBBTransferSpeed(BBTransferSpeed transferSpeed)
         _allowInvalidSSLCertificates = NO;
         _connectionTimeout = 10;
         _downloadTimeout = BBTransferSpeedMake(1024, 20);
+        _uploadSpeedLimit = 0;
+        _downloadSpeedLimit = 0;
         _callbackQueue = dispatch_get_main_queue();
 
         NSString* hostHeaderValue = [_url host];

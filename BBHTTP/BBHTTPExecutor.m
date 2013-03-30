@@ -508,6 +508,14 @@ static BOOL BBHTTPExecutorInitialized = NO;
     curl_easy_setopt(handle, CURLOPT_LOW_SPEED_LIMIT, context.request.downloadTimeout.bytesPerSecond);
     curl_easy_setopt(handle, CURLOPT_LOW_SPEED_TIME, context.request.downloadTimeout.duration);
 
+    // Setup - speed limits
+    if ([context.request isUpload] && (context.request.uploadSpeedLimit > 0)) {
+        curl_easy_setopt(handle, CURLOPT_MAX_SEND_SPEED_LARGE, context.request.uploadSpeedLimit);
+    }
+
+    if (context.request.downloadSpeedLimit > 0) {
+        curl_easy_setopt(handle, CURLOPT_MAX_RECV_SPEED_LARGE, context.request.downloadSpeedLimit);
+    }
 
     // Setup - configure redirections
 //    if (context.request.maxRedirects == 0) {

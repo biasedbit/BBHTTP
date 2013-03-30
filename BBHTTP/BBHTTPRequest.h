@@ -345,6 +345,26 @@ extern NSString* NSStringFromBBTransferSpeed(BBTransferSpeed transferSpeed);
  */
 @property(assign, nonatomic) BBTransferSpeed downloadTimeout;
 
+/**
+ Upload speed limit, in bytes per second.
+
+ If an upload exceeds this speed on cumulative average during the transfer, the transfer will pause to keep the 
+ average rate less than or equal to the parameter value.
+
+ Defaults to 0 (unlimited speed).
+ */
+@property(assign, nonatomic) NSUInteger uploadSpeedLimit;
+
+/**
+ Download speed limit, in bytes per second.
+ 
+ If a download exceeds this speed on cumulative average during the transfer, the transfer will pause to keep the
+ average rate less than or equal to the parameter value.
+
+ Defaults to 0 (unlimited speed).
+ */
+@property(assign, nonatomic) NSUInteger downloadSpeedLimit;
+
 
 #pragma mark Configuring other request properties
 
