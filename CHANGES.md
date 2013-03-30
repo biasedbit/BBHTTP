@@ -1,3 +1,13 @@
+## 0.9.5
+
+#### March 30th, 2013
+
+* Add configurable upload and download speed limits (issue #3)
+* Add configurable download timeout condition (issue #13)
+* Change all init methods to return `instancetype` instead of `id`
+* Remove unnecessary (and wrong) condition on upload and download transfer speeds query methods (`BBHTTPRequest`) that caused it to always report 0b/s until the request finished.
+
+
 ## 0.9.4
 
 #### March 21st, 2013
@@ -11,7 +21,7 @@
 
 #### March 19th, 2013
 
-* Added support to specify custom encoding when decoding response contents to NSString (#10)
+* Added support to specify custom encoding when decoding response contents to NSString (issue #10)
 * Add cancel handling block when using convenience executors
 * Add missing interface declaration for `asImage` on convenience executors
 * Renamed from BBHotpotato to BBHTTP
