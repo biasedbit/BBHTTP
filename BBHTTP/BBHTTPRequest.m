@@ -36,23 +36,23 @@
 
 #pragma mark Creating a request
 
-- (id)init
+- (instancetype)init
 {
     NSAssert(NO, @"please use initWithURL:andVerb: instead");
     return [self initWithTarget:@"http://biasedbit.com" andVerb:@"GET"];
 }
 
-- (id)initWithTarget:(NSString*)url andVerb:(NSString*)verb
+- (instancetype)initWithTarget:(NSString*)url andVerb:(NSString*)verb
 {
     return [self initWithURL:[NSURL URLWithString:url] andVerb:verb];
 }
 
-- (id)initWithURL:(NSURL*)url andVerb:(NSString*)verb
+- (instancetype)initWithURL:(NSURL*)url andVerb:(NSString*)verb
 {
     return [self initWithURL:url verb:verb andProtocolVersion:BBHTTPProtocolVersion_1_1];
 }
 
-- (id)initWithURL:(NSURL*)url verb:(NSString*)verb andProtocolVersion:(BBHTTPProtocolVersion)version;
+- (instancetype)initWithURL:(NSURL*)url verb:(NSString*)verb andProtocolVersion:(BBHTTPProtocolVersion)version;
 {
     BBHTTPEnsureNotNil(url);
     BBHTTPEnsureNotNil(verb);

@@ -76,7 +76,7 @@
  
  @return An initialized `BBHTTPExecutor` with a unique *identifier*.
  */
-- (id)initWithId:(NSString*)identifier;
+- (instancetype)initWithId:(NSString*)identifier;
 
 /**
  Returns a singleton `BBHTTPExecutor`

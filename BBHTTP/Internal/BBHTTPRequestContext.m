@@ -41,13 +41,13 @@
 
 #pragma mark Creating a request context
 
-- (id)init
+- (instancetype)init
 {
     NSAssert(NO, @"please use initWithRequest:andHandle: instead");
     return nil;
 }
 
-- (id)initWithRequest:(BBHTTPRequest*)request andCurlHandle:(CURL*)handle
+- (instancetype)initWithRequest:(BBHTTPRequest*)request andCurlHandle:(CURL*)handle
 {
     self = [super init];
     if (self != nil) {

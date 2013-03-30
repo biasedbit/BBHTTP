@@ -55,7 +55,7 @@ typedef NS_ENUM(NSUInteger, BBHTTPResponseState) {
 /// @name Creating a request context
 /// --------------------------------
 
-- (id)initWithRequest:(BBHTTPRequest*)request andCurlHandle:(CURL*)handle;
+- (instancetype)initWithRequest:(BBHTTPRequest*)request andCurlHandle:(CURL*)handle;
 
 
 #pragma mark Managing state transitions

@@ -37,6 +37,6 @@
 
 #pragma mark Creating a new file writer
 
-- (id)initWithTargetFile:(NSString*)pathToFile;
+- (instancetype)initWithTargetFile:(NSString*)pathToFile;
 
 @end

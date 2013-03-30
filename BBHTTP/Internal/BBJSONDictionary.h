@@ -41,7 +41,7 @@
  
  @return A surrogate for the dictionary.
  */
-- (id)initWithDictionary:(NSDictionary*)dictionary;
+- (instancetype)initWithDictionary:(NSDictionary*)dictionary;
 
 
 #pragma mark NSDictionary behavior override

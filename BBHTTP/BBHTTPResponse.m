@@ -58,9 +58,9 @@ BBHTTPProtocolVersion BBHTTPProtocolVersionFromNSString(NSString* string)
 
 #pragma mark Creation
 
-- (id)initWithVersion:(BBHTTPProtocolVersion)version
-                 code:(NSUInteger)code
-           andMessage:(NSString*)message
+- (instancetype)initWithVersion:(BBHTTPProtocolVersion)version
+                           code:(NSUInteger)code
+                     andMessage:(NSString*)message
 {
     self = [super init];
     if (self != nil) {

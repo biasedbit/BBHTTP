@@ -220,7 +220,7 @@ static BOOL BBHTTPExecutorInitialized = NO;
 
 #pragma mark Creation
 
-- (id)initWithId:(NSString*)identifier
+- (instancetype)initWithId:(NSString*)identifier
 {
     self = [super init];
     if (self != nil) {
@@ -247,7 +247,7 @@ static BOOL BBHTTPExecutorInitialized = NO;
     return self;
 }
 
-- (id)init
+- (instancetype)init
 {
     NSAssert(NO, @"please use initWithId: instead");
 

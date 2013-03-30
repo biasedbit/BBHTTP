@@ -41,6 +41,6 @@
 
 #pragma mark Creating a new stream writer
 
-- (id)initWithOutputStream:(NSOutputStream*)stream;
+- (instancetype)initWithOutputStream:(NSOutputStream*)stream;
 
 @end

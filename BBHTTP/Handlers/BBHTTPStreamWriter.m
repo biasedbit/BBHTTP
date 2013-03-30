@@ -33,7 +33,7 @@
 
 #pragma mark Creating a new stream writer
 
-- (id)initWithOutputStream:(NSOutputStream*)stream
+- (instancetype)initWithOutputStream:(NSOutputStream*)stream
 {
     self = [super init];
     if (self != nil) _stream = stream;

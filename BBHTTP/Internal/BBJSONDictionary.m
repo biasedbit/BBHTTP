@@ -32,7 +32,7 @@
 
 #pragma mark Creating a surrogate
 
-- (id)initWithDictionary:(NSDictionary*)dictionary
+- (instancetype)initWithDictionary:(NSDictionary*)dictionary
 {
     self = [super init];
     if (self != nil) _dictionary = dictionary;

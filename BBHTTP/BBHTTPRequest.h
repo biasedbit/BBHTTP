@@ -59,7 +59,7 @@
 
  @return An initialized request to *url* using *verb*.
  */
-- (id)initWithTarget:(NSString*)url andVerb:(NSString*)verb;
+- (instancetype)initWithTarget:(NSString*)url andVerb:(NSString*)verb;
 
 /**
  Initializes a new request with target *url*, using *verb* and HTTP protocol version 1.1.
@@ -71,7 +71,7 @@
  
  @see initWithURL:verb:andProtocolVersion:
  */
-- (id)initWithURL:(NSURL*)url andVerb:(NSString*)verb;
+- (instancetype)initWithURL:(NSURL*)url andVerb:(NSString*)verb;
 
 /**
  Initializes a new request with target *url*, using *verb* and HTTP protocol *version*.
@@ -82,7 +82,7 @@
 
  @return An initialized request to *url* using *verb* and protocol *version*.
  */
-- (id)initWithURL:(NSURL*)url verb:(NSString*)verb andProtocolVersion:(BBHTTPProtocolVersion)version;
+- (instancetype)initWithURL:(NSURL*)url verb:(NSString*)verb andProtocolVersion:(BBHTTPProtocolVersion)version;
 
 
 #pragma mark Handling request events

@@ -44,7 +44,7 @@ static NSArray* _DefaultAcceptableContentTypes;
 
 #pragma mark Creation
 
-- (id)init
+- (instancetype)init
 {
     self = [super init];
     if (self != nil) {
