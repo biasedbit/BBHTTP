@@ -36,31 +36,7 @@
 @implementation BBHTTPRequest (Convenience)
 
 
-#pragma mark      GET
-
-+ (instancetype)getResource:(NSString*)resourceUrl
-{
-    return [self getFromURL:[NSURL URLWithString:resourceUrl]];
-}
-
-+ (instancetype)getFromURL:(NSURL*)url
-{
-    return [[self alloc] initWithURL:url andVerb:@"GET"];
-}
-
-#pragma mark      DELETE
-
-+ (instancetype)deleteResource:(NSString*)resourceUrl
-{
-    return [self deleteAtURL:[NSURL URLWithString:resourceUrl]];
-}
-
-+ (instancetype)deleteAtURL:(NSURL*)url
-{
-    return [[self alloc] initWithURL:url andVerb:@"DELETE"];
-}
-
-#pragma mark      POST
+#pragma mark      Create (POST)
 
 + (instancetype)createResource:(NSString*)resourceUrl withData:(NSData*)data contentType:(NSString*)contentType
 {
@@ -88,7 +64,24 @@
     return request;
 }
 
-#pragma mark      PUT
+#pragma mark      Read (GET)
+
++ (instancetype)readResource:(NSString*)resourceUrl
+{
+    return [self getFromURL:[NSURL URLWithString:resourceUrl]];
+}
+
++ (instancetype)getFromURL:(NSURL*)url
+{
+    return [[self alloc] initWithURL:url andVerb:@"GET"];
+}
+
+#pragma mark      Update (PUT)
+
++ (instancetype)updateResource:(NSString*)resourceUrl withData:(NSData*)data contentType:(NSString*)contentType
+{
+    return [self putToURL:[NSURL URLWithString:resourceUrl] data:data contentType:contentType];
+}
 
 + (instancetype)putToURL:(NSURL*)url data:(NSData*)data contentType:(NSString*)contentType
 {
@@ -96,6 +89,31 @@
     [request setUploadData:data withContentType:contentType];
 
     return request;
+}
+
++ (instancetype)updateResource:(NSString*)resourceUrl withContentsOfFile:(NSString*)pathToFile
+{
+    return [self putToURL:[NSURL URLWithString:resourceUrl] withContentsOfFile:pathToFile];
+}
+
++ (instancetype)putToURL:(NSURL*)url withContentsOfFile:(NSString*)pathToFile
+{
+    BBHTTPRequest* request = [[BBHTTPRequest alloc] initWithURL:url andVerb:@"PUT"];
+    if (![request setUploadFile:pathToFile error:nil]) return nil;
+
+    return request;
+}
+
+#pragma mark      Delete (DELETE)
+
++ (instancetype)deleteResource:(NSString*)resourceUrl
+{
+    return [self deleteAtURL:[NSURL URLWithString:resourceUrl]];
+}
+
++ (instancetype)deleteAtURL:(NSURL*)url
+{
+    return [[self alloc] initWithURL:url andVerb:@"DELETE"];
 }
 
 

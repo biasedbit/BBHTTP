@@ -34,40 +34,7 @@
 /// @name Creating common requests
 ///-------------------------------
 
-#pragma mark      GET
-
-/**
- Creates a `GET` request to the target url.
-
- This method is a convenience shortcut to `getFromURL:` that takes a string as input and converts it to a `NSURL`.
-
- @see getFromURL:
- */
-+ (instancetype)getResource:(NSString*)resourceUrl;
-
-/**
- Creates a `GET` request to the target url.
-
- @param url The target URL.
-
- @return A `GET` request to *url*.
- */
-+ (instancetype)getFromURL:(NSURL*)url;
-
-#pragma mark      DELETE
-
-+ (instancetype)deleteResource:(NSString*)resourceUrl;
-
-/**
- Creates a `DELETE` request to the target url.
-
- @param url The target URL.
-
- @return A `DELETE` request to *url*.
- */
-+ (instancetype)deleteAtURL:(NSURL*)url;
-
-#pragma mark      POST
+#pragma mark      Create (POST)
 
 /**
  Creates a `POST` request to the target url, with the contents of an in-memory buffer and a specified content-type.
@@ -97,9 +64,46 @@
 + (instancetype)createResource:(NSString*)resourceUrl withContentsOfFile:(NSString*)pathToFile;
 + (instancetype)postToURL:(NSURL*)url withContentsOfFile:(NSString*)pathToFile;
 
-#pragma mark      PUT
+#pragma mark      Read (GET)
 
+/**
+ Creates a `GET` request to the target url.
+
+ This method is a convenience shortcut to `getFromURL:` that takes a string as input and converts it to a `NSURL`.
+
+ @see getFromURL:
+ */
++ (instancetype)readResource:(NSString*)resourceUrl;
+
+/**
+ Creates a `GET` request to the target url.
+
+ @param url The target URL.
+
+ @return A `GET` request to *url*.
+ */
++ (instancetype)getFromURL:(NSURL*)url;
+
+#pragma mark      Update (PUT)
+
++ (instancetype)updateResource:(NSString*)resourceUrl withData:(NSData*)data contentType:(NSString*)contentType;
 + (instancetype)putToURL:(NSURL*)url data:(NSData*)data contentType:(NSString*)contentType;
++ (instancetype)updateResource:(NSString*)resourceUrl withContentsOfFile:(NSString*)pathToFile;
++ (instancetype)putToURL:(NSURL*)url withContentsOfFile:(NSString*)pathToFile;
+
+
+#pragma mark      Delete (DELETE)
+
++ (instancetype)deleteResource:(NSString*)resourceUrl;
+
+/**
+ Creates a `DELETE` request to the target url.
+
+ @param url The target URL.
+
+ @return A `DELETE` request to *url*.
+ */
++ (instancetype)deleteAtURL:(NSURL*)url;
 
 
 #pragma mark Configuring response content handling

@@ -40,7 +40,7 @@
 
 - (void)getImageExample
 {
-    [[BBHTTPRequest getResource:@"http://biasedbit.com/images/badge_dark.png"] setup:^(id request) {
+    [[BBHTTPRequest readResource:@"http://biasedbit.com/images/badge_dark.png"] setup:^(id request) {
         [request downloadContentAsImage]; // alternative to 'asImage' fluent syntax
     } execute:^(BBHTTPResponse* response) {
         NSImage* image = response.content;
@@ -52,7 +52,7 @@
 
 - (void)getExample
 {
-    [[BBHTTPRequest getResource:@"http://biasedbit.com"] execute:^(BBHTTPResponse* response) {
+    [[BBHTTPRequest readResource:@"http://biasedbit.com"] execute:^(BBHTTPResponse* response) {
         NSLog(@"Finished: %lu %@ -- received %lu bytes of '%@' %@",
               response.code, response.message, response.contentSize,
               response[@"Content-Type"], response.headers);

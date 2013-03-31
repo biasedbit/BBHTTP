@@ -44,7 +44,7 @@
 
 - (void)getImageExample
 {
-    [[BBHTTPRequest getResource:@"http://biasedbit.com/images/badge_dark.png"] setup:^(id request) {
+    [[BBHTTPRequest readResource:@"http://biasedbit.com/images/badge_dark.png"] setup:^(id request) {
         [request downloadContentAsImage]; // alternative to 'asImage' fluent syntax
     } execute:^(BBHTTPResponse* response) {
         UIImage* image = response.content;
@@ -59,7 +59,7 @@
     NSString* yahooWeather = @"http://query.yahooapis.com/v1/public/yql?format=json&q="
     "select%20*%20from%20weather.forecast%20where%20woeid%3D2502265";
 
-    [[[BBHTTPRequest getResource:yahooWeather] asJSON] execute:^(BBHTTPResponse* response) {
+    [[[BBHTTPRequest readResource:yahooWeather] asJSON] execute:^(BBHTTPResponse* response) {
         NSLog(@"%@: %@",
               response.content[@"query.results.channel.description"],
               response.content[@"query.results.channel.item.condition.text"]);
@@ -72,7 +72,7 @@
 
 - (void)getExample
 {
-    [[BBHTTPRequest getResource:@"http://biasedbit.com"] execute:^(BBHTTPResponse* response) {
+    [[BBHTTPRequest readResource:@"http://biasedbit.com"] execute:^(BBHTTPResponse* response) {
         NSLog(@"Finished: %u %@ -- received %u bytes of '%@' %@",
               response.code, response.message, response.contentSize,
               response[@"Content-Type"], response.headers);
