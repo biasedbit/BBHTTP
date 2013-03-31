@@ -8,7 +8,7 @@ It is an ARC-only library that uses [features](http://clang.llvm.org/docs/Object
 It boasts an extremely simple and compact interface that allows you to reduce your code to fire off HTTP requests down to a couple of clean lines, while preserving full flexibility should you ever need it.
 
 ```objc
-[[BBHTTPRequest getResource:@"http://foo.bar/baz"] execute:^(BBHTTPResponse* r) {
+[[BBHTTPRequest readResource:@"http://foo.bar/baz"] execute:^(BBHTTPResponse* r) {
      NSLog(@"Finished: %u %@ -- received %u bytes of '%@'.",
            r.code, r.message, r.contentSize, r[@"Content-Type"]);
  } error:^(NSError* e) {
@@ -39,7 +39,7 @@ The API is **very** likely to keep mutating until this reaches 1.0.
 * Handy common usage patterns:
 
     ```objc
-    [[BBHTTPRequest getResource:@"http://foo.bar/baz/1"] setup:^(id request) {
+    [[BBHTTPRequest readResource:@"http://foo.bar/baz/1"] setup:^(id request) {
         // Prepare request...
     } execute:^(BBHTTPResponse* response) {
         // Handle response...
@@ -53,7 +53,7 @@ The API is **very** likely to keep mutating until this reaches 1.0.
 * Get JSON effortlessly:
 
     ```objc
-    [[[BBHTTPRequest getResource:@"http://foo.bar/baz.json"] asJSON] execute:^(BBHTTPResponse* r) {
+    [[[BBHTTPRequest readResource:@"http://foo.bar/baz.json"] asJSON] execute:^(BBHTTPResponse* r) {
         NSLog(@"User email: %@", r.content[@"user.email"]);
         NSLog(@"# of followers: %@", r.content[@"user.followers.@count"]);
     } error:^(NSError* error) {
@@ -67,7 +67,7 @@ The API is **very** likely to keep mutating until this reaches 1.0.
 * Images too:
 
     ```objc
-    [[BBHTTPRequest getResource:@"http://foo.bar/baz.png"] setup:^(id request) {
+    [[BBHTTPRequest readResource:@"http://foo.bar/baz.png"] setup:^(id request) {
         [request downloadContentAsImage];
     } execute:^(BBHTTPResponse* response) {
         UIImage* image = response.content; // NSImage on OSX
@@ -94,7 +94,7 @@ The API is **very** likely to keep mutating until this reaches 1.0.
 * Download to memory buffers or stream directly to file/`NSOutputStream`:
 
     ```objc
-    [[BBHTTPRequest getResource:@"http://foo.bar/baz"] setup:^(BBHTTPRequest* request) {
+    [[BBHTTPRequest readResource:@"http://foo.bar/baz"] setup:^(BBHTTPRequest* request) {
         [request downloadToFile:@"/path/to/file"];
     } execute:^(BBHTTPResponse* response) {
         // handle response
