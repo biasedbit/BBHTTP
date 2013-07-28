@@ -192,7 +192,7 @@
 
 #pragma mark Executing the request
 
-- (BOOL)execute:(void (^)(id request))finish
+- (BOOL)execute:(void (^)(BBHTTPRequest* request))finish
 {
     self.finishBlock = finish;
     return [[BBHTTPExecutor sharedExecutor] executeRequest:self];
@@ -230,21 +230,21 @@
     return [[BBHTTPExecutor sharedExecutor] executeRequest:self];
 }
 
-- (BOOL)setup:(void (^)(id request))setup execute:(void (^)(BBHTTPResponse* response))completed
+- (BOOL)setup:(void (^)(BBHTTPRequest* request))setup execute:(void (^)(BBHTTPResponse* response))completed
         error:(void (^)(NSError* error))error
 {
     if (setup != nil) setup(self);
     return [self execute:completed error:error cancelled:nil finally:nil];
 }
 
-- (BOOL)setup:(void (^)(id request))setup execute:(void (^)(BBHTTPResponse* response))completed
+- (BOOL)setup:(void (^)(BBHTTPRequest* request))setup execute:(void (^)(BBHTTPResponse* response))completed
         error:(void (^)(NSError* error))error finally:(void (^)())finally
 {
     if (setup != nil) setup(self);
     return [self execute:completed error:error cancelled:nil finally:finally];
 }
 
-- (BOOL)setup:(void (^)(id request))setup execute:(void (^)(BBHTTPResponse* response))completed
+- (BOOL)setup:(void (^)(BBHTTPRequest* request))setup execute:(void (^)(BBHTTPResponse* response))completed
         error:(void (^)(NSError* error))error cancelled:(void (^)())cancelled finally:(void (^)())finally
 {
     if (setup != nil) setup(self);

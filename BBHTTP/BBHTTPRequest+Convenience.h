@@ -210,7 +210,7 @@
 /// @name Executing the request
 ///----------------------------
 
-- (BOOL)execute:(void (^)(id request))finish;
+- (BOOL)execute:(void (^)(BBHTTPRequest* request))finish;
 
 /**
  Convenience method that executes this request in the singleton instance of `<BBHTTPExecutor>`.
@@ -243,13 +243,13 @@
 
  @see BBHTTPExecutor
  */
-- (BOOL)setup:(void (^)(id request))setup execute:(void (^)(BBHTTPResponse* response))completed
+- (BOOL)setup:(void (^)(BBHTTPRequest* request))setup execute:(void (^)(BBHTTPResponse* response))completed
         error:(void (^)(NSError* error))error;
 
-- (BOOL)setup:(void (^)(id request))setup execute:(void (^)(BBHTTPResponse* response))completed
+- (BOOL)setup:(void (^)(BBHTTPRequest* request))setup execute:(void (^)(BBHTTPResponse* response))completed
         error:(void (^)(NSError* error))error finally:(void (^)())finally;
 
-- (BOOL)setup:(void (^)(id request))setup execute:(void (^)(BBHTTPResponse* response))completed
+- (BOOL)setup:(void (^)(BBHTTPRequest* request))setup execute:(void (^)(BBHTTPResponse* response))completed
         error:(void (^)(NSError* error))error cancelled:(void (^)())cancelled finally:(void (^)())finally;
 
 @end
