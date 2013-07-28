@@ -74,3 +74,13 @@ long long BBHTTPCurrentTimeMillis()
 
     return (((int64_t) t.tv_sec) * 1000) + (((int64_t) t.tv_usec) / 1000);
 }
+
+NSString* BBHTTPURLEncode(NSString* string, NSStringEncoding encoding)
+{
+    return (__bridge_transfer NSString*)
+            CFURLCreateStringByAddingPercentEscapes(NULL,
+                                                    (__bridge CFStringRef)string,
+                                                    NULL,
+                                                    (CFStringRef)@"!*'\"();:@&=+$,/?%#[]% ",
+                                                    CFStringConvertNSStringEncodingToEncoding(encoding));
+}

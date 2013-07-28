@@ -228,6 +228,30 @@ NSString* NSStringFromBBTransferSpeed(BBTransferSpeed transferSpeed)
     return NO;
 }
 
+- (BOOL)setUploadFormData:(NSDictionary*)formData
+{
+    BBHTTPEnsureNotNil(formData);
+
+    NSMutableArray* concatenatedKeyValuePairs = [NSMutableArray arrayWithCapacity:[formData count]];
+    [formData enumerateKeysAndObjectsUsingBlock:^(NSString* key, id obj, BOOL* stop) {
+        NSString* formEncodedKey = BBHTTPURLEncode(key, NSASCIIStringEncoding);
+        NSString* formEncodedValue;
+        if (obj == nil) {
+            formEncodedValue = @"";
+        } else {
+            formEncodedValue = BBHTTPURLEncode([obj stringValue], NSASCIIStringEncoding);
+        }
+
+        NSString* concatenatedKeyValuePair = [NSString stringWithFormat:@"%@=%@", formEncodedKey, formEncodedValue];
+        [concatenatedKeyValuePairs addObject:concatenatedKeyValuePair];
+    }];
+
+    NSString* formDataAsConcatenatedURLEncodedString = [concatenatedKeyValuePairs componentsJoinedByString:@"&"];
+    NSData* data = [formDataAsConcatenatedURLEncodedString dataUsingEncoding:NSASCIIStringEncoding];
+
+    return [self setUploadData:data withContentType:@"application/x-www-form-urlencoded"];
+}
+
 - (BOOL)isUpload
 {
     return (_uploadData != nil) || (_uploadFile != nil) || (_uploadStream != nil);

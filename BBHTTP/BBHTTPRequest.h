@@ -220,6 +220,8 @@ extern NSString* NSStringFromBBTransferSpeed(BBTransferSpeed transferSpeed);
  */
 - (BOOL)setUploadData:(NSData*)data withContentType:(NSString*)contentType;
 
+- (BOOL)setUploadFormData:(NSDictionary*)formData;
+
 /** Flag that signals whether this request is an upload (from stream, file or memory). */
 @property(assign, nonatomic, readonly, getter = isUpload) BOOL upload;
 

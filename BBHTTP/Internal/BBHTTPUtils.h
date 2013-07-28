@@ -131,3 +131,4 @@ BBHTTPDefineHeaderValue(Chunked,       @"chunked")
 
 extern NSString* BBHTTPMimeType(NSString* file);
 extern long long BBHTTPCurrentTimeMillis(void);
+extern NSString* BBHTTPURLEncode(NSString* string, NSStringEncoding encoding);
