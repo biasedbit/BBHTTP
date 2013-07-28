@@ -25,4 +25,4 @@ appledoc \
   --index-desc      ${SCRIPT_DIR}/index.md \
   --output          ${SCRIPT_DIR} \
   \
-  ${SCRIPT_DIR}/../Classes
+  ${SCRIPT_DIR}/../BBHTTP
