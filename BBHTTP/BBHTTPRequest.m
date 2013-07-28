@@ -225,7 +225,7 @@ NSString* NSStringFromBBTransferSpeed(BBTransferSpeed transferSpeed)
     [self setValue:contentType forHeader:H(ContentType)];
     [self setValue:[NSString stringWithFormat:@"%lu", (long)_uploadSize] forHeader:H(ContentLength)];
 
-    return NO;
+    return YES;
 }
 
 - (BOOL)setUploadFormData:(NSDictionary*)formData
@@ -239,7 +239,7 @@ NSString* NSStringFromBBTransferSpeed(BBTransferSpeed transferSpeed)
         if (obj == nil) {
             formEncodedValue = @"";
         } else {
-            formEncodedValue = BBHTTPURLEncode([obj stringValue], NSASCIIStringEncoding);
+            formEncodedValue = BBHTTPURLEncode(obj, NSASCIIStringEncoding);
         }
 
         NSString* concatenatedKeyValuePair = [NSString stringWithFormat:@"%@=%@", formEncodedKey, formEncodedValue];
