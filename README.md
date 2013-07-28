@@ -126,10 +126,11 @@ The API is **very** likely to keep mutating until this reaches 1.0.
 There are other built-in ways to handle content from responses. Be sure to read up the [In-depth guide to response content handling](https://github.com/brunodecarvalho/BBHTTP/wiki/Response-content-handling).
 
 
-# API Docs
+# Documentation
 
+* Guides and tutorials available on the [wiki pages](https://github.com/brunodecarvalho/BBHTTP/wiki).
+* API available at [CocoaDocs](http://cocoadocs.org/docsets/BBHTTP).
 
-* Published after each commit <a href="http://jasperblues.github.com/BBHotpotato/api/index.html">here</a>.
 
 ## Likely TODO list
 
