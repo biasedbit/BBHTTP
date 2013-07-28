@@ -162,30 +162,35 @@
 - (instancetype)asData
 {
     [self downloadContentAsData];
+
     return self;
 }
 
 - (instancetype)asString
 {
     [self downloadContentAsString];
+
     return self;
 }
 
 - (instancetype)asStringWithEncoding:(NSStringEncoding)encoding
 {
     [self downloadContentAsStringWithEncoding:encoding];
+
     return self;
 }
 
 - (instancetype)asJSON
 {
     [self downloadContentAsJSON];
+
     return self;
 }
 
 - (instancetype)asImage
 {
     [self downloadContentAsImage];
+
     return self;
 }
 
@@ -195,6 +200,7 @@
 - (BOOL)execute:(void (^)(BBHTTPRequest* request))finish
 {
     self.finishBlock = finish;
+
     return [[BBHTTPExecutor sharedExecutor] executeRequest:self];
 }
 
@@ -204,7 +210,7 @@
 }
 
 - (BOOL)execute:(void (^)(BBHTTPResponse* response))completed error:(void (^)(NSError* error))error
-      finally:(void (^)())finally
+        finally:(void (^)())finally
 {
     return [self execute:completed error:error cancelled:nil finally:finally];
 }
@@ -234,6 +240,7 @@
         error:(void (^)(NSError* error))error
 {
     if (setup != nil) setup(self);
+
     return [self execute:completed error:error cancelled:nil finally:nil];
 }
 
@@ -241,6 +248,7 @@
         error:(void (^)(NSError* error))error finally:(void (^)())finally
 {
     if (setup != nil) setup(self);
+
     return [self execute:completed error:error cancelled:nil finally:finally];
 }
 
@@ -248,6 +256,7 @@
         error:(void (^)(NSError* error))error cancelled:(void (^)())cancelled finally:(void (^)())finally
 {
     if (setup != nil) setup(self);
+
     return [self execute:completed error:error cancelled:cancelled finally:finally];
 }
 
