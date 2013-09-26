@@ -1,3 +1,11 @@
+## 0.9.9
+
+#### September 26th, 2013
+
+* Add form encoded POST
+* Update to libcurl 7.32.0
+* Update project file for Xcode 5
+
 ## 0.9.5
 
 #### March 30th, 2013
